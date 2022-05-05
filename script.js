@@ -1,3 +1,16 @@
+const cord = document.querySelector('body');
+	
+	const h5=document.querySelector('h5');
+	cord.addEventListener('mousemove',eventHandler);
+	
+	function eventHandler(event){
+		console.log(`event type : ${event.type}`);
+	
+		h5.textContent=`Mouse X : ${event.offsetX } Mouse Y : ${event.offsetY }`;
+	
+	}
+
+
 (function emojiCursor() {
   
     var possibleEmoji = ["🕋",]
@@ -123,4 +136,5 @@
     
     init();
   })();
+
 
