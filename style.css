@@ -6,7 +6,7 @@ body{
 }
 h1 {
   font-size: 31px;
-  color: #0000ff;
+  color: #ff0000;
   font-family: Montserrat, sans-serif;
   position: absolute;
   left: 50%;
@@ -26,8 +26,7 @@ h1 em {
   font-family: 'Playfair Display', serif;
   text-transform: lowercase;
   font-style: italic;
-      
-      h5{
-              color: red;
-
-      }
+}
+h5{
+  color: red;
+}
