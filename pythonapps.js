@@ -1,4 +1,5 @@
-const apiKey = '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'; // GitHub API anahtarınızı buraya ekleyin
+require('dotenv').config();
+const apiKey = process.env.API_KEY;
 const repoName = 'parzivalhaliday/100-python-apps'; // GitHub reposu adı
 const githubContainer = document.getElementById('github-section'); // GitHub dizinlerini eklemek için bir konteyner seçin
 
