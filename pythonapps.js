@@ -1,4 +1,4 @@
-const apiKey = process.env.API_KEY;
+const apiKey = ${{ secrets.API_KEY }}
 const repoName = 'parzivalhaliday/100-python-apps'; // GitHub reposu adı
 const githubContainer = document.getElementById('github-section'); // GitHub dizinlerini eklemek için bir konteyner seçin
 
