@@ -1,4 +1,3 @@
-const apiKey = ${{ secrets.APIKEY }}
 const repoName = 'parzivalhaliday/100-python-apps'; // GitHub reposu adı
 const githubContainer = document.getElementById('github-section'); // GitHub dizinlerini eklemek için bir konteyner seçin
 
@@ -6,11 +5,7 @@ const githubContainer = document.getElementById('github-section'); // GitHub diz
 const githubUrl = `https://api.github.com/repos/${repoName}/contents`;
 
 // GitHub API'sine GET isteği yaparak dizinleri çekin
-fetch(githubUrl, {
-    headers: {
-        'Authorization': `Bearer ${apiKey}`
-    }
-})
+fetch(githubUrl)
 .then(response => response.json())
 .then(data => {
     // Dizinleri içeren diziye eriştik. Her bir dizini işleyebilirsiniz.
