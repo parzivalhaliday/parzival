@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cihaz Durumu</title>
+</head>
+<body>
+    <h1>Cihaz Durumu</h1>
+    <p id="deviceStatus">Cihazın durumu: Bekleniyor...</p>
+    <p id="deviceOrientation">Yatay Eğiklik Açısı: Bekleniyor...</p>
+
+    <script>
+        window.addEventListener("deviceorientation", handleOrientation, true);
+
+        function handleOrientation(event) {
+            var beta = event.beta;  // Yatay eğiklik açısı (-180-180 derece)
+
+            var statusText = document.getElementById("deviceStatus");
+            var orientationText = document.getElementById("deviceOrientation");
+
+            if (beta > 20) {
+                statusText.textContent = "Cihaz sağa eğik.";
+            } else if (beta < -20) {
+                statusText.textContent = "Cihaz sola eğik.";
+            } else {
+                statusText.textContent = "Cihaz düz.";
+            }
+
+            orientationText.textContent = "Yatay Eğiklik Açısı: " + beta + " derece";
+        }
+    </script>
+</body>
+</html>
