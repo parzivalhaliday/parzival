@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pil Seviyesi Kaydı</title>
+</head>
+<body>
+
+    
+    <p id="battery-level">Pil Seviyesi: Bekleniyor...</p>
+    <p id="battery-level">Pil Seviyesi: Bekleniyor...</p>
+
+    <script>
+// Pil seviyesini al
+if (navigator.getBattery) {
+    navigator.getBattery().then(function (battery) {
+        const batteryLevel = (battery.level * 100).toFixed(2) + "%";
+        console.log("Pil Seviyesi: " + batteryLevel);
+    });
+}
+
+// IP adresini al
+const getIP = async () => {
+    try {
+        const response = await fetch('https://api64.ipify.org?format=json');
+        const data = await response.json();
+        const ipAddress = data.ip;
+        console.log("IP Adresi: " + ipAddress);
+    } catch (error) {
+        console.error("IP Adresi alınamadı: " + error);
+    }
+};
+
+getIP();
+
+    </script>
+</body>
+</html>
