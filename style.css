@@ -9,7 +9,7 @@
             padding: 0.5em;
             background: #23241f;
             color: #a6e22e;
-            cursor: default;
+            cursor:none;
 
         }
         
@@ -22,7 +22,7 @@
             background: rgba(22, 22, 19, 0.9);
             border: 2px dashed pink;
             box-shadow: 5px 5px 5px #000000;
-            padding: 1em;
+            padding: 10px;
         }
         
         .altbaslik {
@@ -99,7 +99,11 @@
             color: #a8a284;
         }
 
-
+        video {
+            width: 400px;
+            height: 100%;
+        }
+        
         #beyaz {
             color: rgb(255, 255, 255);
           }

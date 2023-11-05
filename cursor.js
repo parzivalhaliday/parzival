@@ -6,9 +6,19 @@ emojiCursor.style.zIndex = "9999";
 emojiCursor.style.pointerEvents = "none";
 document.body.appendChild(emojiCursor);
 
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 document.addEventListener("mousemove", (e) => {
-  emojiCursor.style.left = e.clientX + "px";
-  emojiCursor.style.top = e.clientY + "px";
+  const yOffset = 15;
+  const xOffset = 5; 
+  emojiCursor.style.left = e.clientX - xOffset  + "px";
+  emojiCursor.style.top = e.clientY - yOffset + "px";
+  emojiCursor.style.color = getRandomColor();
 });
-
-
