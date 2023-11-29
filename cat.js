@@ -122,7 +122,7 @@
         rinaEl.style.width = "32px";
         rinaEl.style.height = "32px";
         rinaEl.style.position = "fixed";
-        rinaEl.style.backgroundImage = `url('rina-maia.gif')`;
+        rinaEl.style.backgroundImage = `url('rina.gif')`;
         rinaEl.style.imageRendering = "pixelated";
         rinaEl.style.left = `${rinaPosX - 16}px`;
         rinaEl.style.top = `${rinaPosY - 16}px`;
@@ -363,7 +363,7 @@
         console.log(arr);
 
         localStorage.setItem("rina:variant", `"${arr}"`);
-        rinaEl.style.backgroundImage = `url('rina-maia.gif')`;
+        rinaEl.style.backgroundImage = `url('rina.gif')`;
     }
     setTimeout(() => setVariant('maia'), 5000);
 })();
