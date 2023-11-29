@@ -6,6 +6,7 @@
         function AnimateTitle() {
             let title = document.getElementById("head");
             let testElement = document.getElementById("renk");
+
     
             let text = title.innerText;
             let newText = "";

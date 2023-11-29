@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rüzgar Efekti</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+        #container {
+            width: 200%;
+            white-space: nowrap;
+            transition: transform 0.2s ease-out;
+        }
+        .box {
+            display: inline-block;
+            width: 50%;
+            height: 300px;
+            background-color: #3498db;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="box">Sol</div>
+        <div class="box">Sağ</div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        let mouseX = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const xPos = e.clientX;
+            
+            if (xPos > mouseX) {
+                // Fare sağa doğru hareket ediyorsa, rüzgar benzeri direnci artır
+                const resistance = (xPos - mouseX) / 10;
+                container.style.transform = `translateX(${xPos * 2 - resistance}px)`;
+            } else {
+                // Fare sola doğru hareket ediyorsa, normal şekilde kaydır
+                container.style.transform = `translateX(${xPos * 2}px)`;
+            }
+
+            mouseX = xPos;
+        });
+    </script>
+</body>
+</html>
