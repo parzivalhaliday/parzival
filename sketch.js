@@ -11,26 +11,16 @@ function make2DArray(cols, rows) {
 let grid;
 let cols;
 let rows;
-let resolution = (random(15, 30));
+let resolution = 20; // Sabit bir değer kullanabilirsiniz
 let cnv;
-
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
-    //centerCanvas();
-}
-
-function setup() {
-    frameRate(10);
-    canvas = createCanvas(windowWidth, windowHeight);
-    canvas.position(0, 0);
-    canvas.style('z-index', '-1');
-    // centerCanvas()
-    cols = floor(displayWidth / resolution);
-    rows = floor(displayHeight / resolution);
-
-
+    cols = floor(width / resolution);
+    rows = floor(height / resolution);
     grid = make2DArray(cols, rows);
+
+    // Yeni pencere boyutuna göre grid'i yeniden başlat
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             grid[i][j] = floor(random(2));
@@ -38,11 +28,27 @@ function setup() {
     }
 }
 
+function setup() {
+    frameRate(10);
+    canvas = createCanvas(windowWidth, windowHeight);
+    canvas.position(0, 0);
+    canvas.style('z-index', '-1');
+    cols = floor(width / resolution);
+    rows = floor(height / resolution);
+    grid = make2DArray(cols, rows);
 
+    // İlk başlangıçta rastgele grid oluştur
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            grid[i][j] = floor(random(2));
+        }
+    }
+}
 
 function draw() {
     background("#23241f");
 
+    // Grid'i çiz
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             let x = i * resolution;
@@ -61,10 +67,9 @@ function draw() {
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
             let state = grid[i][j];
-            // Count live neighbors!
-            let sum = 0;
             let neighbors = countNeighbors(grid, i, j);
 
+            // Kurallara göre grid'i güncelle
             if (state == 0 && neighbors == 3) {
                 next[i][j] = 1;
             } else if (state == 1 && (neighbors < 2 || neighbors > 3)) {
@@ -72,16 +77,11 @@ function draw() {
             } else {
                 next[i][j] = state;
             }
-
         }
     }
 
     grid = next;
-
-
-
 }
-
 
 function countNeighbors(grid, x, y) {
     let sum = 0;
