@@ -1,81 +1,72 @@
-var offsetAngle = 0,
-    particle,
-    particles = [],
-    ctx;
+var raindrops = [];
+var numOfDrops;
 
 function setup() {
-    ctx = createCanvas(windowWidth, windowHeight);
-    colorMode(HSB, 100);
-    blendMode(ADD);
-    noStroke();
-    background(0, 0, 0);
-    fullscreen(true); // Tam ekran modunu etkinleştir
+  numOfDrops = windowWidth / 2;
+  createCanvas(windowWidth, windowHeight);
 
+  for (var i = 0; i < numOfDrops; i++) {
+    raindrops[i] = new Raindrop();
+  }
 }
 
 function draw() {
-    clear();
-    background(0, 0, 0);
-    offsetAngle += 0.05;
+  background(0, 10);
 
-    if (touchX > 0 && touchY > 0) {
-        makeParticles(2, touchX, touchY);
-    } else {
-        makeParticles(2, width / 2, height / 2)
+  for (var i = 0; i < numOfDrops; i++) {
+    raindrops[i].fall();
+    raindrops[i].show();
+    if (raindrops[i].reachedBottom()) {
+      raindrops[i].splash();
+      raindrops[i].y = 0;
     }
-    for (i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        p.render();
-        p.update();
-    }
-
-    while (particles.length > 1000) particles.shift();
+  }
 }
 
-function makeParticles(pcount, mx, my) {
-    print("make particles " + pcount);
-    for (var i = 0; i < pcount; i++) {
-        var p = new Particle(mx, my, random(35, 95));
-
-        var angle = PI + random(-PI, PI);
-        var speed = random(4, 8);
-
-        p.velX = sin(angle) * speed;
-        p.velY = cos(angle) * speed;
-
-        p.size = random(8, 18);
-
-        particles.push(p);
-    }
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  // Ekran boyutu değiştikçe damla sayısını ve konumlarını güncelle
+  numOfDrops = windowWidth / 2;
+  raindrops = [];
+  for (var i = 0; i < numOfDrops; i++) {
+    raindrops[i] = new Raindrop();
+  }
 }
 
-function Particle(x, y, h) {
-    this.posX = x;
-    this.posY = y;
-    this.velX = 0;
-    this.velY = 0;
-    this.shrink = 0.95;
-    this.size = 1;
-    this.drag = 0.9;
-    this.gravity = 0.2;
-    this.hue = h;
+function Raindrop(x, y) {
+  this.x = random(windowWidth);
+  this.y = random(-100, -600);
 
-    this.update = function () {
-        this.velX *= this.drag;
-        this.velY *= this.drag;
+  this.z = random(1, 3);
+  this.speed = random(1, 3);
+  this.gravity = random(1, 2);
+  this.len = random(3, 10);
+  this.rgb = [random(255), random(255), random(255)];
 
-        this.velY += this.gravity;
+  this.fall = function () {
+    this.y += this.speed;
+    this.y += this.gravity;
+  };
 
-        this.posX += this.velX;
-        this.posY += this.velY;
+  this.reachedBottom = function () {
+    return this.y > windowHeight;
+  };
 
-        this.size *= this.shrink;
-        // this.alpha -= this.fade; 	 
-    };
+  this.splash = function () {
+    strokeWeight(this.z);
 
-    this.render = function () {
-        fill(this.hue, 100, 100);
-        ellipse(this.posX, this.posY, this.size);
-    };
+    line(this.x, this.y, this.x + 10, this.y - 10); // Sağ
+    line(this.x, this.y, this.x + 10, this.y - 20);
 
+    line(this.x, this.y, this.x, this.y - 10); // Orta
+
+    line(this.x, this.y, this.x - 10, this.y - 20);
+    line(this.x, this.y, this.x - 10, this.y - 10); // Sol
+  };
+
+  this.show = function () {
+    strokeWeight(this.z);
+    stroke(this.rgb[0], this.rgb[1], this.rgb[2]);
+    line(this.x, this.y, this.x, this.y + this.len);
+  };
 }
