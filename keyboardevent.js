@@ -15,6 +15,18 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && (e.key === 's' || e.keyCode === 83)) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) {
+        e.preventDefault();
+    }
+});
+
 
 document.addEventListener('selectstart', function (e) {
     e.preventDefault();
