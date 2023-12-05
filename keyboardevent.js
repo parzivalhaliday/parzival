@@ -5,10 +5,16 @@ document.addEventListener('contextmenu', function (e) {
 
 // F12 tuşuna basmayı engellemek için
 document.addEventListener('keydown', function (e) {
-    if (e.key === 'F12' || e.keyCode === 123) {
+    if ((e.key === 'F12' || e.keyCode === 123) || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73))) {
         e.preventDefault();
     }
 });
+document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && e.shiftKey) {
+        e.preventDefault();
+    }
+});
+
 
 document.addEventListener('selectstart', function (e) {
     e.preventDefault();
