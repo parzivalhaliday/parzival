@@ -19,3 +19,28 @@
             const link = document.querySelector("link[rel='icon']");
             link.href = favicon;
         }
+
+        var basliklar = ["Parzi CV", "Hakkımda ve Yaptığım çalışmalar", "Lütfen beni işe alın UwU"];
+        
+        // Başlık değiştirme fonksiyonu
+        function baslikDegistir() {
+            var pageTitle = document.getElementById("pageTitle");
+            var randomIndex = Math.floor(Math.random() * basliklar.length);
+            pageTitle.innerText = basliklar[randomIndex];
+        }
+
+        // Belirli aralıklarla başlığı değiştir
+        setInterval(baslikDegistir, 10000);
+
+
+        var basliklar = ["Parzi CV", "Hakkımda ve Yaptığım çalışmalar", "Lütfen beni işe alın UwU"];
+        
+        // Başlık değiştirme fonksiyonu
+        function baslikDegistir() {
+            var pageTitle = document.getElementById("pageTitle");
+            var randomIndex = Math.floor(Math.random() * basliklar.length);
+            pageTitle.innerText = basliklar[randomIndex];
+        }
+
+        // Belirli aralıklarla başlığı değiştir
+        setInterval(baslikDegistir, 10000);
