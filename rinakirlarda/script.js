@@ -402,7 +402,7 @@ function setFavicon(favicon) {
 
 // Sayfanın yüklenmesini bekle
 document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(showAlert, 1000);
+    setTimeout(showAlert, 2500);
 });
 
 
@@ -411,3 +411,8 @@ function showAlert() {
 
     document.body.classList.add('custom-alert');
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.body.style.cursor = 'url("icons/cookie.ico"), auto';
+});
