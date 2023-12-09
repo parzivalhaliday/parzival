@@ -13,6 +13,15 @@ body {
  background-image: url("bgimage.jpg");
  background-color: #cccccc;
 }
+
+/* Özel stil */
+.custom-alert {
+    background-color: #080000; /* Kırmızı arkaplan */
+    color: #ffffff; /* Beyaz metin */
+    padding: 10px; /* Kenar boşluğu */
+    font-size: 18px; /* Metin boyutu */
+}
+
     </style>
 
     <!-- Diğer HTML içeriği buraya gelecek -->
@@ -395,7 +404,7 @@ body {
     setTimeout(() => setVariant('maia'), 5000);
 })();
 
-var basliklar = ["Pinecik", "Beni fena düşürdün", "Muhtemelen burayı okuyacaksın", "Gitme.", "Okuduğunda bana da söyleme"];
+var basliklar = ["Pinecik", "Beni fena düşürdün", "Muhtemelen burayı okuyan tek kişisim", "Gitme.", "Lütfen.","İstersen sarışında olurum xd"];
 
 var currentIndex = 0;
 
@@ -405,7 +414,7 @@ function baslikDegistir() {
     currentIndex = (currentIndex + 1) % basliklar.length;
 }
 
-setInterval(baslikDegistir, 2000);
+setInterval(baslikDegistir, 1500);
 
 
 
@@ -426,6 +435,19 @@ function setFavicon(favicon) {
     const link = document.querySelector("link[rel='icon']");
     link.href = favicon;
 }
+
+// Sayfanın yüklenmesini bekle
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(showAlert, 1000);
+});
+
+
+function showAlert() {
+    alert('Buraya bi bulmaca oyunu yaptım :3');
+
+    document.body.classList.add('custom-alert');
+}
+
     </script>
 </body>
 </html>
