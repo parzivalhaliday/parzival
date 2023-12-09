@@ -1,32 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Siteniz</title>
-</head>
-<body>
 
-    <!-- Diğer HTML içeriği buraya gelecek -->
-
-    <div id="oneko" style="position: fixed; z-index: 99;">
-        <img
-            src="oneko-maia.gif" <!-- dosya adı buraya eklendi -->
-            alt="Kedi Resmi"
-            style="width: 32px; height: 32px; image-rendering: pixelated; filter: none;"
-        />
-    </div>
-
-    <script>
-    // original oneko.js by: https://github.com/adryd325/oneko.js
-// modified oneko.js by: https://github.com/kyrie25/spicetify-oneko
-// further modified oneko.js by: https://github.com/spinfal
-// then even further, modified oneko.js by: https://github.com/Cheddlar
-
-(async function oneko() {
-    const nekoEl = document.createElement("div");
-    let nekoPosX,
-        nekoPosY,
+(async function orina() {
+    const rinaEl = document.createElement("div");
+    let rinaPosX,
+        rinaPosY,
         mousePosX = 0,
         mousePosY = 0,
         frameCount = 0,
@@ -37,12 +13,12 @@
         grabbing = false,
         grabStop = true,
         nudge = false,
-        kuroNeko = false,
+        pinerina = false,
         variant = "classic";
 
     function parseLocalStorage(key, fallback) {
         try {
-            const value = JSON.parse(localStorage.getItem(`oneko:${key}`));
+            const value = JSON.parse(localStorage.getItem(`orina:${key}`));
             console.log(key, value);
             return typeof value === typeof fallback ? value : fallback;
         } catch (e) {
@@ -57,13 +33,13 @@
         return { x, y };
     }
 
-    const nekoSpeed = 10,
+    const rinaSpeed = 10,
         variants = [
             ["classic", "Classic"],
-            ["dog", "Dog"],
-            ["tora", "Tora"],
-            ["maia", "Maia (maia.crimew.gay)"],
-            ["vaporwave", "Vaporwave (nya.rest)"],
+            ["x", "xd"],
+            ["test", "Test"],
+            ["z", "ZZ"],
+            ["T", "xda"],
         ],
         spriteSets = {
             idle: [[-3, -3]],
@@ -132,28 +108,28 @@
 
     function create() {
         variant = parseLocalStorage("variant", "classic");
-        kuroNeko = parseLocalStorage("kuroneko", false);
+        pinerina = parseLocalStorage("pinerina", false);
 
         if (!variants.some((v) => v[0] === variant)) {
             variant = "maia";
         }
 
         const initialPosition = getRandomPosition();
-        nekoPosX = initialPosition.x;
-        nekoPosY = initialPosition.y;
+        rinaPosX = initialPosition.x;
+        rinaPosY = initialPosition.y;
 
-        nekoEl.id = "oneko";
-        nekoEl.style.width = "32px";
-        nekoEl.style.height = "32px";
-        nekoEl.style.position = "fixed";
-        nekoEl.style.backgroundImage = `url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-${variant}.gif')`;
-        nekoEl.style.imageRendering = "pixelated";
-        nekoEl.style.left = `${nekoPosX - 16}px`;
-        nekoEl.style.top = `${nekoPosY - 16}px`;
-        nekoEl.style.filter = kuroNeko ? "invert(100%)" : "none";
-        nekoEl.style.zIndex = "99";
+        rinaEl.id = "orina";
+        rinaEl.style.width = "32px";
+        rinaEl.style.height = "32px";
+        rinaEl.style.position = "fixed";
+        rinaEl.style.backgroundImage = `url('rina.gif')`;
+        rinaEl.style.imageRendering = "pixelated";
+        rinaEl.style.left = `${rinaPosX - 16}px`;
+        rinaEl.style.top = `${rinaPosY - 16}px`;
+        rinaEl.style.filter = pinerina ? "invert(100%)" : "none";
+        rinaEl.style.zIndex = "99";
 
-        document.body.appendChild(nekoEl);
+        document.body.appendChild(rinaEl);
 
         window.addEventListener("mousemove", (e) => {
             if (forceSleep) return;
@@ -164,10 +140,10 @@
 
         window.addEventListener("resize", () => {
             if (!forceSleep) return;
-            // If neko is outside the window and is forced to sleep, wake her up
+            // If rina is outside the window and is forced to sleep, wake her up
             if (
-                nekoPosX - window.innerWidth > 32 ||
-                nekoPosY - window.innerHeight > 32 ||
+                rinaPosX - window.innerWidth > 32 ||
+                rinaPosY - window.innerHeight > 32 ||
                 // Also when she is about to go outside the window
                 mousePosX - window.innerWidth > 32 ||
                 mousePosY - window.innerHeight > 32
@@ -178,13 +154,13 @@
         });
 
         // Handle dragging of the cat
-        nekoEl.addEventListener("mousedown", (e) => {
+        rinaEl.addEventListener("mousedown", (e) => {
             if (e.button !== 0) return;
             grabbing = true;
             let startX = e.clientX;
             let startY = e.clientY;
-            let startNekoX = nekoPosX;
-            let startNekoY = nekoPosY;
+            let startrinaX = rinaPosX;
+            let startrinaY = rinaPosY;
             let grabInterval;
 
             const mousemove = (e) => {
@@ -213,15 +189,15 @@
                         nudge = false;
                         startX = e.clientX;
                         startY = e.clientY;
-                        startNekoX = nekoPosX;
-                        startNekoY = nekoPosY;
+                        startrinaX = rinaPosX;
+                        startrinaY = rinaPosY;
                     }, 150);
                 }
 
-                nekoPosX = startNekoX + e.clientX - startX;
-                nekoPosY = startNekoY + e.clientY - startY;
-                nekoEl.style.left = `${nekoPosX - 16}px`;
-                nekoEl.style.top = `${nekoPosY - 16}px`;
+                rinaPosX = startrinaX + e.clientX - startX;
+                rinaPosY = startrinaY + e.clientY - startY;
+                rinaEl.style.left = `${rinaPosX - 16}px`;
+                rinaEl.style.top = `${rinaPosY - 16}px`;
             };
 
             const mouseup = () => {
@@ -236,14 +212,14 @@
             window.addEventListener("mouseup", mouseup);
         });
 
-        nekoEl.addEventListener("contextmenu", (e) => {
+        rinaEl.addEventListener("contextmenu", (e) => {
             e.preventDefault();
-            kuroNeko = !kuroNeko;
-            localStorage.setItem("oneko:kuroneko", kuroNeko);
-            nekoEl.style.filter = kuroNeko ? "invert(100%)" : "none";
+            pinerina = !pinerina;
+            localStorage.setItem("orina:pinerina", pinerina);
+            rinaEl.style.filter = pinerina ? "invert(100%)" : "none";
         });
 
-        nekoEl.addEventListener("dblclick", () => {
+        rinaEl.addEventListener("dblclick", () => {
             forceSleep = !forceSleep;
             nudge = false;
             if (!forceSleep) {
@@ -252,7 +228,7 @@
             }
         });
 
-        window.onekoInterval = setInterval(frame, 100);
+        window.orinaInterval = setInterval(frame, 100);
     }
 
     function getSprite(name, frame) {
@@ -261,7 +237,7 @@
 
     function setSprite(name, frame) {
         const sprite = getSprite(name, frame);
-        nekoEl.style.backgroundPosition = `${sprite[0] * 32}px ${sprite[1] * 32}px`;
+        rinaEl.style.backgroundPosition = `${sprite[0] * 32}px ${sprite[1] * 32}px`;
     }
 
     function resetIdleAnimation() {
@@ -279,16 +255,16 @@
             idleAnimation == null
         ) {
             let avalibleIdleAnimations = ["sleeping", "scratchSelf"];
-            if (nekoPosX < 32) {
+            if (rinaPosX < 32) {
                 avalibleIdleAnimations.push("scratchWallW");
             }
-            if (nekoPosY < 32) {
+            if (rinaPosY < 32) {
                 avalibleIdleAnimations.push("scratchWallN");
             }
-            if (nekoPosX > window.innerWidth - 32) {
+            if (rinaPosX > window.innerWidth - 32) {
                 avalibleIdleAnimations.push("scratchWallE");
             }
-            if (nekoPosY > window.innerHeight - 32) {
+            if (rinaPosY > window.innerHeight - 32) {
                 avalibleIdleAnimations.push("scratchWallS");
             }
             idleAnimation =
@@ -345,11 +321,11 @@
             return;
         }
 
-        const diffX = nekoPosX - mousePosX;
-        const diffY = nekoPosY - mousePosY;
+        const diffX = rinaPosX - mousePosX;
+        const diffY = rinaPosY - mousePosY;
         const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
-        if ((distance < nekoSpeed || distance < 48) && !forceSleep) {
+        if ((distance < rinaSpeed || distance < 48) && !forceSleep) {
             idle();
             return;
         }
@@ -371,14 +347,14 @@
         direction += diffX / distance < -0.5 ? "E" : "";
         setSprite(direction, frameCount);
 
-        nekoPosX -= (diffX / distance) * nekoSpeed;
-        nekoPosY -= (diffY / distance) * nekoSpeed;
+        rinaPosX -= (diffX / distance) * rinaSpeed;
+        rinaPosY -= (diffY / distance) * rinaSpeed;
 
-        nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
-        nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
+        rinaPosX = Math.min(Math.max(16, rinaPosX), window.innerWidth - 16);
+        rinaPosY = Math.min(Math.max(16, rinaPosY), window.innerHeight - 16);
 
-        nekoEl.style.left = `${nekoPosX - 16}px`;
-        nekoEl.style.top = `${nekoPosY - 16}px`;
+        rinaEl.style.left = `${rinaPosX - 16}px`;
+        rinaEl.style.top = `${rinaPosY - 16}px`;
     }
 
     create();
@@ -386,11 +362,52 @@
     function setVariant(arr) {
         console.log(arr);
 
-        localStorage.setItem("oneko:variant", `"${arr}"`);
-        nekoEl.style.backgroundImage = `url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-${arr}.gif')`;
+        localStorage.setItem("orina:variant", `"${arr}"`);
+        rinaEl.style.backgroundImage = `url('rina.gif')`;
     }
     setTimeout(() => setVariant('maia'), 5000);
 })();
-    </script>
-</body>
-</html>
+
+var basliklar = ["Pinecik", "Beni fena düşürdün", "Muhtemelen burayı okuyan tek kişisim", "Gitme.", "Lütfen.","İstersen sarışında olurum xd"];
+
+var currentIndex = 0;
+
+function baslikDegistir() {
+    var pageTitle = document.getElementById("dusurdunbeni");
+    pageTitle.innerText = basliklar[currentIndex];
+    currentIndex = (currentIndex + 1) % basliklar.length;
+}
+
+setInterval(baslikDegistir, 1500);
+
+
+
+
+const favicons = ["icons/favicon1.ico", "icons/favicon2.ico"];
+
+const changeInterval = 1000;
+
+let faviconIndex = 0;
+setFavicon(favicons[faviconIndex]);
+
+setInterval(() => {
+    faviconIndex = (faviconIndex + 1) % favicons.length;
+    setFavicon(favicons[faviconIndex]);
+}, changeInterval);
+
+function setFavicon(favicon) {
+    const link = document.querySelector("link[rel='icon']");
+    link.href = favicon;
+}
+
+// Sayfanın yüklenmesini bekle
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(showAlert, 1000);
+});
+
+
+function showAlert() {
+    alert('Buraya bi bulmaca oyunu yaptım :3');
+
+    document.body.classList.add('custom-alert');
+}

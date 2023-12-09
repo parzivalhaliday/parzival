@@ -1,0 +1,6 @@
+.custom-alert {
+    background-color: #080000; /* Kırmızı arkaplan */
+    color: #ffffff; /* Beyaz metin */
+    padding: 10px; /* Kenar boşluğu */
+    font-size: 18px; /* Metin boyutu */
+}
