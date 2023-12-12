@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        #countdown {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function updateCountdown() {
+            var unixTime = 1706074630; 
+
+            var currentTime = Math.floor(Date.now() / 1000);
+            var timeDifference = unixTime - currentTime;
+
+            if (timeDifference <= 0) {
+                document.getElementById('countdown').innerHTML = "YEEEEYYYY BEN ÖLDÜM";
+            } else {
+                var days = Math.floor(timeDifference / (60 * 60 * 24));
+                var hours = Math.floor((timeDifference % (60 * 60 * 24)) / (60 * 60));
+                var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
+                var seconds = timeDifference % 60;
+
+                document.getElementById('countdown').innerHTML = "Countdown: " + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+            }
+        }
+
+        // Güncelleme frekansını ayarlamak için setInterval kullanılır
+        setInterval(updateCountdown, 1000);
+    </script>
+</head>
+<body>
+    <h1>Countdown Timer</h1>
+    <p id="countdown"></p>
+</body>
+</html>

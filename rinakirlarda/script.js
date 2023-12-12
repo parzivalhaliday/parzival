@@ -402,7 +402,7 @@ function setFavicon(favicon) {
 
 // Sayfanın yüklenmesini bekle
 document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(showAlert, 2500);
+    setTimeout(showAlert, 25100);
 });
 
 
