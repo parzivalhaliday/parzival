@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="icons/cookie.ico" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.js"></script>
+    <script src="./p5.js"></script>
+    <script src="./renk.js"></script>
+    <script src="keyboardevent.js"></script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            cursor: url('icons/cookie.ico'), auto;
+
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #htmlOverlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 31px;
+            text-align: center;
+            z-index: 1; 
+        }
+        #countdown {
+            font-size: 54px;
+            font-weight: bold;
+            margin-top: 40px;
+            
+        }
+        .renkcount{
+            color: aqua;
+        }
+    </style>
+    <script>
+                function updateCountdown() {
+            var unixTime = 1717966800; 
+
+            var currentTime = Math.floor(Date.now() / 1000);
+            var timeDifference = unixTime - currentTime;
+
+            if (timeDifference <= 0) {
+                document.getElementById('countdown').innerHTML = "YEEEEYYYY BEN ÖLDÜM";
+            } else {
+                var days = Math.floor(timeDifference / (60 * 60 * 24));
+                var hours = Math.floor((timeDifference % (60 * 60 * 24)) / (60 * 60));
+                var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
+                var seconds = timeDifference % 60;
+
+                document.getElementById('countdown').innerHTML = "" + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</head>
+<body>
+    <div id="htmlOverlay" class="renk">
+        <p id="head">Pine Store</p>
+        <br>
+        <p>Pinecik Store açılma tarihi</p>
+        <br>
+        <p id="countdown" class="renkcount"></p>
+
+    </div>
+    
+</body>
+</html>
