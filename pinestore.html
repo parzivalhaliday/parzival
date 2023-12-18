@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pine Store</title>
+    <title id="pinecik"> Pine Store </title>
     <link rel="icon" href="icons/cookie.ico" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.js"></script>
     <script src="./p5.js"></script>
@@ -83,6 +83,18 @@
         Tarayıcınız video etiketini desteklemiyor.
     </video>
     </div>
-    
+    <script>
+        var basliklar = ["Pine Store", "Yakında hizmetinizde", "umarım yakında", "xd."];
+
+var currentIndex = 0;
+
+function baslikDegistir() {
+    var pageTitle = document.getElementById("pinecik");
+    pageTitle.innerText = basliklar[currentIndex];
+    currentIndex = (currentIndex + 1) % basliklar.length;
+}
+
+setInterval(baslikDegistir, 1500);
+    </script>
 </body>
 </html>
