@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Son Maç İstatistikleri</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+  }
+  h1 {
+    color: #333;
+  }
+  input[type="text"] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 200px;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #result {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+</style>
+</head>
+<body>
+
+<h1>Son Maç İstatistikleri</h1>
+<input type="text" id="summonerName" placeholder="Oyuncu Adı">
+<button onclick="getLastMatchInfo()">İstatistikleri Getir</button>
+
+<div id="result"></div>
+
+<script>
+  async function getLastMatchInfo() {
+    const API_KEY = 'RGAPI-4c7bf8d8-4ed7-4ce7-851a-158353072417';
+    const SUMMONER_NAME = document.getElementById('summonerName').value;
+    const resultDiv = document.getElementById('result');
+
+    try {
+      const summonerResponse = await fetch(`https://TR1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${SUMMONER_NAME}?api_key=${API_KEY}`);
+      const summonerData = await summonerResponse.json();
+      const puuid = summonerData.puuid;
+
+      const matchListResponse = await fetch(`https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=1&api_key=${API_KEY}`);
+      const matchListData = await matchListResponse.json();
+      const lastMatchId = matchListData[0];
+
+      const matchInfoResponse = await fetch(`https://europe.api.riotgames.com/lol/match/v5/matches/${lastMatchId}?api_key=${API_KEY}`);
+      const matchInfoData = await matchInfoResponse.json();
+
+      resultDiv.innerHTML = `<pre>${JSON.stringify(matchInfoData, null, 2)}</pre>`;
+    } catch (error) {
+      resultDiv.innerHTML = `<p>Hata: ${error.message}</p>`;
+    }
+  }
+</script>
+
+</body>
+</html>
