@@ -1,5 +1,5 @@
         // Kullanılabilir faviconlarınızın dosya adlarını diziye ekleyin (icons klasörü içinde)
-        const favicons = ["icons/favicon1.ico", "icons/favicon2.ico", "icons/favicon3.ico"];
+        const favicons = ["icons/cv.ico", "icons/cv.ico", "icons/favicon2.ico"];
 
         // Favicon değişim hızı (milisaniye cinsinden)
         const changeInterval = 5000; // Örnek olarak 5 saniye
