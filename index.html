@@ -36,10 +36,19 @@
         <pre class="section">
 <span class="baslik">Personal Info</span>
 <style>
-        .cizgili {
-            text-decoration: line-through;
-            text-decoration-thickness: 2px; 
-        }
+.cizgili {
+    position: relative;
+    text-decoration: none;
+}
+
+.cizgili::before {
+    content: 'XXX';
+    color: red;  
+    position: absolute;
+    top: 0px;  
+}
+
+
 </style>
 
 <span class="a">Name</span><span class="b"> <span class="cizgili">Ali</span> Parzi Dinç</span>
