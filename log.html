@@ -5,6 +5,15 @@
     <title>Cihaz Bilgileri ve Hareket Sensörleri Örneği</title>
 </head>
 <body>
+
+    <style>
+        body{
+            background-color: black;
+        }
+        p{
+            color: wheat;
+        }
+    </style>
     <h1>Cihaz Bilgileri ve Hareket Sensörleri</h1>
 
     <p id="battery-level">Pil Seviyesi: Bekleniyor...</p>
@@ -30,6 +39,26 @@
     <p id="device-orientation">Cihaz Oryantasyonu: Bekleniyor...</p>
     <p id="connection-type">İnternet Bağlantısı Türü: Bekleniyor...</p>
     <p id="timezone">İşletim Sistemi Saat Dilimi: Bekleniyor...</p>
+<p id="deviceSpeed">Cihaz Hızı: Bekleniyor...</p>
+<p id="storage">Depolama Alanı: Bekleniyor...</p>
+
+<script>
+    // Cihaz hızını al
+    const deviceSpeed = navigator.connection.downlink;
+    document.getElementById("deviceSpeed").textContent = "Cihaz Hızı: " + deviceSpeed + " Mbps";
+
+    // Depolama alanını al
+    if (navigator.storage && navigator.storage.estimate) {
+        navigator.storage.estimate().then(function(estimate) {
+            const storage = estimate.quota / (1024 * 1024 * 1024); // Convert bytes to gigabytes
+            document.getElementById("storage").textContent = "Depolama Alanı: " + storage.toFixed(2) + " GB";
+        });
+    }
+
+    
+</script>
+
+
 
     <script>
         // Pil seviyesini al
