@@ -54,7 +54,7 @@ window.addEventListener("deviceorientation", function(event) {
     } else if (gamma < -45) {
         orientation = "Sola yatmışsın";
     } else {
-        orientation = "Böyle tutman imkansız";
+        orientation = "Mobil cihaz kullanmıyorsun";
     }
 
     // Oryantasyon bilgisini ekrana yazdır

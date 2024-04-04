@@ -4,43 +4,6 @@
 </head>
 <body>
 
-  <div id="resimGalerisi"></div>
-
-  <script>
-    // Linklerin bulunduğu dizi
-    var linkler = [
-                "https://sonar-widget-steelseries.webrova.com/revanche-jan",
-                "https://wot-widget-wargaming.streamtools.io/Revanch/0124"
-
-    ];
-
-    // Resimleri tek tek gösterme fonksiyonu
-    function resimleriTekTekGoster(index) {
-      var resimGalerisi = document.getElementById("resimGalerisi");
-      resimGalerisi.innerHTML = ""; // Önceki resmi temizle
-
-      var iframe = document.createElement("iframe");
-      iframe.src = linkler[index];
-      iframe.style.width = "100%";
-      iframe.style.height = "500px";
-      resimGalerisi.appendChild(iframe);
-      
-      // Bir sonraki resmi göstermek için index'i güncelle
-      index++;
-      if (index >= linkler.length) {
-        index = 0; // Dizinin başına dön
-      }
-      
-      // 3 saniye sonra bir sonraki resmi göster
-      setTimeout(function() {
-        resimleriTekTekGoster(index);
-      }, 3000);
-    }
-
-    // Sayfa yüklendiğinde resimleri göster
-    window.onload = function() {
-      resimleriTekTekGoster(0); 
-    };
-  </script>
+<h1>test</h1>
 </body>
 </html>
