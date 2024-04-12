@@ -44,3 +44,34 @@
 
         // Belirli aralıklarla başlığı değiştir
         setInterval(baslikDegistir, 10000);
+
+// Tüm diller için
+var diller = document.querySelectorAll(".dil");
+diller.forEach(function(dil) {
+  dil.addEventListener("mouseover", function() {
+    var dilResmi = document.getElementById("dilResmi");
+    var dilData = dil.getAttribute("data-lang");
+    dilResmi.src = "images/" + dilData + "10finger.png";
+    document.querySelector(".resimBolgesi").style.display = "block";
+  });
+
+  dil.addEventListener("mouseout", function() {
+    document.querySelector(".resimBolgesi").style.display = "none";
+  });
+});
+
+// Python sertifikası için
+document.getElementById("python").addEventListener("click", function() {
+    window.open("https://www.udemy.com/certificate/UC-9c9e6b54-388f-4ed2-9ce9-ef51dd6c008b/", "_blank");
+  });
+  
+  // JavaScript ES7 sertifikası için
+  document.getElementById("javascriptes7").addEventListener("click", function() {
+    window.open("https://www.udemy.com/certificate/UC-44285a20-3ef7-4466-a9c1-bfdb5e4d3956/", "_blank");
+  });
+  
+  // HTML JavaScript sertifikası için
+  document.getElementById("htmljavascript").addEventListener("click", function() {
+    window.open("https://www.udemy.com/certificate/UC-ed0e1ff0-bd77-47e6-96b7-d7ab7638c127/", "_blank");
+  });
+  
