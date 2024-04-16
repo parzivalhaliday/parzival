@@ -5,8 +5,8 @@ const textCount = 25; // Oluşturulacak yazı sayısı
 // Yazıların stilini ayarlayalım
 const textStyle = `
   position: absolute;
-  font-size: 34px;
-  color: #ffb3b3;
+  font-size: 14px;
+  color: #4b99ff;
   font-weight: bold;
 `;
 
