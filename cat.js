@@ -1,8 +1,8 @@
 
-(async function rina() {
-    const rinaEl = document.createElement("div");
-    let rinaPosX,
-        rinaPosY,
+(async function susam() {
+    const susamEl = document.createElement("div");
+    let susamPosX,
+        susamPosY,
         mousePosX = 0,
         mousePosY = 0,
         frameCount = 0,
@@ -13,12 +13,12 @@
         grabbing = false,
         grabStop = true,
         nudge = false,
-        pinerina = false,
+        parzisusam = false,
         variant = "classic";
 
     function parseLocalStorage(key, fallback) {
         try {
-            const value = JSON.parse(localStorage.getItem(`rina:${key}`));
+            const value = JSON.parse(localStorage.getItem(`susam:${key}`));
             console.log(key, value);
             return typeof value === typeof fallback ? value : fallback;
         } catch (e) {
@@ -33,7 +33,7 @@
         return { x, y };
     }
 
-    const rinaSpeed = 10,
+    const susamSpeed = 10,
         variants = [
             ["classic", "Classic"],
             ["dog", "Dog"],
@@ -108,28 +108,28 @@
 
     function create() {
         variant = parseLocalStorage("variant", "classic");
-        pinerina = parseLocalStorage("pinerina", false);
+        parzisusam = parseLocalStorage("parzisusam", false);
 
         if (!variants.some((v) => v[0] === variant)) {
             variant = "maia";
         }
 
         const initialPosition = getRandomPosition();
-        rinaPosX = initialPosition.x;
-        rinaPosY = initialPosition.y;
+        susamPosX = initialPosition.x;
+        susamPosY = initialPosition.y;
 
-        rinaEl.id = "rina";
-        rinaEl.style.width = "32px";
-        rinaEl.style.height = "32px";
-        rinaEl.style.position = "fixed";
-        rinaEl.style.backgroundImage = `url('rina.gif')`;
-        rinaEl.style.imageRendering = "pixelated";
-        rinaEl.style.left = `${rinaPosX - 16}px`;
-        rinaEl.style.top = `${rinaPosY - 16}px`;
-        rinaEl.style.filter = pinerina ? "invert(100%)" : "none";
-        rinaEl.style.zIndex = "99";
+        susamEl.id = "susam";
+        susamEl.style.width = "32px";
+        susamEl.style.height = "32px";
+        susamEl.style.position = "fixed";
+        susamEl.style.backgroundImage = `url('susam.gif')`;
+        susamEl.style.imageRendering = "pixelated";
+        susamEl.style.left = `${susamPosX - 16}px`;
+        susamEl.style.top = `${susamPosY - 16}px`;
+        susamEl.style.filter = parzisusam ? "invert(100%)" : "none";
+        susamEl.style.zIndex = "99";
 
-        document.body.appendChild(rinaEl);
+        document.body.appendChild(susamEl);
 
         window.addEventListener("mousemove", (e) => {
             if (forceSleep) return;
@@ -140,10 +140,10 @@
 
         window.addEventListener("resize", () => {
             if (!forceSleep) return;
-            // If rina is outside the window and is forced to sleep, wake her up
+            // If susam is outside the window and is forced to sleep, wake her up
             if (
-                rinaPosX - window.innerWidth > 32 ||
-                rinaPosY - window.innerHeight > 32 ||
+                susamPosX - window.innerWidth > 32 ||
+                susamPosY - window.innerHeight > 32 ||
                 // Also when she is about to go outside the window
                 mousePosX - window.innerWidth > 32 ||
                 mousePosY - window.innerHeight > 32
@@ -154,13 +154,13 @@
         });
 
         // Handle dragging of the cat
-        rinaEl.addEventListener("mousedown", (e) => {
+        susamEl.addEventListener("mousedown", (e) => {
             if (e.button !== 0) return;
             grabbing = true;
             let startX = e.clientX;
             let startY = e.clientY;
-            let startrinaX = rinaPosX;
-            let startrinaY = rinaPosY;
+            let startsusamX = susamPosX;
+            let startsusamY = susamPosY;
             let grabInterval;
 
             const mousemove = (e) => {
@@ -189,15 +189,15 @@
                         nudge = false;
                         startX = e.clientX;
                         startY = e.clientY;
-                        startrinaX = rinaPosX;
-                        startrinaY = rinaPosY;
+                        startsusamX = susamPosX;
+                        startsusamY = susamPosY;
                     }, 150);
                 }
 
-                rinaPosX = startrinaX + e.clientX - startX;
-                rinaPosY = startrinaY + e.clientY - startY;
-                rinaEl.style.left = `${rinaPosX - 16}px`;
-                rinaEl.style.top = `${rinaPosY - 16}px`;pinerina
+                susamPosX = startsusamX + e.clientX - startX;
+                susamPosY = startsusamY + e.clientY - startY;
+                susamEl.style.left = `${susamPosX - 16}px`;
+                susamEl.style.top = `${susamPosY - 16}px`;parzisusam
             };
 
             const mouseup = () => {
@@ -212,14 +212,14 @@
             window.addEventListener("mouseup", mouseup);
         });
 
-        rinaEl.addEventListener("contextmenu", (e) => {
+        susamEl.addEventListener("contextmenu", (e) => {
             e.preventDefault();
-            pinerina = !pinerina;
-            localStorage.setItem("rina:pinerina", pinerina);
-            rinaEl.style.filter = pinerina ? "invert(100%)" : "none";
+            parzisusam = !parzisusam;
+            localStorage.setItem("susam:parzisusam", parzisusam);
+            susamEl.style.filter = parzisusam ? "invert(100%)" : "none";
         });
 
-        rinaEl.addEventListener("dblclick", () => {
+        susamEl.addEventListener("dblclick", () => {
             forceSleep = !forceSleep;
             nudge = false;
             if (!forceSleep) {
@@ -228,7 +228,7 @@
             }
         });
 
-        window.orinaInterval = setInterval(frame, 100);
+        window.osusamInterval = setInterval(frame, 100);
     }
 
     function getSprite(name, frame) {
@@ -237,7 +237,7 @@
 
     function setSprite(name, frame) {
         const sprite = getSprite(name, frame);
-        rinaEl.style.backgroundPosition = `${sprite[0] * 32}px ${sprite[1] * 32}px`;
+        susamEl.style.backgroundPosition = `${sprite[0] * 32}px ${sprite[1] * 32}px`;
     }
 
     function resetIdleAnimation() {
@@ -255,16 +255,16 @@
             idleAnimation == null
         ) {
             let avalibleIdleAnimations = ["sleeping", "scratchSelf"];
-            if (rinaPosX < 32) {
+            if (susamPosX < 32) {
                 avalibleIdleAnimations.push("scratchWallW");
             }
-            if (rinaPosY < 32) {
+            if (susamPosY < 32) {
                 avalibleIdleAnimations.push("scratchWallN");
             }
-            if (rinaPosX > window.innerWidth - 32) {
+            if (susamPosX > window.innerWidth - 32) {
                 avalibleIdleAnimations.push("scratchWallE");
             }
-            if (rinaPosY > window.innerHeight - 32) {
+            if (susamPosY > window.innerHeight - 32) {
                 avalibleIdleAnimations.push("scratchWallS");
             }
             idleAnimation =
@@ -321,11 +321,11 @@
             return;
         }
 
-        const diffX = rinaPosX - mousePosX;
-        const diffY = rinaPosY - mousePosY;
+        const diffX = susamPosX - mousePosX;
+        const diffY = susamPosY - mousePosY;
         const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
-        if ((distance < rinaSpeed || distance < 48) && !forceSleep) {
+        if ((distance < susamSpeed || distance < 48) && !forceSleep) {
             idle();
             return;
         }
@@ -347,14 +347,14 @@
         direction += diffX / distance < -0.5 ? "E" : "";
         setSprite(direction, frameCount);
 
-        rinaPosX -= (diffX / distance) * rinaSpeed;
-        rinaPosY -= (diffY / distance) * rinaSpeed;
+        susamPosX -= (diffX / distance) * susamSpeed;
+        susamPosY -= (diffY / distance) * susamSpeed;
 
-        rinaPosX = Math.min(Math.max(16, rinaPosX), window.innerWidth - 16);
-        rinaPosY = Math.min(Math.max(16, rinaPosY), window.innerHeight - 16);
+        susamPosX = Math.min(Math.max(16, susamPosX), window.innerWidth - 16);
+        susamPosY = Math.min(Math.max(16, susamPosY), window.innerHeight - 16);
 
-        rinaEl.style.left = `${rinaPosX - 16}px`;
-        rinaEl.style.top = `${rinaPosY - 16}px`;
+        susamEl.style.left = `${susamPosX - 16}px`;
+        susamEl.style.top = `${susamPosY - 16}px`;
     }
 
     create();
@@ -362,8 +362,8 @@
     function setVariant(arr) {
         console.log(arr);
 
-        localStorage.setItem("rina:variant", `"${arr}"`);
-        rinaEl.style.backgroundImage = `url('rina.gif')`;
+        localStorage.setItem("susam:variant", `"${arr}"`);
+        susamEl.style.backgroundImage = `url('susam.gif')`;
     }
     setTimeout(() => setVariant('maia'), 5000);
 })();
