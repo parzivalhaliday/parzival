@@ -74,4 +74,17 @@ document.getElementById("python").addEventListener("click", function() {
   document.getElementById("htmljavascript").addEventListener("click", function() {
     window.open("https://www.udemy.com/certificate/UC-ed0e1ff0-bd77-47e6-96b7-d7ab7638c127/", "_blank");
   });
-  
+
+
+//////rickroll
+
+var audio = document.querySelector('.music');
+
+function playMusic() {
+    audio.play();
+}
+
+function pauseMusic() {
+    audio.pause();
+    audio.currentTime = 0;
+}
