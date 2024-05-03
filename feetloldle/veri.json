@@ -1,0 +1,12 @@
+{
+  "champs": [
+    {
+      "isim": "Ahri",
+      "resimler": ["ahri1.png", "ahri2.png", "ahri3.png","ahri4.png","ahri5.png","ahri6.png","ahri7.png","ahri8.png"]
+    },
+    {
+      "isim": "Lux",
+      "resimler": ["lux1.png", "lux2.png", "lux3.png","lux4.png", "lux5.png", "lux6.png","lux7.png", "lux8.png"]
+    }
+  ]
+}

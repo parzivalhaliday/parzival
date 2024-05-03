@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resim Tahmin Oyunu</title>
+</head>
+<body>
+<h1>Resim Tahmin Oyunu</h1>
+<img id="resim-ekrani" src="" alt="Resim">
+<br>
+<label for="tahmin-input">Tahmininiz:</label>
+<input type="text" id="tahmin-input">
+<button onclick="tahminKontrol()">Tahmin Et</button>
+
+<script>
+  let rastgeleKlasor;
+
+  function tahminKontrol() {
+    const tahmin = document.getElementById("tahmin-input").value;
+    if (tahmin.toLowerCase() === rastgeleKlasor.isim.toLowerCase()) {
+      alert("Tebrikler, doğru tahmin!");
+      yeniResmeGec();
+    } else {
+      alert("Üzgünüm, yanlış tahmin. Tekrar deneyin.");
+    }
+  }
+
+  function yeniResmeGec() {
+    fetch('veri.json')
+    .then(response => response.json())
+    .then(data => {
+      const klasorler = data.champs;
+      rastgeleKlasor = klasorler[Math.floor(Math.random() * klasorler.length)];
+      const rastgeleResim = rastgeleKlasor.resimler[Math.floor(Math.random() * rastgeleKlasor.resimler.length)];
+
+      console.log("Rastgele Seçilen Klasör:", rastgeleKlasor.isim);
+      console.log("Rastgele Seçilen Resim:", rastgeleResim);
+
+      const resimEkrani = document.getElementById("resim-ekrani");
+      resimEkrani.src = `champs/${rastgeleKlasor.isim}/${rastgeleResim}`;
+    });
+  }
+
+  // Sayfa yüklendiğinde ilk resmi göstermek için
+  window.onload = yeniResmeGec;
+
+</script>
+</body>
+</html>
