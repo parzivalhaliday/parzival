@@ -109,17 +109,6 @@
           }
 
 
-          .cizgili {
-            position: relative;
-            text-decoration: none;
-        }
-        
-        .cizgili::before {
-            content: 'XXX';
-            color: red;  
-            position: absolute;
-            top: 0px;  
-        }
         
         #python:hover,
         #javascriptes7:hover,
