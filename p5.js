@@ -25,7 +25,6 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  // Ekran boyutu değiştikçe damla sayısını ve konumlarını güncelle
   numOfDrops = windowWidth / 2;
   raindrops = [];
   for (var i = 0; i < numOfDrops; i++) {
