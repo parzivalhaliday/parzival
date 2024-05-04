@@ -1,55 +1,23 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LoL ayak bilme oyunu 😎👍</title>
+<title>Resim Tahmin Oyunu</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>ahri ve lux var sadece şimdilik uyanınca tüm ayakları eklicem</h1>
-<h1>frontu yazmak isteyen 10 tl ye (günlük) afgan aranır </h1>
-<h1>beğenirsem döner ekmek (tavuk) ısmarlarım </h1>
-<h1>kendime not jsona yazma resimleri</h1>
-<img id="resim-ekrani" src="" alt="Resim">
-<br>
-<label for="tahmin-input">Tahmininiz:</label>
-<input type="text" id="tahmin-input">
-<button onclick="tahminKontrol()">Tahmin Et</button>
-<style>
-  body{
-    background-color: rgb(161, 104, 104);
-  }
-</style>
-<script>
-  let rastgeleKlasor;
+<h1>Resim Tahmin Oyunu</h1>
+<div id="tahmin-bolumu">
+    <img id="resim-ekrani" src="" alt="Resim">
+    <br>
+    <label for="tahmin-input">Tahmininiz:</label>
+    <input type="text" id="tahmin-input" oninput="filtrele()">
+    <div id="champion-suggestions" class="guess-suggestions"></div>
+    <button id="tahmin-et-btn">Tahmin Et</button>
+</div>
+<script src="script.js"></script>
+<script src="list.js"></script>
 
-  function tahminKontrol() {
-    const tahmin = document.getElementById("tahmin-input").value;
-    if (tahmin.toLowerCase() === rastgeleKlasor.isim.toLowerCase()) {
-      alert("Tebrikler, doğru tahmin!");
-      yeniResmeGec();
-    } else {
-      alert("Üzgünüm, yanlış tahmin. Tekrar deneyin.");
-    }
-  }
-
-  function yeniResmeGec() {
-    fetch('veri.json')
-    .then(response => response.json())
-    .then(data => {
-      const klasorler = data.champs;
-      rastgeleKlasor = klasorler[Math.floor(Math.random() * klasorler.length)];
-      const rastgeleResim = rastgeleKlasor.resimler[Math.floor(Math.random() * rastgeleKlasor.resimler.length)];
-
-      console.log("Rastgele Seçilen Klasör:", rastgeleKlasor.isim);
-      console.log("Rastgele Seçilen Resim:", rastgeleResim);
-
-      const resimEkrani = document.getElementById("resim-ekrani");
-      resimEkrani.src = `champs/${rastgeleKlasor.isim}/${rastgeleResim}`;
-    });
-  }
-  window.onload = yeniResmeGec;
-
-</script>
 </body>
 </html>

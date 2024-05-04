@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+h1 {
+    color: #333;
+}
+
+#resim-ekrani {
+    max-width: 100%;
+    margin: 20px 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+#tahmin-input {
+    margin-right: 10px;
+}
+
+#tahmin-et-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#tahmin-et-btn:hover {
+    background-color: #0056b3;
+}
+
+.guess-suggestions {
+    text-align: center; /* Tahmin önerilerini merkezle */
+        border: solid 2px var(--box-outline);
+
+}
+
+.guess-suggestions > div {
+    padding: 10px;
+    border: solid 2px var(--box-outline);
+    background: var(--background-colour);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 200px; /* Öneri kutularının genişliği */
+    margin: 0 auto; /* Tahmin önerilerini sayfanın ortasında hizala */
+    margin-bottom: 5px; /* Öneri kutuları arasındaki boşluk */
+    background-color: #007bff;
+
+}
+
+.guess-suggestions > div img {
+    width: 40px; /* Şampiyon resmi genişliği */
+    height: auto; /* Otomatik yükseklik */
+    margin-right: 10px; /* Resim ile metin arasındaki boşluk */
+    background-color: #007bff;
+
+
+}
+
+.guess-suggestions > div span {
+    font-size: 14px; /* Metin boyutu */
+    background-color: #007bff;
+
+}
