@@ -1,11 +1,25 @@
+@font-face {
+    font-family: 'Beaufort for LOL Heavy Italic';
+    src: local('Beaufort for LOL Heavy Italic'), url('fonts/BeaufortforLOL-HeavyItalic.woff2') format('woff2');
+}
 body {
-    font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #1f2937; /* Arka plan rengi: "Nightblue" (#1f2937) */
+}
+
+
+
+
+
+
+body {
+    font-family: 'Montserrat', sans-serif; 
+    text-align: center;
+    background-color: #000000; 
 }
 
 h1 {
-    color: #333;
+    color: #ffffff; 
 }
 
 #resim-ekrani {
@@ -15,6 +29,7 @@ h1 {
 
 label {
     font-weight: bold;
+    color: #ffffff;
 }
 
 #tahmin-input {
@@ -22,49 +37,48 @@ label {
 }
 
 #tahmin-et-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
+    background-color: #005A82; 
+    color: #CDFAFA; 
+    border: 2px solid #C89B3C; 
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border-radius: 5px;
 }
 
 #tahmin-et-btn:hover {
-    background-color: #0056b3;
+    background-color: #C89B3C; /* Buton hover rengi: Koyu Electric Blue (#004366) */
+    border: 2px solid #32281E;
+}
+
+
+#tahmin-et-btn:hover {
+    background-color: #C89B3C; /* Buton hover rengi: Koyu Electric Blue (#2672d9) */
+
 }
 
 .guess-suggestions {
     text-align: center; /* Tahmin önerilerini merkezle */
-        border: solid 2px var(--box-outline);
-
 }
 
 .guess-suggestions > div {
     padding: 10px;
-    border: solid 2px var(--box-outline);
-    background: var(--background-colour);
+    background: #785A28; /* Öneri kutusu arka plan rengi: Beyaz (#ffffff) */
     display: flex;
     align-items: center;
     cursor: pointer;
     width: 200px; /* Öneri kutularının genişliği */
     margin: 0 auto; /* Tahmin önerilerini sayfanın ortasında hizala */
     margin-bottom: 5px; /* Öneri kutuları arasındaki boşluk */
-    background-color: #007bff;
-
 }
 
 .guess-suggestions > div img {
     width: 40px; /* Şampiyon resmi genişliği */
     height: auto; /* Otomatik yükseklik */
     margin-right: 10px; /* Resim ile metin arasındaki boşluk */
-    background-color: #007bff;
-
-
 }
 
 .guess-suggestions > div span {
     font-size: 14px; /* Metin boyutu */
-    background-color: #007bff;
-
+    color: #ffffff; /* Metin rengi: Beyaz (#ffffff) */
 }
