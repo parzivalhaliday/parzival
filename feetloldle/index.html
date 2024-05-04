@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resim Tahmin Oyunu</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resim Tahmin Oyunu</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Ayak tahmin</h1>
-<div id="tahmin-bolumu">
-    <img id="resim-ekrani" src="" alt="Resim">
-    <br>
-    <label for="tahmin-input">Tahmininiz:</label>
-    <input type="text" id="tahmin-input" oninput="filtrele()">
-    <div id="champion-suggestions" class="guess-suggestions"></div>
-    <button id="tahmin-et-btn">Tahmin Et</button>
-</div>
-<script src="script.js"></script>
-
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="https://assets.contentstack.io/v3/assets/blt2ac872571a60ee02/blt7a72b1686eb3219a/618d75137ae6ce6fab413b1f/background-video-d-02.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div id="tahmin-bolumu">
+            <h1>Ayak tahmin</h1>
+            <img id="resim-ekrani" src="" alt="Resim">
+            <br>
+            <label for="tahmin-input">Tahmininiz:</label>
+            <input type="text" id="tahmin-input" oninput="filtrele()">
+            <div id="champion-suggestions" class="guess-suggestions"></div>
+            <button id="tahmin-et-btn">Tahmin Et</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
