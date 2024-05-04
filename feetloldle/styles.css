@@ -45,11 +45,10 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white; /* İçerik rengi */
     font-size: 2rem; /* İçerik boyutu */
 }
 h1 {
-    color: #000000; 
+    color: #C8AA6E; 
 }
 
 #resim-ekrani {
@@ -59,11 +58,12 @@ h1 {
 
 label {
     font-weight: bold;
-    color: #ffffff;
+    color: #C8AA6E;
 }
 
 #tahmin-input {
     margin-right: 10px;
+    color: #32281E;
 }
 
 #tahmin-et-btn {
