@@ -20,7 +20,7 @@
             link.href = favicon;
         }
 
-        var basliklar = ["Parzi CV", "Hakkımda ve Yaptığım çalışmalar", "Lütfen beni işe alın UwU"];
+        var basliklar = ["Parzi CV", "Hakkımda ve Yaptığım çalışmalar"];
         
         // Başlık değiştirme fonksiyonu
         function baslikDegistir() {
