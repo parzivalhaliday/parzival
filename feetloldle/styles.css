@@ -10,6 +10,7 @@ body {
     font-family: 'BeaufortforLOL-HeavyItalic', sans-serif;
     text-align: center;
     background-color: #581313; 
+    cursor: url('cursor.png'), auto; 
 }
 
 body, html {
