@@ -50,6 +50,7 @@ window.onload = function() {
 };
 
 
+
 let rastgeleKlasor;
 let sampiyonlar;
 
