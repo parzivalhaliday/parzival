@@ -13,13 +13,7 @@ body {
     cursor: url('cursor.png'), auto; 
 }
 
-input[type='image'],
-label[for],
-select,
-button,
-.pointer {
-    cursor: url('cursor.png'), auto;
-}
+
 
 body, html {
     margin: 0;
@@ -83,7 +77,6 @@ label {
     color: #CDFAFA; 
     border: 2px solid #C89B3C; 
     padding: 10px 20px;
-    cursor: pointer; /* İmleci göster */
     transition: background-color 0.3s ease;
     border-radius: 5px;
 }
