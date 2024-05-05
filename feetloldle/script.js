@@ -53,7 +53,6 @@ document.getElementById("champion-suggestions").addEventListener("click", functi
 });
 
 
-// Sayfa yüklendiğinde listeyi oluştur
 window.onload = function() {
   createChampionList();
 };
@@ -64,11 +63,11 @@ let sampiyonlar;
 function tahminKontrol() {
   const tahmin = document.getElementById("tahmin-input").value;
   if (tahmin.toLowerCase() === rastgeleKlasor.isim.toLowerCase()) {
-      sayac++; // Doğru tahmin edildiğinde sayaç artar
-      document.getElementById("sayac").textContent = sayac; // Sayaç değerini güncelle
+      sayac++; 
+      document.getElementById("sayac").textContent = sayac; 
       yeniResmeGec();
   } else {
-      sayac = 0; // Yanlış tahmin edildiğinde sayaç sıfırlanır
+      sayac = 0; 
       document.getElementById("sayac").textContent = sayac; // Sayaç değerini güncelle
   }
   // Tahmin yapıldıktan sonra input alanını temizle
