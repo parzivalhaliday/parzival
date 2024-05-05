@@ -7,30 +7,23 @@
     <link rel="stylesheet" href="../feetloldle/style.css">
 </head>
 <body>
+    
     <div class="video-container">
         <video autoplay muted loop id="background-video">
             <source src="https://assets.contentstack.io/v3/assets/blt2ac872571a60ee02/blt7a72b1686eb3219a/618d75137ae6ce6fab413b1f/background-video-d-02.mp4" type="video/mp4">
         </video>
-        <div id="tahmin-bolumu">
-            <h1>Ayak tahmin</h1>
-            <br>
-            <h1>to do</h1>
-            <br>
-            <h2>1 butona tıklayınca otomatik dolduracak şampiyon ismi kısmını</h2>
-            <h2>2 loopta sayaç ile skoru sayacak</h2>
-            <h2>3 scoreboard tüm ayakları doğru tahmin edebilenlerin nickini yazabileceği</h2>
-            <h2>4 arka plan resim değişcek</h2>
-            <h2>5 negative space azaltcam</h2>
+<h1>Ayak tahmin</h1>
 
-            <img id="resim-ekrani" src="" alt="Resim">
-            <br>
-            <label for="tahmin-input">Tahmininiz: </label>
-            <input type="text" id="tahmin-input" oninput="filtrele()">
-            <div id="champion-suggestions" class="guess-suggestions"></div>
-            <button id="tahmin-et-btn">Tahmin Et</button>
-        </div>
+<div id="tahmin-bolumu">
+    <img id="resim-ekrani" src="" alt="Resim">
+    <br>
+    <label for="tahmin-input">Tahmininiz:</label>
+    <input type="text" id="tahmin-input" oninput="filtrele()">
+    <div id="champion-suggestions" class="guess-suggestions"></div>
+    <button id="tahmin-et-btn" style="cursor: url('cursor1.png'), auto;">Tahmin Et</button>
+    <div id="sayac">0</div> <!-- Sayaç için -->
+</div>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
-

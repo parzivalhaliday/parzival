@@ -1,5 +1,6 @@
-// bunu statik olarak sürümü çekmem gerek galiba da neyse 
 const championDataURL = "https://ddragon.leagueoflegends.com/cdn/14.9.1/data/en_US/champion.json";
+
+let sayac = 0; 
 
 async function createChampionList(filter = "", count = 5) {
   try {
@@ -44,12 +45,18 @@ document.getElementById("tahmin-input").addEventListener("input", function() {
 
 document.getElementById("tahmin-et-btn").addEventListener("click", tahminKontrol);
 
+document.getElementById("champion-suggestions").addEventListener("click", function(event) {
+  if (event.target.tagName === "DIV") {
+    const championName = event.target.querySelector("span").textContent;
+    document.getElementById("tahmin-input").value = championName;
+  }
+});
+
+
 // Sayfa yüklendiğinde listeyi oluştur
 window.onload = function() {
   createChampionList();
 };
-
-
 
 let rastgeleKlasor;
 let sampiyonlar;
@@ -57,11 +64,15 @@ let sampiyonlar;
 function tahminKontrol() {
   const tahmin = document.getElementById("tahmin-input").value;
   if (tahmin.toLowerCase() === rastgeleKlasor.isim.toLowerCase()) {
-      alert("Tebrikler, doğru tahmin!");
+      sayac++; // Doğru tahmin edildiğinde sayaç artar
+      document.getElementById("sayac").textContent = sayac; // Sayaç değerini güncelle
       yeniResmeGec();
   } else {
-      alert("Üzgünüm, yanlış tahmin. Tekrar deneyin.");
+      sayac = 0; // Yanlış tahmin edildiğinde sayaç sıfırlanır
+      document.getElementById("sayac").textContent = sayac; // Sayaç değerini güncelle
   }
+  // Tahmin yapıldıktan sonra input alanını temizle
+  document.getElementById("tahmin-input").value = "";
 }
 
 function yeniResmeGec() {
