@@ -1,12 +1,32 @@
 {
   "champs": [
     {
-      "isim": "Ahri",
-      "resimler": ["ahri1.png", "ahri2.png", "ahri3.png","ahri4.png","ahri5.png","ahri6.png","ahri7.png","ahri8.png"]
+      "champname": "Ahri",
+      "champimages": ["ahri1.png", "ahri2.png", "ahri3.png","ahri4.png","ahri5.png","ahri6.png","ahri7.png","ahri8.png","ahri9.png","ahri10.png"]
     },
     {
-      "isim": "Lux",
-      "resimler": ["lux1.png", "lux2.png", "lux3.png","lux4.png", "lux5.png", "lux6.png","lux7.png", "lux8.png"]
+      "champname": "Lux",
+      "champimages": ["lux1.png", "lux2.png", "lux3.png","lux4.png", "lux5.png", "lux6.png","lux7.png", "lux8.png"]
+    },
+    {
+      "champname": "Akali",
+      "champimages": ["akali1.png", "akali2.png", "akali3.png","akali4.png", "akali5.png", "akali6.png","akali7.png"]
+    },
+    {
+      "champname": "Ashe",
+      "champimages": ["ashe1.png", "ashe2.png", "ashe3.png","ashe4.png", "ashe5.png"]
+    },
+    {
+      "champname": "Annie",
+      "champimages": ["annie1.png", "annie2.png", "annie3.png","annie4.png", "annie5.png", "annie6.png","annie7.png", "annie8.png", "annie9.png", "annie10.png", "annie11.png"]
+    },
+    {
+      "champname": "Fiora",
+      "champimages": ["Fiora1.png"]
+    },
+    {
+      "champname": "Camille",
+      "champimages": ["camille1.png", "camille2.png", "camille3.png","camille4.png", "camille5.png","camille6.png","camille7.png","camille8.png"]
     }
   ]
 }

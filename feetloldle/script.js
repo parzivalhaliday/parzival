@@ -62,7 +62,7 @@ let sampiyonlar;
 
 function tahminKontrol() {
   const tahmin = document.getElementById("tahmin-input").value;
-  if (tahmin.toLowerCase() === rastgeleKlasor.isim.toLowerCase()) {
+  if (tahmin.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
       sayac++; 
       document.getElementById("sayac").textContent = sayac; 
       yeniResmeGec();
@@ -80,28 +80,28 @@ function yeniResmeGec() {
       .then(data => {
           const klasorler = data.champs;
           rastgeleKlasor = klasorler[Math.floor(Math.random() * klasorler.length)];
-          const rastgeleResim = rastgeleKlasor.resimler[Math.floor(Math.random() * rastgeleKlasor.resimler.length)];
+          const rastgeleResim = rastgeleKlasor.champimages[Math.floor(Math.random() * rastgeleKlasor.champimages.length)];
 
-          console.log("Rastgele Seçilen Klasör:", rastgeleKlasor.isim);
+          console.log("Rastgele Seçilen Klasör:", rastgeleKlasor.champname);
           console.log("Rastgele Seçilen Resim:", rastgeleResim);
 
           const resimEkrani = document.getElementById("resim-ekrani");
-          resimEkrani.src = `champs/${rastgeleKlasor.isim}/${rastgeleResim}`;
+          resimEkrani.src = `champs/${rastgeleKlasor.champname}/${rastgeleResim}`;
       });
 }
 
 function filtrele() {
   const harf = document.getElementById("tahmin-input").value.toLowerCase();
-  const filtrelenmisSampiyonlar = sampiyonlar.filter(sampiyon => sampiyon.isim.toLowerCase().startsWith(harf));
+  const filtrelenmisSampiyonlar = sampiyonlar.filter(sampiyon => sampiyon.champname.toLowerCase().startsWith(harf));
   const sampiyonListesi = document.getElementById("champion-suggestions");
   sampiyonListesi.innerHTML = "";
   filtrelenmisSampiyonlar.forEach(sampiyon => {
       const div = document.createElement("div");
       const img = document.createElement("img");
       const span = document.createElement("span");
-      img.src = `tiles/${sampiyon.isim}.png`; // Resmin yolu değiştirildi
-      img.alt = sampiyon.isim;
-      span.textContent = sampiyon.isim;
+      img.src = `tiles/${sampiyon.champname}.png`; // Resmin yolu değiştirildi
+      img.alt = sampiyon.champname;
+      span.textContent = sampiyon.champname;
       div.appendChild(img);
       div.appendChild(span);
       sampiyonListesi.appendChild(div);
