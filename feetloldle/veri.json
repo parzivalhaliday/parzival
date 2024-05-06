@@ -125,19 +125,6 @@
       ]
     },
     {
-      "champname": "Lux",
-      "champimages": [
-        "lux1.png",
-        "lux2.png",
-        "lux3.png",
-        "lux4.png",
-        "lux5.png",
-        "lux6.png",
-        "lux7.png",
-        "lux8.png"
-      ]
-    },
-    {
       "champname": "Jinx",
       "champimages": [
         "jinx1.png",
@@ -270,14 +257,6 @@
       ]
     },
     {
-      "champname": "Yuumi",
-      "champimages": [
-        "yuumi1.png",
-        "yuumi2.png",
-        "yuumi3.png"
-      ]
-    },
-    {
       "champname": "Zoe",
       "champimages": [
         "zoe1.png",
@@ -365,16 +344,28 @@
       ]
     },
     {
-      "champname": "Sejuani ",
+      "champname": "Sejuani",
       "champimages": [
         "sejuani1.png"
       ]
     },
     {
-      "champname": "Samira ",
+      "champname": "Samira",
       "champimages": [
         "samira1.png"
       ]
     },
+    {
+      "champname": "Rell",
+      "champimages": [
+        "rell1.png"
+      ]
+    },
+    {
+      "champname": "Qiyana ",
+      "champimages": [
+        "qiyana1.png"
+      ]
+    }
   ]
 }

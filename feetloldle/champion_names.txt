@@ -60,18 +60,14 @@ Ornn
 Pantheon
 Poppy +
 Pyke
-Qiyana +
-Quinn +
 Rakan 
 Rammus
 Rek'Sai
-Rell +
 Renekton
 Rengar
 Riven
 Rumble
 Ryze
-Samira +
 Sett
 Shaco
 Shen
