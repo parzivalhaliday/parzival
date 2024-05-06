@@ -91,6 +91,10 @@
     {
       "champname": "Morgana",
       "champimages": ["morgana1.png"]
+    },
+    {
+      "champname": "Miss Fortune",
+      "champimages": ["missfortune1.png","missfortune2.png","missfortune3.png","missfortune4.png","missfortune5.png","missfortune6.png","missfortune7.png","missfortune8.png","missfortune9.png","missfortune10.png","missfortune11.png","missfortune12.png","missfortune13.png","missfortune14.png"]
     }
 
     
