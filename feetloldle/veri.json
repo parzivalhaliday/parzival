@@ -375,10 +375,43 @@
       ]
     },
     {
-      "champname": "GWEN",
+      "champname": "Gwen",
       "champimages": [
         "gwen1.png"
       ]
+    },
+    {
+      "champname": "Orianna",
+      "champimages": [
+        "orianna1.png"
+      ]
+    },
+    {
+      "champname": "Orianna",
+      "champimages": [
+        "orianna1.png"
+      ]
+    },
+    {
+      "champname": "Nidalee",
+      "champimages": [
+        "nidalee1.png",
+        "nidalee2.png",
+        "nidalee3.png",
+        "nidalee4.png",
+        "nidalee5.png",
+        "nidalee6.png"
+      ]
+    },
+    {
+      "champname": "Neeko",
+      "champimages": [
+        "neeko1.png",
+        "neeko2.png",
+        "neeko3.png",
+        "neeko4.png"
+      ]
     }
+
   ]
 }

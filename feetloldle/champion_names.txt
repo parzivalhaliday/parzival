@@ -50,12 +50,9 @@ Wukong
 Mordekaiser
 Nasus
 Nautilus
-Neeko +
-Nidalee +
 Nocturne
 Nunu & Willump
 Olaf
-Orianna +
 Ornn
 Pantheon
 Pyke
@@ -105,12 +102,3 @@ Zac
 Zed
 Ziggs
 Zilean
-
-
-
-++++
-
-
-Briar
-Gwen
-Hwei
