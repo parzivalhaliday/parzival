@@ -362,9 +362,22 @@
       ]
     },
     {
-      "champname": "Qiyana ",
+      "champname": "Qiyana",
       "champimages": [
         "qiyana1.png"
+      ]
+    },
+    {
+      "champname": "Briar",
+      "champimages": [
+        "briar1.png",
+        "briar2.png"
+      ]
+    },
+    {
+      "champname": "GWEN",
+      "champimages": [
+        "gwen1.png"
       ]
     }
   ]

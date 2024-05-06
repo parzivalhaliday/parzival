@@ -58,7 +58,6 @@ Olaf
 Orianna +
 Ornn
 Pantheon
-Poppy +
 Pyke
 Rakan 
 Rammus
@@ -107,3 +106,11 @@ Zed
 Ziggs
 Zilean
 
+
+
+++++
+
+
+Briar
+Gwen
+Hwei
