@@ -51,7 +51,51 @@
     {
       "champname": "Jinx",
       "champimages": ["jinx1.png","jinx2.png","jinx3.png","jinx4.png","jinx5.png","jinx6.png","jinx7.png","jinx8.png","jinx9.png"]
+    },
+    {
+      "champname": "Elise",
+      "champimages": ["elise1.png"]
+    },
+    {
+      "champname": "Evelynn",
+      "champimages": ["evelynn1.png", "evelynn2.png", "evelynn3.png","evelynn4.png"]
+    },
+    {
+      "champname": "Irelia",
+      "champimages": ["irelia1.png"]
+    },
+    {
+      "champname": "Karma",
+      "champimages": ["karma1.png","karma2.png"]
+    },
+    {
+      "champname": "Leblanc",
+      "champimages": ["leblanc1.png","leblanc2.png"]
+    },
+    {
+      "champname": "Katarina",
+      "champimages": ["katarina1.png","katarina2.png","katarina3.png"]
+    },
+    {
+      "champname": "Kayle",
+      "champimages": ["kayle1.png", "kayle2.png", "kayle3.png","kayle4.png"]
+    },
+    {
+      "champname": "Leona",
+      "champimages": ["leona1.png", "leona2.png", "leona3.png","leona4.png"]
+    },
+    {
+      "champname": "Lillia",
+      "champimages": ["lillia1.png", "lillia2.png", "lillia3.png"]
+    },
+    {
+      "champname": "Morgana",
+      "champimages": ["morgana1.png"]
     }
+
+    
+
+
   ]
 }
 
