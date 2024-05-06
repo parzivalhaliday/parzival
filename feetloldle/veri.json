@@ -167,7 +167,7 @@
       ]
     },
     {
-      "champname": "Leblanc",
+      "champname": "LeBlanc",
       "champimages": [
         "leblanc1.png",
         "leblanc2.png"
@@ -412,6 +412,5 @@
         "neeko4.png"
       ]
     }
-
   ]
 }
