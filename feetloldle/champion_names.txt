@@ -26,7 +26,6 @@ Gragas
 Graves
 Hecarim
 Heimerdinger
-Illaoi
 Ivern
 Jarvan IV
 Jax
@@ -41,63 +40,52 @@ Kindred
 Kled
 Kog'Maw
 Lee Sin
-Leona
 Lucian
 Lulu
 Malphite
 Malzahar
 Maokai
 Master Yi
-Miss Fortune
 Wukong
 Mordekaiser
 Nasus
 Nautilus
-Neeko
-Nidalee
+Neeko +
+Nidalee +
 Nocturne
 Nunu & Willump
 Olaf
-Orianna
+Orianna +
 Ornn
 Pantheon
-Poppy
+Poppy +
 Pyke
-Qiyana
-Quinn
-Rakan
+Qiyana +
+Quinn +
+Rakan 
 Rammus
 Rek'Sai
-Rell
+Rell +
 Renekton
 Rengar
 Riven
 Rumble
 Ryze
-Samira
-Sejuani
-Senna
-Seraphine
+Samira +
 Sett
 Shaco
 Shen
 Shyvana
 Singed
 Sion
-Sivir
 Skarner
-Sona
-Soraka
 Swain
 Sylas
-Syndra
 Tahm Kench
-Taliyah
 Talon
 Taric
 Teemo
 Thresh
-Tristana
 Trundle
 Tryndamere
 Twisted Fate
@@ -108,22 +96,18 @@ Varus
 Vayne
 Veigar
 Vel'Koz
-Vi
 Viego
 Viktor
 Vladimir
 Volibear
 Warwick
-Xayah
 Xerath
 Xin Zhao
 Yasuo
 Yone
 Yorick
-Yuumi
 Zac
 Zed
 Ziggs
 Zilean
-Zoe
-Zyra
+
