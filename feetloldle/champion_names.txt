@@ -9,11 +9,9 @@ Bard
 Blitzcrank
 Brand
 Braum
-Cassiopeia
 Cho'Gath
 Corki
 Darius
-Diana
 Draven
 Dr. Mundo
 Ekko
@@ -40,7 +38,6 @@ Jayce
 Jhin
 Jinx
 Kai'Sa
-Kalista
 Karma
 Karthus
 Kassadin

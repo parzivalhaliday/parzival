@@ -27,6 +27,30 @@
     {
       "champname": "Camille",
       "champimages": ["camille1.png", "camille2.png", "camille3.png","camille4.png", "camille5.png","camille6.png","camille7.png","camille8.png"]
+    },
+    {
+      "champname": "Diana",
+      "champimages": ["diana1.png", "diana2.png", "diana3.png","diana4.png", "diana5.png"]
+    },
+    {
+      "champname": "Janna",
+      "champimages": ["janna1.png", "janna2.png", "janna3.png","janna4.png", "janna5.png"]
+    },
+    {
+      "champname": "Kalista",
+      "champimages": ["kalista1.png"]
+    },
+    {
+      "champname": "Lux",
+      "champimages": ["lux1.png","lux2.png","lux3.png","lux4.png","lux5.png","lux6.png","lux7.png","lux8.png"]
+    },
+    {
+      "champname": "Lux",
+      "champimages": ["lux1.png","lux2.png","lux3.png","lux4.png","lux5.png","lux6.png","lux7.png","lux8.png"]
+    },
+    {
+      "champname": "Jinx",
+      "champimages": ["jinx1.png","jinx2.png","jinx3.png","jinx4.png","jinx5.png","jinx6.png","jinx7.png","jinx8.png","jinx9.png"]
     }
   ]
 }
