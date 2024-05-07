@@ -60,6 +60,12 @@ document.getElementById("tweet-btn").addEventListener("click", function() {
     window.open(tweetURL, "_blank");
 });
 
+document.getElementById("try-again-btn").addEventListener("click", function() {
+    document.getElementById("try-again-container").style.display = "none";
+    document.getElementById("tahmin-et-btn").style.display = "block";
+    yeniResmeGec();
+});
+
 window.onload = function() {
     fetch('veri.json')
         .then(response => response.json())
@@ -86,8 +92,8 @@ function tahminKontrol() {
           document.getElementById("game-over-screen").style.display = "block"; // Oyun bitti ekranını göster
           document.getElementById("final-score").textContent = totalScore;
       }
-      document.getElementById("sayac").textContent = sayac;
-      document.getElementById("total-score").textContent = totalScore;
+      document.getElementById("sayac").textContent = "kalan hakkınız " + sayac;
+      document.getElementById("total-score").textContent = "doğru sayısı " + totalScore;
 
       // Yanlış tahmin olduğunda enemymiss.png görüntüsünü 3 ila 5 farklı konumda göster
       const numberOfImages = Math.floor(Math.random() * 11) + 3; // 3 ila 5 arası rastgele sayı

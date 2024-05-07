@@ -17,7 +17,7 @@
     <input type="text" id="tahmin-input" oninput="filtrele()">
     <div id="champion-suggestions"  class="guess-suggestions"></div>
     <button id="tahmin-et-btn" style="cursor: url('cursor1.png'), auto;">Tahmin Et</button>
-    <div id="sayac" style="color: #ffc144 ;">0</div> 
+    <div id="sayac" style="color: #ffc144 ;">doğru sayısı 0</div> 
     <div id="total-score">Toplam Skor: 0</div>
 </div>
 
@@ -26,6 +26,12 @@
     <p>Toplam Skor: <span id="final-score">0</span></p>
     <p>Twitter'da paylaşmak ister misiniz?</p>
     <button id="tweet-btn">Evet</button>
+</div>
+
+<!-- Yeni eklenen butonlar -->
+<div id="try-again-container" style="display: none;">
+    <button id="try-again-btn">Tekrar Denemek İster Misiniz?</button>
+    <button id="tweet-btn-after-try-again" style="display: none;">Twitter'da Paylaş</button>
 </div>
 
 <script src="script.js"></script>
