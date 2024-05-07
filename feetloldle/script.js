@@ -60,12 +60,6 @@ document.getElementById("tweet-btn").addEventListener("click", function() {
     window.open(tweetURL, "_blank");
 });
 
-document.getElementById("try-again-btn").addEventListener("click", function() {
-    document.getElementById("try-again-container").style.display = "none";
-    document.getElementById("tahmin-et-btn").style.display = "block";
-    yeniResmeGec();
-});
-
 window.onload = function() {
     fetch('veri.json')
         .then(response => response.json())
