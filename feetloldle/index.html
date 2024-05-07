@@ -8,10 +8,6 @@
 </head>
 <body>
     
-    <div class="video-container">
-        <video autoplay muted loop id="background-video">
-            <source src="https://assets.contentstack.io/v3/assets/blt2ac872571a60ee02/blt7a72b1686eb3219a/618d75137ae6ce6fab413b1f/background-video-d-02.mp4" type="video/mp4">
-        </video>
 <h1>Ayak tahmin</h1>
 
 <div id="tahmin-bolumu">
@@ -22,8 +18,16 @@
     <div id="champion-suggestions"  class="guess-suggestions"></div>
     <button id="tahmin-et-btn" style="cursor: url('cursor1.png'), auto;">Tahmin Et</button>
     <div id="sayac" style="color: #ffc144 ;">0</div> 
+    <div id="total-score">Toplam Skor: 0</div>
 </div>
-    </div>
-    <script src="script.js"></script>
+
+<div id="game-over-screen" style="display: none;">
+    <h2>Oyun Bitti!</h2>
+    <p>Toplam Skor: <span id="final-score">0</span></p>
+    <p>Twitter'da paylaşmak ister misiniz?</p>
+    <button id="tweet-btn">Evet</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
