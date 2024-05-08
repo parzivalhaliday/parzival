@@ -164,6 +164,12 @@ label {
     color: #C8AA6E;
 }
 
+
+label[for="tahmin-input"] {
+    font-size: 28px;
+}
+
+
 #tahmin-input {
     width: 200px;
     padding: 10px;
@@ -280,17 +286,23 @@ label {
     color: #ffffff; 
 }
  
-
 #tweet-btn {
-    background-color: #1da1f2;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #0397AB; /* Arka plan rengi */
+    color: #fff; /* Metin rengi */
+    padding: 10px 20px; /* Yastıklama */
+    font-size: 16px; /* Metin boyutu */
+    border: none; /* Kenarlık yok */
+    border-radius: 5px; /* Kenar yuvarlaklığı */
+    cursor: pointer; /* İşaretçi türü */
+    transition: background-color 0.3s ease; /* Geçiş efekti */
 }
 
 #tweet-btn:hover {
     background-color: #0c7cbf;
+}
+
+#tweet-text {
+    color: #0397AB; /* Metin rengi */
+    font-size: 28px; /* Metin boyutu */
+    margin-bottom: 10px; /* Alt boşluk */
 }
