@@ -1,5 +1,5 @@
 const championDataURL = "https://ddragon.leagueoflegends.com/cdn/14.9.1/data/en_US/champion.json";
-let sayac = 0; 
+let sayac = 0;
 let totalScore = 0;
 
 async function createChampionList(filter = "", count = 5) {
@@ -12,7 +12,7 @@ async function createChampionList(filter = "", count = 5) {
 
         const filteredChampionsData = championsData.filter(champion =>
             champion.name.toLowerCase().startsWith(filter.toLowerCase())
-        ).slice(0, count); 
+        ).slice(0, count);
 
         const listContainer = document.getElementById("champion-suggestions");
         listContainer.innerHTML = "";
@@ -27,7 +27,6 @@ async function createChampionList(filter = "", count = 5) {
 
             const imageURL = `${imagePath}${encodeURIComponent(championImageName)}.png`;
 
-            
             championImg.src = imageURL;
             championSpan.textContent = championName;
 
@@ -36,13 +35,20 @@ async function createChampionList(filter = "", count = 5) {
             listContainer.appendChild(championDiv);
         });
     } catch (error) {
-        console.error("hata", error);
+        console.error("Hata:", error);
     }
 }
 
 document.getElementById("tahmin-input").addEventListener("input", function() {
-    createChampionList(this.value);
+    const tahmin = this.value;
+    if (tahmin.length > 0) {
+        createChampionList(tahmin); // Tahmin inputunda yazı varsa önerilen şampiyonları oluştur
+    } else {
+        const championSuggestions = document.getElementById("champion-suggestions");
+        championSuggestions.innerHTML = ""; // Tahmin inputunda herhangi bir yazı yoksa önerilen şampiyonları temizle
+    }
 });
+
 
 document.getElementById("tahmin-et-btn").addEventListener("click", tahminKontrol);
 
@@ -73,48 +79,55 @@ let rastgeleKlasor;
 let sampiyonlar;
 
 function tahminKontrol() {
-  const tahmin = document.getElementById("tahmin-input").value;
-  if (tahmin.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
-      sayac++; 
-      totalScore++; 
-      document.getElementById("sayac").textContent = sayac; 
-      document.getElementById("total-score").textContent = totalScore;
-      yeniResmeGec();
-  } else {
-      sayac++; 
-      if (sayac === 3) { // Tahmin canı 0 olduğunda
-          document.getElementById("game-over-screen").style.display = "block"; // Oyun bitti ekranını göster
-          document.getElementById("final-score").textContent = totalScore;
-      }
-      document.getElementById("sayac").textContent = "kalan hakkınız " + sayac;
-      document.getElementById("total-score").textContent = "doğru sayısı " + totalScore;
+    const tahmin = document.getElementById("tahmin-input").value;
+    if (tahmin.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
+        sayac++;
+        totalScore++;
+        document.getElementById("sayac").textContent = sayac;
+        document.getElementById("total-score").textContent = totalScore;
+        yeniResmeGec();
+    } else {
+        sayac++;
+        if (sayac === 3) {
+            document.getElementById("game-over-screen").style.display = "block";
+            document.getElementById("final-score").textContent = totalScore;
+            document.getElementById("tahmin-et-btn").style.display = "none"; // Oyun kaybedildiğinde Tahmin Et butonunu gizle
+            document.getElementById("sayac").style.display = "none"; // Oyun kaybedildiğinde kalan hak sayacını gizle
+            document.getElementById("total-score").style.display = "none";
+        } else {
+            const kalanHak = 3 - sayac; // Kalan hakkı hesapla
+            document.getElementById("sayac").textContent = "kalan hakkınız " + kalanHak; // Kalan hakkı ekrana yazdır
+            document.getElementById("total-score").textContent = "doğru sayısı " + totalScore;
+        }
 
-      // Yanlış tahmin olduğunda enemymiss.png görüntüsünü 3 ila 5 farklı konumda göster
-      const numberOfImages = Math.floor(Math.random() * 11) + 3; // 3 ila 5 arası rastgele sayı
-      for (let i = 0; i < numberOfImages; i++) {
-          const enemymissImg = document.createElement("img");
-          enemymissImg.src = "enemymiss.png";
-          enemymissImg.style.position = "fixed";
-          enemymissImg.style.left = Math.floor(Math.random() * (window.innerWidth - 50)) + "px";
-          enemymissImg.style.top = Math.floor(Math.random() * (window.innerHeight - 50)) + "px";
-          enemymissImg.style.width = "50px";
-          document.body.appendChild(enemymissImg);
+        const numberOfImages = Math.floor(Math.random() * 11) + 3;
+        for (let i = 0; i < numberOfImages; i++) {
+            const enemymissImg = document.createElement("img");
+            enemymissImg.src = "enemymiss.png";
+            enemymissImg.style.position = "fixed";
+            enemymissImg.style.left = Math.floor(Math.random() * (window.innerWidth - 50)) + "px";
+            enemymissImg.style.top = Math.floor(Math.random() * (window.innerHeight - 50)) + "px";
+            enemymissImg.style.width = "50px";
+            document.body.appendChild(enemymissImg);
 
-          // Resimleri 1 saniye sonra kaldır
-          setTimeout(function() {
-              enemymissImg.remove();
-          }, 1000);
-      }
+            setTimeout(function() {
+                enemymissImg.remove();
+            }, 1000);
+        }
 
-      // Miss ses dosyasını çal
-      for (let i = 0; i < 2; i++) {
-          setTimeout(function() {
-              const audio = new Audio('miss.mp3');
-              audio.play();
-          }, i * 1000); // Her bir ses arasında 1 saniye bekle
-      }
-  }
-  document.getElementById("tahmin-input").value = "";
+        for (let i = 0; i < 2; i++) {
+            setTimeout(function() {
+                const audio = new Audio('miss.mp3');
+                audio.play();
+            }, i * 1000);
+        }
+    }
+
+    if (sayac >= 3) {
+        document.getElementById("tahmin-input").disabled = true; // Tahmin etme inputunu devre dışı bırak
+    }
+
+    document.getElementById("tahmin-input").value = "";
 }
 
 function yeniResmeGec() {
