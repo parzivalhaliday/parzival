@@ -11,15 +11,20 @@
 <h1>Ayak tahmin</h1>
 
 <div id="tahmin-bolumu">
-    <img id="resim-ekrani" src="" alt="Resim">
-    <br>
+    <img id="resim-ekrani" alt="Resim"><br>
     <label for="tahmin-input">Tahmininiz:</label>
     <input type="text" id="tahmin-input" oninput="filtrele()">
-    <div id="champion-suggestions"  class="guess-suggestions"></div>
-    <button id="tahmin-et-btn" style="cursor: url('cursor1.png'), auto;">Tahmin Et</button>
-    <div id="sayac" style="color: #ffc144 ;">doğru sayısı 0</div> 
+    <button id="tahmin-et-btn" style="cursor: url('cursor1.png'), auto;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 490 490">
+            <polygon fill="#000000" points="240.112,0 481.861,245.004 240.112,490 8.139,490 250.29,245.004 8.139,0 "/>
+        </svg>  
+    </button>
+    <div id="champion-suggestions" class="guess-suggestions"></div>
+    <div id="sayac" style="color: #ffc144;">doğru sayısı 0</div> 
     <div id="total-score">Toplam Skor: 0</div>
 </div>
+
+
 
 <div id="game-over-screen" style="display: none;">
     <h2>Oyun Bitti!</h2>
@@ -31,3 +36,4 @@
 <script src="script.js"></script>
 </body>
 </html>
+<div id="champion-suggestions"  class="guess-suggestions"></div>
