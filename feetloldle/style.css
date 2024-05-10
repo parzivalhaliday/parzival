@@ -15,7 +15,6 @@ body {
     background-position: center;
 }
 
-
 input[type='image'],
 label[for],
 select,
@@ -59,12 +58,10 @@ body, html {
     align-items: center;
     font-size: 2rem; 
 }
+
 h1 {
     color: #C8AA6E; 
 }
-
-
-
 
 #resim-ekrani {
     max-width: 300px;
@@ -75,100 +72,14 @@ h1 {
     overflow: hidden; /* Eğer resim 500x500 pikselden büyükse taşmayı önler */
 }
 
-
 label {
     font-weight: bold;
     color: #C8AA6E;
 }
-
-@font-face {
-    font-family: 'BeaufortforLOL-HeavyItalic';
-    src: url('fonts/BeaufortforLOL-HeavyItalic.woff2') format('woff2');
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'BeaufortforLOL-HeavyItalic', sans-serif;
-    text-align: center;
-    cursor: url('cursor.png'), auto;
-    background-image: url('background.png'); 
-    background-size: cover;
-    background-position: center;
-}
-
-
-input[type='image'],
-label[for],
-select,
-button,
-.pointer {
-    cursor: url('cursor.png'), auto;
-}
-
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-.video-container {
-    position: relative;
-    width: 100%;
-    height: 100vh; 
-    overflow: hidden;
-}
-
-#background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-}
-
-.content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem; 
-}
-h1 {
-    color: #C8AA6E; 
-}
-
-
-
-
-#resim-ekrani {
-    max-width: 300px;
-    max-height: 300px;
-    width: 100%;
-    height: 100%;
-    margin: 20px auto;
-    overflow: hidden; /* Eğer resim 500x500 pikselden büyükse taşmayı önler */
-}
-
-
-label {
-    font-weight: bold;
-    color: #C8AA6E;
-}
-
 
 label[for="tahmin-input"] {
     font-size: 28px;
 }
-
 
 #tahmin-input {
     width: 200px;
@@ -176,7 +87,6 @@ label[for="tahmin-input"] {
     font-size: 16px;
     margin-bottom: 10px;
 }
-
 
 #tahmin-et-btn {
     background-color: #005A82; 
@@ -188,16 +98,9 @@ label[for="tahmin-input"] {
     border-radius: 5px;
 }
 
-
 #tahmin-et-btn:hover {
     background-color: #C89B3C; 
     border: 2px solid #32281E;
-}
-
-
-#tahmin-et-btn:hover {
-    background-color: #C89B3C; 
-
 }
 
 .guess-suggestions {
@@ -213,8 +116,6 @@ label[for="tahmin-input"] {
     width: 200px;
     margin: 5px auto;
 }
-
-
 
 .guess-suggestions > div img {
     width: 40px;
@@ -225,44 +126,6 @@ label[for="tahmin-input"] {
 .guess-suggestions > div span {
     font-size: 14px; 
     color: #ffffff; 
-}
- 
-
-
-#tahmin-et-btn {
-    background-color: #005A82; 
-    color: #CDFAFA; 
-    border: 2px solid #C89B3C; 
-    padding: 10px 20px;
-    cursor: pointer; /* İmleci göster */
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
-}
-
-
-#tahmin-et-btn:hover {
-    background-color: #C89B3C; 
-    border: 2px solid #32281E;
-}
-
-
-#tahmin-et-btn:hover {
-    background-color: #C89B3C; 
-
-}
-
-.guess-suggestions {
-    text-align: center; 
-}
-
-.guess-suggestions > div {
-    padding: 10px;
-    background: #785A28;
-    display: flex;
-    align-items: center;
-    cursor: url('cursor1.png'), auto; /* Cursor özelliğini ekledik */
-    width: 200px;
-    margin: 5px auto;
 }
 
 #game-over-screen {
@@ -274,18 +137,6 @@ label[for="tahmin-input"] {
     color: #d9534f;
 }
 
-
-.guess-suggestions > div img {
-    width: 40px;
-    height: auto; 
-    margin-right: 10px; 
-}
-
-.guess-suggestions > div span {
-    font-size: 14px; 
-    color: #ffffff; 
-}
- 
 #tweet-btn {
     background-color: #0397AB; /* Arka plan rengi */
     color: #fff; /* Metin rengi */
