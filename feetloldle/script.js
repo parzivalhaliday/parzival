@@ -63,8 +63,9 @@ document.getElementById("tweet-btn").addEventListener("click", function() {
     const scoreText = document.getElementById("final-score").textContent;
     const tweetText = `Ben feetle de ${scoreText} puan aldım 🎉`;
     const tweetURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-    window.open(tweetURL, "_blank");
+    window.open(tweetURL, "_blank", "width=600,height=300");
 });
+
 
 window.onload = function() {
     fetch('veri.json')
@@ -86,6 +87,12 @@ function tahminKontrol() {
         document.getElementById("sayac").textContent = sayac;
         document.getElementById("total-score").textContent = totalScore;
         yeniResmeGec();
+
+        // Eğer tüm ayaklar bilindiğinde
+        if (totalScore === MAX_AYAK_SAYISI) {
+            // Uyarı göster
+            alert("Tebrikler! Tüm ayakları doğru tahmin ettiniz!");
+        }
     } else {
         sayac++;
         if (sayac === 3) {
@@ -129,6 +136,7 @@ function tahminKontrol() {
 
     document.getElementById("tahmin-input").value = "";
 }
+
 
 function yeniResmeGec() {
     fetch('veri.json')
