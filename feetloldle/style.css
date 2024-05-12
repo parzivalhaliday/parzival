@@ -1,184 +1,208 @@
-@font-face {
-    font-family: 'BeaufortforLOL-HeavyItalic';
-    src: url('fonts/BeaufortforLOL-HeavyItalic.woff2') format('woff2');
-}
+       /* From https://css.glass */
+       @font-face {
+        font-family: 'BeaufortforLOL-HeavyItalic';
+        src: url('fonts/BeaufortforLOL-HeavyItalic.woff2') format('woff2');
+    }
 
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'BeaufortforLOL-HeavyItalic', sans-serif;
-    text-align: center;
-    cursor: url('cursor.png'), auto;
-    background-image: url('background.png'); 
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'BeaufortforLOL-HeavyItalic', sans-serif;
+        text-align: center;
+        cursor: url('cursor.png'), auto;
+        background-image: url('background.png'); 
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+    }
+    
+    .blur-effect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('background.png'); /* Same background image as body */
+        background-size: cover;
+        background-position: center;
+        backdrop-filter: blur(5.7px); /* Apply blur effect */
+        -webkit-backdrop-filter: blur(5.7px); /* For Safari */
+        z-index: 1; /* Ensure it's above other content */
+    }
+    
 
-input[type='image'],
-label[for],
-select,
-button,
-.pointer {
-    cursor: url('cursor.png'), auto;
-}
+    input[type='image'],
+    label[for],
+    select,
+    button,
+    .pointer {
+        cursor: url('cursor.png'), auto;
+    }
 
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
 
+    .video-container {
+        position: relative;
+        width: 100%;
+        height: 100vh; 
+        overflow: hidden;
+    }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
+    #background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+    }
+    #image-screen {
+        border-radius: 50px;
+        border: 3px solid #C89B3C;
+        background: rgba(217, 217, 217, 0.41);
+        margin: 0 7px 17px 7px;
+        align-self: flex-end;
+        width: 262px;
+        height: 262px;
+    }
+    
+    .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem; 
+    }
 
-.video-container {
-    position: relative;
-    width: 100%;
-    height: 100vh; 
-    overflow: hidden;
-}
+    #final-score, #total-score-text, #total-score {
+        color: #ffc144;
+        font-size: 38px;
+    }
 
-#background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -1;
-}
+    #counter{
+        color: #ffc144;
+        font-size: 18px;
+    }
 
-.content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem; 
-}
+    h1 {
+        color: #C8AA6E; 
+    }
 
+    #resim-ekrani {
+        max-width: 300px;
+        max-height: 300px;
+        width: 100%;
+        height: 100%;
+        margin: 20px auto;
+        overflow: hidden; /* Eğer resim 500x500 pikselden büyükse taşmayı önler */
+    }
 
-#final-score, #total-score-text, #total-score {
-    color: #ffc144;
-    font-size: 38px;
-}
+    label {
+        font-weight: bold;
+        color: #C8AA6E;
+    }
 
-#counter{
-    color: #ffc144;
-    font-size: 18px;
-}
+    label[for="guess-input"] {
+        font-size: 28px;
+    }
 
-h1 {
-    color: #C8AA6E; 
-}
+    #guess-input {
+        width: 200px;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
 
-#resim-ekrani {
-    max-width: 300px;
-    max-height: 300px;
-    width: 100%;
-    height: 100%;
-    margin: 20px auto;
-    overflow: hidden; /* Eğer resim 500x500 pikselden büyükse taşmayı önler */
-}
+    #guess-et-btn {
+        background-color: #005A82; 
+        color: #CDFAFA; 
+        border: 2px solid #C89B3C; 
+        padding: 10px 20px;
+        cursor: pointer; /* İmleci göster */
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+    }
 
-label {
-    font-weight: bold;
-    color: #C8AA6E;
-}
+    #guess-et-btn:hover {
+        background-color: #C89B3C; 
+        border: 2px solid #32281E;
+    }
 
-label[for="guess-input"] {
-    font-size: 28px;
-}
+    .guess-suggestions {
+        text-align: center; 
+    }
 
-#guess-input {
-    width: 200px;
-    padding: 10px;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
+    .guess-suggestions > div {
+        padding: 10px;
+        background: #785A28;
+        display: flex;
+        align-items: center;
+        cursor: url('cursor1.png'), auto; /* Cursor özelliğini ekledik */
+        width: 200px;
+        margin: 5px auto;
+    }
 
-#guess-et-btn {
-    background-color: #005A82; 
-    color: #CDFAFA; 
-    border: 2px solid #C89B3C; 
-    padding: 10px 20px;
-    cursor: pointer; /* İmleci göster */
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
-}
+    .guess-suggestions > div img {
+        width: 40px;
+        height: auto; 
+        margin-right: 10px; 
+    }
 
-#guess-et-btn:hover {
-    background-color: #C89B3C; 
-    border: 2px solid #32281E;
-}
+    .guess-suggestions > div span {
+        font-size: 14px; 
+        color: #ffffff; 
+    }
 
-.guess-suggestions {
-    text-align: center; 
-}
+    #game-over-screen {
+        display: none;
+        margin-top: 50px;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(94, 17, 17, 0.1); 
+    }
 
-.guess-suggestions > div {
-    padding: 10px;
-    background: #785A28;
-    display: flex;
-    align-items: center;
-    cursor: url('cursor1.png'), auto; /* Cursor özelliğini ekledik */
-    width: 200px;
-    margin: 5px auto;
-}
+    #full-screen-gif {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+    }
 
-.guess-suggestions > div img {
-    width: 40px;
-    height: auto; 
-    margin-right: 10px; 
-}
+    #game-over-screen h2 {
+        font-size: 44px; 
+        color: #360706;
+    }
 
-.guess-suggestions > div span {
-    font-size: 14px; 
-    color: #ffffff; 
-}
+    #tweet-btn {
+        background-color: #0397AB; /* Arka plan rengi */
+        color: #fff; /* Metin rengi */
+        padding: 10px 20px; /* Yastıklama */
+        font-size: 16px; /* Metin boyutu */
+        border: none; /* Kenarlık yok */
+        border-radius: 5px; /* Kenar yuvarlaklığı */
+        cursor: pointer; /* İşaretçi türü */
+        transition: background-color 0.3s ease; /* Geçiş efekti */
+    }
 
-#game-over-screen {
-    display: none;
-    margin-top: 50px;
-}
+    #tweet-btn:hover {
+        background-color: #0c7cbf;
+    }
 
-#full-screen-gif {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9999;
-}
-
-
-#game-over-screen h2 {
-    font-size: 44px; 
-    color: #360706;
-}
-
-#tweet-btn {
-    background-color: #0397AB; /* Arka plan rengi */
-    color: #fff; /* Metin rengi */
-    padding: 10px 20px; /* Yastıklama */
-    font-size: 16px; /* Metin boyutu */
-    border: none; /* Kenarlık yok */
-    border-radius: 5px; /* Kenar yuvarlaklığı */
-    cursor: pointer; /* İşaretçi türü */
-    transition: background-color 0.3s ease; /* Geçiş efekti */
-}
-
-#tweet-btn:hover {
-    background-color: #0c7cbf;
-}
-
-#tweet-text {
-    color: #0397AB; /* Metin rengi */
-    font-size: 28px; /* Metin boyutu */
-    margin-bottom: 10px; /* Alt boşluk */
-}
+    #tweet-text {
+        color: #0397AB; /* Metin rengi */
+        font-size: 28px; /* Metin boyutu */
+        margin-bottom: 10px; /* Alt boşluk */
+    }
