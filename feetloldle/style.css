@@ -147,6 +147,16 @@ label[for="guess-input"] {
     margin-top: 50px;
 }
 
+#full-screen-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+}
+
+
 #game-over-screen h2 {
     font-size: 44px; 
     color: #360706;

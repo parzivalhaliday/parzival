@@ -99,7 +99,25 @@ function guessKontrol() {
             document.getElementById("guess-et-btn").style.display = "none"; 
             document.getElementById("counter").style.display = "none"; 
             document.getElementById("total-score").style.display = "none";
-        } else {
+            document.getElementById("guess-input").style.display = "none"; 
+            document.getElementById("prediction-label").style.display = "none"; // Hide the prediction label
+        
+            const fullScreenGif = document.createElement("img");
+            fullScreenGif.id = "full-screen-gif";
+            fullScreenGif.src = "defeat.gif";
+            fullScreenGif.alt = "Defeat";
+            
+            document.body.appendChild(fullScreenGif);
+        
+            setTimeout(() => {
+                const element = document.getElementById("full-screen-gif");
+                if (element) {
+                    element.parentNode.removeChild(element);
+                }
+            }, 4500);
+        }
+        else {
+
             const kalanHak = 3 - counter; 
             document.getElementById("counter").textContent = "Remaining attempts " + kalanHak; 
             document.getElementById("total-score").textContent = "Correct count " + totalScore;
