@@ -17,15 +17,15 @@
         overflow: hidden;
     }
     
-
     #all {
         box-shadow: 0px 0px 50px -5px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(50px);
+        backdrop-filter: blur(10px);
         border-radius: 50px;
-        border: 3px solid rgba(105, 120, 255, 0.6);
+        border: 3px solid rgba(200, 155, 60, 0.6);
         background: linear-gradient(288.74deg, rgba(10, 20, 40, 0.3) 100%, rgba(9, 20, 40, 0.3) 200%);
         position: fixed;
-        top: 0;
+        top: 10px; /* Adjusted top position */
+        bottom: 10px; /* Added bottom position */
         left: 50%;
         cursor: url('cursor1.png'), auto;
         transform: translate(-50%, 0);
@@ -35,9 +35,10 @@
         align-items: flex-end;
         padding: 43px 53px 53px 0;
         width: 600px;
-        height: 100vh;
+        height: calc(100vh - 20px); /* Adjusted height to account for margin */
         box-sizing: border-box;
     }
+    
     
 
     #image-screen {
