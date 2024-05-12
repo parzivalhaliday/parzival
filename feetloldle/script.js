@@ -74,6 +74,12 @@ window.onload = function() {
             sampiyonlar = data.champs;
         });
     yeniResmeGec();
+
+    document.getElementById("guess-input").addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+            guessKontrol();
+        }
+    });
 };
 
 let rastgeleKlasor;
