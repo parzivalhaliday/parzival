@@ -84,12 +84,12 @@ function guessKontrol() {
     if (guess.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
         counter++;
         totalScore++;
-        document.getElementById("counter").textContent = counter;
-        document.getElementById("total-score").textContent = totalScore;
+        document.getElementById("counter").textContent = "Remaining attempts " + counter;
+        document.getElementById("total-score").textContent = "Total Score:" + totalScore;
         yeniResmeGec();
-
+        const MAX_AYAK_SAYISI = 301;
         if (totalScore === MAX_AYAK_SAYISI) {
-            alert("Congratulations! You guessed all champions correctly!");
+            alert("ayak uzmanı");
         }
     } else {
         counter++;

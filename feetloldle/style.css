@@ -119,6 +119,10 @@
     }
 
 
+    #counter, #total-score {
+        font-size: 18px;
+    }
+    
 
     #guess-bolumu {
         position: relative;
@@ -164,7 +168,16 @@
     
     
 
+    #counter, #total-score {
+        font-size: 34px;
+    }
+    
 
+
+    #counter, #total-score {
+        font-size: 18px;
+    }
+    
 
     #final-score, #total-score-text, #total-score {
         margin: 0 0 16px 36.2px;
