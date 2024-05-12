@@ -1,5 +1,5 @@
 const championDataURL = "https://ddragon.leagueoflegends.com/cdn/14.9.1/data/en_US/champion.json";
-let sayac = 0;
+let counter = 0;
 let totalScore = 0;
 
 async function createChampionList(filter = "", count = 5) {
@@ -84,7 +84,7 @@ function guessKontrol() {
     if (guess.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
         counter++;
         totalScore++;
-        document.getElementById("counter").textContent = sayac;
+        document.getElementById("counter").textContent = counter;
         document.getElementById("total-score").textContent = totalScore;
         yeniResmeGec();
 
@@ -92,16 +92,16 @@ function guessKontrol() {
             alert("Congratulations! You guessed all champions correctly!");
         }
     } else {
-        sayac++;
-        if (sayac === 3) {
+        counter++;
+        if (counter === 3) {
             document.getElementById("game-over-screen").style.display = "block";
             document.getElementById("final-score").textContent = totalScore;
             document.getElementById("guess-et-btn").style.display = "none"; 
-            document.getElementById("sayac").style.display = "none"; 
+            document.getElementById("counter").style.display = "none"; 
             document.getElementById("total-score").style.display = "none";
         } else {
-            const kalanHak = 3 - sayac; 
-            document.getElementById("sayac").textContent = "Remaining attempts " + kalanHak; 
+            const kalanHak = 3 - counter; 
+            document.getElementById("counter").textContent = "Remaining attempts " + kalanHak; 
             document.getElementById("total-score").textContent = "Correct count " + totalScore;
         }
 
@@ -128,7 +128,7 @@ function guessKontrol() {
         }
     }
 
-    if (sayac >= 3) {
+    if (counter >= 3) {
         document.getElementById("guess-input").disabled = true; 
     }
 
