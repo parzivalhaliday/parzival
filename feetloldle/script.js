@@ -102,20 +102,16 @@ function guessKontrol() {
             document.getElementById("guess-input").style.display = "none"; 
             document.getElementById("prediction-label").style.display = "none"; // Hide the prediction label
             
-            // Create an image element for the fullscreen GIF
             const fullScreenGif = document.createElement("img");
             fullScreenGif.id = "full-screen-gif";
             fullScreenGif.src = "defeat.gif";
             fullScreenGif.alt = "Defeat";
             
-            // Append the fullscreen GIF to the body
             document.body.appendChild(fullScreenGif);
         
-            // Play defeat.mp3
             const audio = new Audio('defeat.mp3');
             audio.play();
         
-            // Remove the fullscreen GIF and audio from the DOM after 3 seconds
             setTimeout(() => {
                 const gifElement = document.getElementById("full-screen-gif");
                 if (gifElement) {
