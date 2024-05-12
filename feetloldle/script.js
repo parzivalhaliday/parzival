@@ -122,7 +122,7 @@ function guessKontrol() {
 
         for (let i = 0; i < 2; i++) {
             setTimeout(function() {
-                const audio = new Audio('feetloldle/miss.mp3');
+                const audio = new Audio('miss.mp3');
                 audio.play();
             }, i * 1000);
         }
