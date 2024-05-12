@@ -35,33 +35,33 @@ async function createChampionList(filter = "", count = 5) {
             listContainer.appendChild(championDiv);
         });
     } catch (error) {
-        console.error("Hata:", error);
+        console.error("Error:", error);
     }
 }
 
-document.getElementById("tahmin-input").addEventListener("input", function() {
-    const tahmin = this.value;
-    if (tahmin.length > 0) {
-        createChampionList(tahmin); // Tahmin inputunda yazı varsa önerilen şampiyonları oluştur
+document.getElementById("guess-input").addEventListener("input", function() {
+    const guess = this.value;
+    if (guess.length > 0) {
+        createChampionList(guess); 
     } else {
         const championSuggestions = document.getElementById("champion-suggestions");
-        championSuggestions.innerHTML = ""; // Tahmin inputunda herhangi bir yazı yoksa önerilen şampiyonları temizle
+        championSuggestions.innerHTML = ""; 
     }
 });
 
 
-document.getElementById("tahmin-et-btn").addEventListener("click", tahminKontrol);
+document.getElementById("guess-et-btn").addEventListener("click", guessKontrol);
 
 document.getElementById("champion-suggestions").addEventListener("click", function(event) {
     if (event.target.tagName === "DIV") {
         const championName = event.target.querySelector("span").textContent;
-        document.getElementById("tahmin-input").value = championName;
+        document.getElementById("guess-input").value = championName;
     }
 });
 
 document.getElementById("tweet-btn").addEventListener("click", function() {
     const scoreText = document.getElementById("final-score").textContent;
-    const tweetText = `Ben feetle de ${scoreText} puan aldım 🎉`;
+    const tweetText = `I scored ${scoreText} points in Feet LOL DLE 🎉`;
     const tweetURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
     window.open(tweetURL, "_blank", "width=600,height=300");
 });
@@ -79,32 +79,30 @@ window.onload = function() {
 let rastgeleKlasor;
 let sampiyonlar;
 
-function tahminKontrol() {
-    const tahmin = document.getElementById("tahmin-input").value;
-    if (tahmin.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
-        sayac++;
+function guessKontrol() {
+    const guess = document.getElementById("guess-input").value;
+    if (guess.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
+        counter++;
         totalScore++;
-        document.getElementById("sayac").textContent = sayac;
+        document.getElementById("counter").textContent = sayac;
         document.getElementById("total-score").textContent = totalScore;
         yeniResmeGec();
 
-        // Eğer tüm ayaklar bilindiğinde
         if (totalScore === MAX_AYAK_SAYISI) {
-            // Uyarı göster
-            alert("Tebrikler! Tüm ayakları doğru tahmin ettiniz!");
+            alert("Congratulations! You guessed all champions correctly!");
         }
     } else {
         sayac++;
         if (sayac === 3) {
             document.getElementById("game-over-screen").style.display = "block";
             document.getElementById("final-score").textContent = totalScore;
-            document.getElementById("tahmin-et-btn").style.display = "none"; // Oyun kaybedildiğinde Tahmin Et butonunu gizle
-            document.getElementById("sayac").style.display = "none"; // Oyun kaybedildiğinde kalan hak sayacını gizle
+            document.getElementById("guess-et-btn").style.display = "none"; 
+            document.getElementById("sayac").style.display = "none"; 
             document.getElementById("total-score").style.display = "none";
         } else {
-            const kalanHak = 3 - sayac; // Kalan hakkı hesapla
-            document.getElementById("sayac").textContent = "kalan hakkınız " + kalanHak; // Kalan hakkı ekrana yazdır
-            document.getElementById("total-score").textContent = "doğru sayısı " + totalScore;
+            const kalanHak = 3 - sayac; 
+            document.getElementById("sayac").textContent = "Remaining attempts " + kalanHak; 
+            document.getElementById("total-score").textContent = "Correct count " + totalScore;
         }
 
         const numberOfImages = Math.floor(Math.random() * 11) + 3;
@@ -131,10 +129,10 @@ function tahminKontrol() {
     }
 
     if (sayac >= 3) {
-        document.getElementById("tahmin-input").disabled = true; // Tahmin etme inputunu devre dışı bırak
+        document.getElementById("guess-input").disabled = true; 
     }
 
-    document.getElementById("tahmin-input").value = "";
+    document.getElementById("guess-input").value = "";
 }
 
 
@@ -146,16 +144,16 @@ function yeniResmeGec() {
             rastgeleKlasor = klasorler[Math.floor(Math.random() * klasorler.length)];
             const rastgeleResim = rastgeleKlasor.champimages[Math.floor(Math.random() * rastgeleKlasor.champimages.length)];
 
-            console.log("Rastgele Seçilen Klasör:", rastgeleKlasor.champname);
-            console.log("Rastgele Seçilen Resim:", rastgeleResim);
+            console.log("Randomly Selected Folder:", rastgeleKlasor.champname);
+            console.log("Randomly Selected Image:", rastgeleResim);
 
-            const resimEkrani = document.getElementById("resim-ekrani");
+            const resimEkrani = document.getElementById("image-screen");
             resimEkrani.src = `champs/${rastgeleKlasor.champname}/${rastgeleResim}`;
         });
 }
 
 function filtrele() {
-    const harf = document.getElementById("tahmin-input").value.toLowerCase();
+    const harf = document.getElementById("guess-input").value.toLowerCase();
     const filtrelenmisSampiyonlar = sampiyonlar.filter(sampiyon => sampiyon.champname.toLowerCase().startsWith(harf));
     const sampiyonListesi = document.getElementById("champion-suggestions");
     sampiyonListesi.innerHTML = "";

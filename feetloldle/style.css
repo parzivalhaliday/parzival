@@ -78,18 +78,18 @@ label {
     color: #C8AA6E;
 }
 
-label[for="tahmin-input"] {
+label[for="guess-input"] {
     font-size: 28px;
 }
 
-#tahmin-input {
+#guess-input {
     width: 200px;
     padding: 10px;
     font-size: 16px;
     margin-bottom: 10px;
 }
 
-#tahmin-et-btn {
+#guess-et-btn {
     background-color: #005A82; 
     color: #CDFAFA; 
     border: 2px solid #C89B3C; 
@@ -99,7 +99,7 @@ label[for="tahmin-input"] {
     border-radius: 5px;
 }
 
-#tahmin-et-btn:hover {
+#guess-et-btn:hover {
     background-color: #C89B3C; 
     border: 2px solid #32281E;
 }
