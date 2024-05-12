@@ -24,6 +24,8 @@ button,
     cursor: url('cursor.png'), auto;
 }
 
+
+
 body, html {
     margin: 0;
     padding: 0;
@@ -58,6 +60,17 @@ body, html {
     justify-content: center;
     align-items: center;
     font-size: 2rem; 
+}
+
+
+#final-score, #total-score-text, #total-score {
+    color: #ffc144;
+    font-size: 38px;
+}
+
+#counter{
+    color: #ffc144;
+    font-size: 18px;
 }
 
 h1 {
@@ -135,7 +148,8 @@ label[for="guess-input"] {
 }
 
 #game-over-screen h2 {
-    color: #d9534f;
+    font-size: 44px; 
+    color: #360706;
 }
 
 #tweet-btn {
