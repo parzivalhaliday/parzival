@@ -8,29 +8,32 @@
 </head>
 <body>
     <div id="all">
-<h1 id="prediction-title">Foot Prediction</h1>
+        <h1 id="prediction-title">Foot Prediction</h1>
+        <br>
+        <div id="guess-bolumu">
+            <img id="image-screen" alt="Image"><br>
+            <label for="guess-input" id="prediction-label">Your Prediction:</label>
+            <input type="text" id="guess-input" oninput="filtrele()">
+            <button id="guess-et-btn" style="cursor: url('cursor1.png'), auto; position: absolute; top: 50%; right: 5px; transform: translateY(-50%);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 490 490">
+                    <polygon fill="#000000" points="240.112,0 481.861,245.004 240.112,490 8.139,490 250.29,245.004 8.139,0 "></polygon>
+                </svg>
+            </button>
+        </div>
+        <div id="champion-suggestions" class="guess-suggestions"></div>
+        <div id="counter">Remaining attempts 3</div> 
+        <div id="total-score">Total Score: 0</div>
+    
+        <div id="game-over-screen" style="display: none;">
+            <h2 id="game-over-heading">Game Over!</h2>
+            <p id="game-over-score"><span id="total-score-text">Total Score:</span> <span id="final-score">0</span></p>
+            <p id="tweet-text">Do you want to share on Twitter?</p>
+            <button id="tweet-btn" style="cursor: url('cursor1.png'), auto;">Share on Twitter</button>
+        </div>
+    </div>
+    
 
-<div id="guess-bolumu">
-    <img id="image-screen" alt="Image"><br>
-    <label for="guess-input" id="prediction-label">Your Prediction:</label>
-    <input type="text" id="guess-input" oninput="filtrele()">
-    <button id="guess-et-btn" style="cursor: url('cursor1.png'), auto;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 490 490">
-            <polygon fill="#000000" points="240.112,0 481.861,245.004 240.112,490 8.139,490 250.29,245.004 8.139,0 "/>
-        </svg>  
-    </button>
-    <div id="champion-suggestions" class="guess-suggestions"></div>
-    <div id="counter">Remaining attempts 3</div> 
-    <div id="total-score">Total Score: 0</div>
-</div>
 
-<div id="game-over-screen" style="display: none;">
-    <h2 id="game-over-heading">Game Over!</h2>
-    <p id="game-over-score"><span id="total-score-text">Total Score:</span> <span id="final-score">0</span></p>
-    <p id="tweet-text">Do you want to share on Twitter?</p>
-    <button id="tweet-btn" style="cursor: url('cursor1.png'), auto;">Share on Twitter</button>
-</div>
-</div>
 <script src="script.js"></script>
 </body>
 </html>

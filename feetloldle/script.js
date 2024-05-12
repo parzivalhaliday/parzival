@@ -2,7 +2,7 @@ const championDataURL = "https://ddragon.leagueoflegends.com/cdn/14.9.1/data/en_
 let counter = 0;
 let totalScore = 0;
 
-async function createChampionList(filter = "", count = 4) {
+async function createChampionList(filter = "", count = 3) {
     try {
         const response = await fetch(championDataURL);
         const data = await response.json();
