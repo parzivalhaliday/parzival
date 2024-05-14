@@ -9,7 +9,7 @@
             padding: 0.5em;
             background: #23241f;
             color: #a6e22e;
-            cursor:none;
+            cursor: url('cursor.png'), auto;
 
         }
         
@@ -57,6 +57,7 @@
         
         .a {
             color: #66d9ef;
+            
         }
         
         .a::before {
@@ -85,6 +86,7 @@
         
         a.a1 {
             color: #e6db74;
+            cursor: url('cursor1.png'), auto;
         }
         
         a.a1:hover {
