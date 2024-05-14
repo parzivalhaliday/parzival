@@ -93,7 +93,7 @@ function guessKontrol() {
         document.getElementById("counter").textContent = "Remaining attempts " + counter;
         document.getElementById("total-score").textContent = "Total Score:" + totalScore;
         yeniResmeGec();
-        const MAX_AYAK_SAYISI = 301;
+        const MAX_AYAK_SAYISI = 303;
         if (totalScore === MAX_AYAK_SAYISI) {
             alert("ayak uzmanı");
         }
