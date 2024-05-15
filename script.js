@@ -20,7 +20,7 @@
             link.href = favicon;
         }
 
-        var basliklar = ["Parzi CV", "Hakkımda ve Yaptığım çalışmalar","lol"];
+        var basliklar = ["Parzi CV", "Hakkımda ve Yaptığım çalışmalar"];
         
         // Başlık değiştirme fonksiyonu
         function baslikDegistir() {
@@ -30,7 +30,7 @@
         }
 
         // Belirli aralıklarla başlığı değiştir
-        setInterval(baslikDegistir, 10000);
+        setInterval(baslikDegistir, 5000);
 
 // Tüm diller için
 var diller = document.querySelectorAll(".dil");
