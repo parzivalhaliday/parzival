@@ -88,10 +88,7 @@ let sampiyonlar;
 function guessKontrol() {
     const guess = document.getElementById("guess-input").value;
     if (guess.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
-        counter++;
         totalScore++;
-        document.getElementById("counter").textContent = "Remaining attempts " + counter;
-        document.getElementById("total-score").textContent = "Total Score:" + totalScore;
         yeniResmeGec();
         const MAX_AYAK_SAYISI = 303;
         if (totalScore === MAX_AYAK_SAYISI) {
@@ -126,35 +123,11 @@ function guessKontrol() {
                 audio.pause(); // Pause the audio
             }, 3000);
         }
-        else {
-
-            const kalanHak = 3 - counter; 
-            document.getElementById("counter").textContent = "Remaining attempts " + kalanHak; 
-            document.getElementById("total-score").textContent = "Correct count " + totalScore;
-        }
-
-        const numberOfImages = Math.floor(Math.random() * 11) + 3;
-        for (let i = 0; i < numberOfImages; i++) {
-            const enemymissImg = document.createElement("img");
-            enemymissImg.src = "enemymiss.png";
-            enemymissImg.style.position = "fixed";
-            enemymissImg.style.left = Math.floor(Math.random() * (window.innerWidth - 50)) + "px";
-            enemymissImg.style.top = Math.floor(Math.random() * (window.innerHeight - 50)) + "px";
-            enemymissImg.style.width = "50px";
-            document.body.appendChild(enemymissImg);
-
-            setTimeout(function() {
-                enemymissImg.remove();
-            }, 1000);
-        }
-
-        for (let i = 0; i < 2; i++) {
-            setTimeout(function() {
-                const audio = new Audio('miss.mp3');
-                audio.play();
-            }, i * 1000);
-        }
     }
+
+    const remainingAttempts = 3 - counter;
+    document.getElementById("counter").textContent = "Remaining attempts " + remainingAttempts;
+    document.getElementById("total-score").textContent = "Total Score: " + totalScore;
 
     if (counter >= 3) {
         document.getElementById("guess-input").disabled = true; 
@@ -162,6 +135,7 @@ function guessKontrol() {
 
     document.getElementById("guess-input").value = "";
 }
+
 
 
 function yeniResmeGec() {
