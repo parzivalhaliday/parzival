@@ -46,6 +46,7 @@
         background: rgba(217, 217, 217, 0.41);
         margin: 0 auto 17px auto; 
         width: 262px;
+        position: relative;
         height: 262px;
     }
     
@@ -133,29 +134,35 @@
     }
     
 
-        .guess-suggestions {
+    .guess-suggestions {
         text-align: center; 
     }
-
+    
     .guess-suggestions > div {
-        padding: 10px;
+        border: 3px solid #C89B3C;
+        border-radius: 20px;
+        width: 450px;
         background: #785A28;
         display: flex;
         align-items: center;
-        cursor: url('cursor1.png'), auto; /* Cursor özelliğini ekledik */
-        width: 200px;
-        margin: 5px auto;
+        cursor: url('cursor1.png'), auto;
+        margin: 10px auto; 
     }
-
+    
     .guess-suggestions > div img {
+        border-radius: 50%;
+        border: 1px solid #3c61c8;
         width: 40px;
-        height: auto; 
-        margin-right: 10px; 
+        height: 40px; 
+        margin: 10px;
     }
-
+    
     .guess-suggestions > div span {
-        font-size: 14px; 
-        color: #ffffff; 
+        font-size: 16px; 
+        color: #ffffff;
+        flex-grow: 1;
+        text-align: left;
+        padding: 10px;
     }
     
 
