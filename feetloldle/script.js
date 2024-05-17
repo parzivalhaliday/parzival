@@ -108,6 +108,7 @@ async function guessKontrol() {
             document.getElementById("guess-input").style.display = "none";
             document.getElementById("prediction-label").style.display = "none";
             document.getElementById("champion-suggestions").style.display = "none"; // Champion suggestions gizle
+            
 
             const fullScreenGif = document.createElement("img");
             fullScreenGif.id = "full-screen-gif";
