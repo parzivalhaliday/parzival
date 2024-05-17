@@ -34,8 +34,8 @@ body {
     width: 600px;
     height: 100vh;
     box-sizing: border-box;
-    overflow: hidden; /* Hide overflowing content */
-    padding-bottom: 150px; /* Extra padding at the bottom */
+    overflow: hidden; 
+    padding-bottom: 150px;
     
 }
 
