@@ -95,11 +95,19 @@ async function guessKontrol() {
         if (counter === 3) {
             document.getElementById("game-over-screen").style.display = "block";
             document.getElementById("final-score").textContent = totalScore;
+            
+            // Oyun bittiğinde rastgele seçilen karakterin resmini ve adını göster
+            const imageURL = `tiles/${rastgeleKlasor.champname}.png`;
+            document.getElementById("game-over-image").src = imageURL;
+            document.getElementById("game-over-champion-name").textContent = rastgeleKlasor.champname;
+            
+            // Gizlenecek elementleri belirleyelim
             document.getElementById("guess-et-btn").style.display = "none";
             document.getElementById("counter").style.display = "none";
             document.getElementById("total-score").style.display = "none";
             document.getElementById("guess-input").style.display = "none";
             document.getElementById("prediction-label").style.display = "none";
+            document.getElementById("champion-suggestions").style.display = "none"; // Champion suggestions gizle
 
             const fullScreenGif = document.createElement("img");
             fullScreenGif.id = "full-screen-gif";
@@ -131,6 +139,8 @@ async function guessKontrol() {
 
     document.getElementById("guess-input").value = "";
 }
+
+
 
 async function yeniResmeGec() {
     try {

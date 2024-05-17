@@ -36,6 +36,7 @@ body {
     box-sizing: border-box;
     overflow: hidden; /* Hide overflowing content */
     padding-bottom: 150px; /* Extra padding at the bottom */
+    
 }
 
 #image-screen {
@@ -76,6 +77,12 @@ body, html {
 #guess-input-container {
     position: relative;
     display: inline-block;
+}
+
+
+label {
+    display: block;
+    text-align: center; /* Etiket içeriğinin ortalanması */
 }
 
 #guess-input {
@@ -133,31 +140,44 @@ body, html {
 }
 
 .guess-suggestions > div {
-    border: 3px solid #C89B3C;
-    border-radius: 20px;
-    width: 450px;
-    background: #785A28;
+    border: 2px solid #C89B3C;
+    border-radius: 15px;
+    width: 400px;
+    background: linear-gradient(145deg, #6b4f24, #8b6d3a);
     display: flex;
     align-items: center;
     cursor: url('cursor1.png'), auto;
-    margin: 10px auto;
+    margin: 15px auto; /* Ortalama hizalama */
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.guess-suggestions > div:hover {
+    transform: scale(1.05);
 }
 
 .guess-suggestions > div img {
     border-radius: 50%;
-    border: 1px solid #3c61c8;
-    width: 40px;
-    height: 40px;
+    border: 2px solid #3c61c8;
+    width: 50px;
+    height: 50px;
     margin: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.guess-suggestions > div:hover img {
+    border-color: #ffffff;
 }
 
 .guess-suggestions > div span {
-    font-size: 16px;
+    font-size: 18px;
     color: #ffffff;
     flex-grow: 1;
     text-align: left;
     padding: 10px;
+    font-weight: bold;
 }
+
 
 h1 {
     color: #C8AA6E;
@@ -169,20 +189,44 @@ h1 {
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(94, 17, 17, 0.1);
-}
-
-#full-screen-gif {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.8); /* Arkaplan rengi ekledik */
+    padding: 20px;
+    text-align: center;
 }
 
 #game-over-screen h2 {
     font-size: 44px;
     color: #360706;
+}
+
+#game-over-image {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+    border: 2px solid #C89B3C;
+}
+
+#game-over-champion-name {
+    font-size: 24px;
+    color: #C89B3C;
+    margin-bottom: 20px;
+}
+
+
+
+
+#total-score-text {
+    font-size: 48px; /* Font boyutunu büyüttük */
+    color: #C89B3C; /* Yazı rengini ayarladık */
+    margin: 20px 0;
+}
+
+#final-score {
+    font-size: 48px; /* Font boyutunu büyüttük */
+    color: #C89B3C; /* Yazı rengini ayarladık */
+    margin: 20px 0;
 }
 
 #tweet-btn {
@@ -205,5 +249,4 @@ h1 {
     font-size: 28px;
     margin-bottom: 10px;
 }
-
 
