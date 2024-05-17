@@ -1,250 +1,209 @@
-       @font-face {
-        font-family: 'BeaufortforLOL-HeavyItalic';
-        src: url('fonts/BeaufortforLOL-HeavyItalic.woff2') format('woff2');
-    }
+@font-face {
+    font-family: 'BeaufortforLOL-HeavyItalic';
+    src: url('fonts/BeaufortforLOL-HeavyItalic.woff2') format('woff2');
+}
 
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        font-family: 'BeaufortforLOL-HeavyItalic', sans-serif;
-        text-align: center;
-        cursor: url('cursor.png'), auto;
-        background-image: url('background.png'); 
-        background-size: cover;
-        background-position: center;
-        overflow: hidden;
-    }
-    
-    #all {
-        box-shadow: 0px 0px 50px -5px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
-        border-radius: 50px;
-        border: 3px solid rgba(200, 155, 60, 0.6);
-        background: linear-gradient(288.74deg, rgba(10, 20, 40, 0.3) 100%, rgba(9, 20, 40, 0.3) 200%);
-        position: fixed;
-        top: 0;
-        left: 50%;
-        cursor: url('cursor1.png'), auto;
-        transform: translate(-50%, 0);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-end;
-        padding: 43px 53px 53px 0;
-        width: 600px;
-        height: 100vh;
-        box-sizing: border-box;
-        overflow: hidden; /* Sığmayan içeriği kesmek için */
-        padding-bottom: 150px; /* Alt kısmı genişletmek için */
-    }
-    
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'BeaufortforLOL-HeavyItalic', sans-serif;
+    text-align: center;
+    cursor: url('cursor.png'), auto;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
 
-    #image-screen {
-        border-radius: 50px;
-        border: 3px solid #C89B3C;
-        background: rgba(217, 217, 217, 0.41);
-        margin: 0 auto 17px auto; 
-        width: 262px;
-        position: relative;
-        height: 262px;
-    }
-    
-    
+#all {
+    box-shadow: 0px 0px 50px -5px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    border: 3px solid rgba(200, 155, 60, 0.6);
+    background: linear-gradient(288.74deg, rgba(10, 20, 40, 0.3) 100%, rgba(9, 20, 40, 0.3) 200%);
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 43px 53px 53px 0;
+    width: 600px;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden; /* Hide overflowing content */
+    padding-bottom: 150px; /* Extra padding at the bottom */
+}
 
-    #prediction-title {
-        margin: 0 auto;
-    }
-    
+#image-screen {
+    border-radius: 50px;
+    border: 3px solid #C89B3C;
+    background: rgba(217, 217, 217, 0.41);
+    margin: 0 auto 17px auto;
+    width: 262px;
+    position: relative;
+    height: 262px;
+}
 
-    input[type='image'],
-    label[for],
-    select,
-    button,
-    .pointer {
-        cursor: url('cursor.png'), auto;
-    }
+#prediction-title {
+    margin: 0 auto;
+}
 
-    body, html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
+input[type='image'],
+label[for],
+select,
+button,
+.pointer {
+    cursor: url('cursor.png'), auto;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#prediction-label {
+    font-weight: bold;
+    color: #C8AA6E;
+    font-size: 38px;
+    font-family: 'Beaufort for LOL', 'Roboto Condensed', sans-serif;
+}
+
+#guess-input-container {
+    position: relative;
+    display: inline-block;
+}
+
+#guess-input {
+    border-radius: 20px;
+    border: 3px solid #C89B3C;
+    background: #1E282D;
+    width: 500px;
+    height: 70px;
+    font-size: 56px;
+    padding: 0px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    font-family: 'Beaufort for LOL', 'Roboto Condensed';
+    color: #a57231;
+}
+
+#guess-et-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50px;
+    border: none;
+    background-color: #C89B3C;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+}
+
+#guess-et-btn:hover {
+    background-color: #633b07;
+}
+
+#counter, #total-score {
+    font-size: 34px;
+    margin: 0 0 16px 36.2px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Beaufort for LOL', 'Roboto Condensed';
+    font-weight: 900;
+    color: #C89B3C;
+}
+
+#guess-bolumu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Beaufort for LOL', 'Roboto Condensed';
+}
+
+.guess-suggestions {
+    text-align: center;
+}
+
+.guess-suggestions > div {
+    border: 3px solid #C89B3C;
+    border-radius: 20px;
+    width: 450px;
+    background: #785A28;
+    display: flex;
+    align-items: center;
+    cursor: url('cursor1.png'), auto;
+    margin: 10px auto;
+}
+
+.guess-suggestions > div img {
+    border-radius: 50%;
+    border: 1px solid #3c61c8;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+}
+
+.guess-suggestions > div span {
+    font-size: 16px;
+    color: #ffffff;
+    flex-grow: 1;
+    text-align: left;
+    padding: 10px;
+}
+
+h1 {
+    color: #C8AA6E;
+}
+
+#game-over-screen {
+    display: none;
+    margin-top: 50px;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(94, 17, 17, 0.1);
+}
+
+#full-screen-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+}
+
+#game-over-screen h2 {
+    font-size: 44px;
+    color: #360706;
+}
+
+#tweet-btn {
+    background-color: #0397AB;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#tweet-btn:hover {
+    background-color: #0c7cbf;
+}
+
+#tweet-text {
+    color: #0397AB;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
 
 
-    #prediction-label {
-        font-weight: bold;
-        color: #C8AA6E;
-        font-size: 38px;
-        font-family: 'Beaufort for LOL', 'Roboto Condensed', sans-serif;
-    }
-
-
-
-    
-    #guess-input-container {
-        position: relative; 
-        display: inline-block;
-    }
-    
-    #guess-input {
-        border-radius: 20px;
-        border: 3px solid #C89B3C;
-        background: #1E282D;
-        width: 500px; 
-        height: 70px;
-        font-size: 56px;
-        padding: 0px;
-        padding-right: 10px;
-        box-sizing: border-box; 
-        display: inline-block;
-        font-family: 'Beaufort for LOL', 'Roboto Condensed';
-        color: #a57231;
-    }
-    
-    #guess-et-btn {
-        position: absolute; 
-        top: 0;
-        right: 0;
-        height: 100%;
-        width: 50px;
-        border: none;
-        background-color: #C89B3C;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        cursor: pointer;
-    }
-    
-    #guess-et-btn:hover {
-        background-color: #633b07; 
-    }
-
-
-    #counter, #total-score {
-        font-size: 18px;
-    }
-    
-
-    #guess-bolumu {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-family: 'Beaufort for LOL', 'Roboto Condensed';
-    }
-    
-
-    .guess-suggestions {
-        text-align: center; 
-    }
-    
-    .guess-suggestions > div {
-        border: 3px solid #C89B3C;
-        border-radius: 20px;
-        width: 450px;
-        background: #785A28;
-        display: flex;
-        align-items: center;
-        cursor: url('cursor1.png'), auto;
-        margin: 10px auto; 
-    }
-    
-    .guess-suggestions > div img {
-        border-radius: 50%;
-        border: 1px solid #3c61c8;
-        width: 40px;
-        height: 40px; 
-        margin: 10px;
-    }
-    
-    .guess-suggestions > div span {
-        font-size: 16px; 
-        color: #ffffff;
-        flex-grow: 1;
-        text-align: left;
-        padding: 10px;
-    }
-    
-
-    #counter, #total-score {
-        font-size: 34px;
-    }
-    
-
-
-    #counter, #total-score {
-        font-size: 18px;
-    }
-    
-
-    #final-score, #total-score-text, #total-score {
-        margin: 0 0 16px 36.2px;
-        display: inline-block;
-        overflow-wrap: break-word;
-        font-family: 'Beaufort for LOL', 'Roboto Condensed';
-        font-weight: 900;
-        font-size: 40px;
-        color: #C89B3C;
-    }
-
-    #counter{
-        margin-bottom: 12px;
-        display: inline-block;
-        overflow-wrap: break-word;
-        font-family: 'Beaufort for LOL', 'Roboto Condensed';
-        font-weight: 900;
-        font-size: 40px;
-        color: #C89B3C;
-    }
-
-    h1 {
-        color: #C8AA6E; 
-    }
-
-
-
-
-
-
-    #game-over-screen {
-        display: none;
-        margin-top: 50px;
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(94, 17, 17, 0.1); 
-    }
-
-    #full-screen-gif {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 9999;
-    }
-
-    #game-over-screen h2 {
-        font-size: 44px; 
-        color: #360706;
-    }
-
-    #tweet-btn {
-        background-color: #0397AB; /* Arka plan rengi */
-        color: #fff; /* Metin rengi */
-        padding: 10px 20px; /* Yastıklama */
-        font-size: 16px; /* Metin boyutu */
-        border: none; /* Kenarlık yok */
-        border-radius: 5px; /* Kenar yuvarlaklığı */
-        cursor: pointer; /* İşaretçi türü */
-        transition: background-color 0.3s ease; /* Geçiş efekti */
-    }
-
-    #tweet-btn:hover {
-        background-color: #0c7cbf;
-    }
-
-    #tweet-text {
-        color: #0397AB; /* Metin rengi */
-        font-size: 28px; /* Metin boyutu */
-        margin-bottom: 10px; /* Alt boşluk */
-    }

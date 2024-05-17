@@ -1,6 +1,8 @@
 const championDataURL = "https://ddragon.leagueoflegends.com/cdn/14.9.1/data/en_US/champion.json";
 let counter = 0;
 let totalScore = 0;
+let sampiyonlar;
+let rastgeleKlasor;
 
 async function createChampionList(filter = "", count = 3) {
     try {
@@ -9,7 +11,6 @@ async function createChampionList(filter = "", count = 3) {
         const championsData = Object.values(data.data);
 
         const imagePath = "tiles/";
-
         const filteredChampionsData = championsData.filter(champion =>
             champion.name.toLowerCase().startsWith(filter.toLowerCase())
         ).slice(0, count);
@@ -24,7 +25,6 @@ async function createChampionList(filter = "", count = 3) {
 
             const championName = champion.name;
             const championImageName = champion.id;
-
             const imageURL = `${imagePath}${encodeURIComponent(championImageName)}.png`;
 
             championImg.src = imageURL;
@@ -42,19 +42,17 @@ async function createChampionList(filter = "", count = 3) {
 document.getElementById("guess-input").addEventListener("input", function() {
     const guess = this.value;
     if (guess.length > 0) {
-        createChampionList(guess); 
+        createChampionList(guess);
     } else {
-        const championSuggestions = document.getElementById("champion-suggestions");
-        championSuggestions.innerHTML = ""; 
+        document.getElementById("champion-suggestions").innerHTML = "";
     }
 });
-
 
 document.getElementById("guess-et-btn").addEventListener("click", guessKontrol);
 
 document.getElementById("champion-suggestions").addEventListener("click", function(event) {
-    if (event.target.tagName === "DIV") {
-        const championName = event.target.querySelector("span").textContent;
+    if (event.target.tagName === "SPAN" || event.target.tagName === "IMG") {
+        const championName = event.target.closest("div").querySelector("span").textContent;
         document.getElementById("guess-input").value = championName;
     }
 });
@@ -66,14 +64,15 @@ document.getElementById("tweet-btn").addEventListener("click", function() {
     window.open(tweetURL, "_blank", "width=600,height=300");
 });
 
-
-window.onload = function() {
-    fetch('veri.json')
-        .then(response => response.json())
-        .then(data => {
-            sampiyonlar = data.champs;
-        });
-    yeniResmeGec();
+window.onload = async function() {
+    try {
+        const response = await fetch('veri.json');
+        const data = await response.json();
+        sampiyonlar = data.champs;
+        yeniResmeGec();
+    } catch (error) {
+        console.error("Error:", error);
+    }
 
     document.getElementById("guess-input").addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
@@ -82,14 +81,11 @@ window.onload = function() {
     });
 };
 
-let rastgeleKlasor;
-let sampiyonlar;
-
-function guessKontrol() {
+async function guessKontrol() {
     const guess = document.getElementById("guess-input").value;
     if (guess.toLowerCase() === rastgeleKlasor.champname.toLowerCase()) {
         totalScore++;
-        yeniResmeGec();
+        await yeniResmeGec();
         const MAX_AYAK_SAYISI = 303;
         if (totalScore === MAX_AYAK_SAYISI) {
             alert("ayak uzmanı");
@@ -99,28 +95,28 @@ function guessKontrol() {
         if (counter === 3) {
             document.getElementById("game-over-screen").style.display = "block";
             document.getElementById("final-score").textContent = totalScore;
-            document.getElementById("guess-et-btn").style.display = "none"; 
-            document.getElementById("counter").style.display = "none"; 
+            document.getElementById("guess-et-btn").style.display = "none";
+            document.getElementById("counter").style.display = "none";
             document.getElementById("total-score").style.display = "none";
-            document.getElementById("guess-input").style.display = "none"; 
-            document.getElementById("prediction-label").style.display = "none"; // Hide the prediction label
-            
+            document.getElementById("guess-input").style.display = "none";
+            document.getElementById("prediction-label").style.display = "none";
+
             const fullScreenGif = document.createElement("img");
             fullScreenGif.id = "full-screen-gif";
             fullScreenGif.src = "defeat.gif";
             fullScreenGif.alt = "Defeat";
-            
+
             document.body.appendChild(fullScreenGif);
-        
+
             const audio = new Audio('defeat.mp3');
             audio.play();
-        
+
             setTimeout(() => {
                 const gifElement = document.getElementById("full-screen-gif");
                 if (gifElement) {
                     gifElement.parentNode.removeChild(gifElement);
                 }
-                audio.pause(); // Pause the audio
+                audio.pause();
             }, 3000);
         }
     }
@@ -130,28 +126,28 @@ function guessKontrol() {
     document.getElementById("total-score").textContent = "Total Score: " + totalScore;
 
     if (counter >= 3) {
-        document.getElementById("guess-input").disabled = true; 
+        document.getElementById("guess-input").disabled = true;
     }
 
     document.getElementById("guess-input").value = "";
 }
 
+async function yeniResmeGec() {
+    try {
+        const response = await fetch('veri.json');
+        const data = await response.json();
+        const klasorler = data.champs;
+        rastgeleKlasor = klasorler[Math.floor(Math.random() * klasorler.length)];
+        const rastgeleResim = rastgeleKlasor.champimages[Math.floor(Math.random() * rastgeleKlasor.champimages.length)];
 
+        console.log("Randomly Selected Folder:", rastgeleKlasor.champname);
+        console.log("Randomly Selected Image:", rastgeleResim);
 
-function yeniResmeGec() {
-    fetch('veri.json')
-        .then(response => response.json())
-        .then(data => {
-            const klasorler = data.champs;
-            rastgeleKlasor = klasorler[Math.floor(Math.random() * klasorler.length)];
-            const rastgeleResim = rastgeleKlasor.champimages[Math.floor(Math.random() * rastgeleKlasor.champimages.length)];
-
-            console.log("Randomly Selected Folder:", rastgeleKlasor.champname);
-            console.log("Randomly Selected Image:", rastgeleResim);
-
-            const resimEkrani = document.getElementById("image-screen");
-            resimEkrani.src = `champs/${rastgeleKlasor.champname}/${rastgeleResim}`;
-        });
+        const resimEkrani = document.getElementById("image-screen");
+        resimEkrani.src = `champs/${rastgeleKlasor.champname}/${rastgeleResim}`;
+    } catch (error) {
+        console.error("Error:", error);
+    }
 }
 
 function filtrele() {
