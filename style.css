@@ -13,9 +13,7 @@
 
         }
         
-        a:hover {
-            cursor: pointer;
-        }
+
         
         
         .section {
@@ -41,8 +39,13 @@
         }
         
         .baslik::before {
-            color: white;
-            content: ">>> ";
+            color: #fff27d;
+            content: "<";
+        }
+
+        .baslik::after {
+            color: #fff27d;
+            content: "/>";
         }
         
         header {
@@ -82,7 +85,6 @@
         .c {
             color: #f92672;
         }
-        /*# sourceMappingURL=style.css.map */
         
         a.a1 {
             color: #e6db74;
@@ -115,7 +117,8 @@
         #python:hover,
         #javascriptes7:hover,
         #htmljavascript:hover {
-            cursor: pointer;
+            cursor: url('cursor1.png'), auto;
+
             text-decoration: underline;
         }
         

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Films</title>
+<link rel="stylesheet" href="style.css">
+<style>
+    .section {
+      text-align: center;
+      overflow: hidden;
+    }
+    .baslik {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+  
+    .animated-text {
+      animation: fadeIn 1s ease;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: slideDown 1s ease;
+    }
+    li {
+      margin: 10px;
+      padding: 10px;
+      background-color: #ff00001c;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      width: 200px;
+      flex: 0 0 calc(20% - 20px);
+      color: rgb(0, 255, 255);
+    }
+    li:hover {
+      transform: translateY(-5px);
+    }
+    img {
+      width: 100%;
+      border-radius: 5px;
+      cursor: url('cursor.png'), auto;
+    }
+  
+    a {
+      color: #e6db74;
+      cursor: url('cursor1.png'), auto;
+      text-decoration: none; /* Link altındaki çizgiyi kaldırma */
+    }
+  
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+  
+</head>
+<body>
+
+<div class="section">
+<span class="baslik animated-text">My Films</span>
+<ul id="movieList"></ul>
+</div>
+
+<script src="movie.js"></script>
+<style ></style>
+</body>
+</html>

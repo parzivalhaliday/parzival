@@ -1,3 +1,4 @@
+
 fetch('https://api.themoviedb.org/3/list/8301529?api_key=0f07e31867110e665a9b2c304b153eb9')
   .then(response => response.json())
   .then(data => {
@@ -11,7 +12,8 @@ fetch('https://api.themoviedb.org/3/list/8301529?api_key=0f07e31867110e665a9b2c3
       const title = movie.title ? movie.title : movie.name;
       // Arka plan görseli
       const backdropPath = movie.backdrop_path ? 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path : '';
-      listItem.innerHTML = `<div>${title}</div>`;
+      // Tıklanabilir bağlantı ekleyerek TMDb sayfasına yönlendir
+      listItem.innerHTML = `<a href="https://www.themoviedb.org/movie/${movie.id}" target="_blank"><img src="${backdropPath}" alt="${title}"><div>${title}</div></a>`;
       movieList.appendChild(listItem);
     });
   })
