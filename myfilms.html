@@ -29,31 +29,45 @@
       justify-content: center;
       animation: slideDown 1s ease;
     }
-    li {
-      margin: 10px;
-      padding: 10px;
-      background-color: #ff00001c;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-      width: 200px;
-      flex: 0 0 calc(20% - 20px);
-      color: rgb(0, 255, 255);
-    }
-    li:hover {
-      transform: translateY(-5px);
-    }
+
+    a {
+  color: #FF5722; /* Normal durumda link rengi */
+  cursor: url('cursor1.png'), auto;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FF9800; /* Hover durumunda link rengi */
+}
+
+li {
+  border: 2px outset #9C27B0;
+  margin: 10px;
+  padding: 10px;
+  background-color: #212121; /* Normal durumda arka plan rengi */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Arka plan rengi için transition eklendi */
+  width: 200px;
+  flex: 0 0 calc(20% - 20px);
+  color: #FFFFFF; /* Yazı rengi */
+}
+
+li:hover {
+  border: 2px outset #FF4081;
+  transform: translateY(-5px);
+  background-color: #424242; /* Hover durumunda arka plan rengi değiştirildi */
+}
+
+
+
     img {
       width: 100%;
       border-radius: 5px;
       cursor: url('cursor.png'), auto;
     }
   
-    a {
-      color: #e6db74;
-      cursor: url('cursor1.png'), auto;
-      text-decoration: none; /* Link altındaki çizgiyi kaldırma */
-    }
+
   
     @keyframes slideDown {
       from {
@@ -85,6 +99,8 @@
 </div>
 
 <script src="movie.js"></script>
+<script src="animatedtext.js"></script>
+<script src="renk.js"></script>
 <style ></style>
 </body>
 </html>
