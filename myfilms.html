@@ -16,6 +16,17 @@
       margin-bottom: 20px;
       display: inline-block;
     }
+
+    .baslik::before {
+            color: #fff27d;
+            content: "";
+        }
+
+        .baslik::after {
+            color: #fff27d;
+            content: "";
+
+        }
   
     .animated-text {
       animation: fadeIn 1s ease;
@@ -94,13 +105,15 @@ li:hover {
 <body>
 
 <div class="section">
-<span class="baslik animated-text">My Films</span>
+<span class="baslik animated-text">adored</span>
+
 <ul id="movieList"></ul>
 </div>
 
 <script src="movie.js"></script>
 <script src="animatedtext.js"></script>
 <script src="renk.js"></script>
+<script src="keyboardevent.js"></script>
 <style ></style>
 </body>
 </html>
