@@ -13,11 +13,12 @@ if ("geolocation" in navigator) {
         updateLocationInfo(position);
     });
 }
+ 
 
 function updateLocationInfo(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    document.getElementById("location").textContent = " Enlem " + latitude + ", Boylam " + longitude;
+    document.getElementById("location").textContent = " latitude " + latitude + ", longitude " + longitude;
 }
 const language = navigator.language;
 document.getElementById("language").textContent = "" + language;
