@@ -19,15 +19,14 @@
     }
 
     .baslik::before {
-            color: #fff27d;
-            content: "";
-        }
+      color: #fff27d;
+      content: "";
+    }
 
-        .baslik::after {
-            color: #fff27d;
-            content: "";
-
-        }
+    .baslik::after {
+      color: #fff27d;
+      content: "";
+    }
   
     .animated-text {
       animation: fadeIn 1s ease;
@@ -43,43 +42,39 @@
     }
 
     a {
-  color: #FF5722; /* Normal durumda link rengi */
-  cursor: url('cursor1.png'), auto;
-  text-decoration: none;
-}
+      color: #FF5722; /* Normal durumda link rengi */
+      cursor: url('cursor1.png'), auto;
+      text-decoration: none;
+    }
 
-a:hover {
-  color: #FF9800; /* Hover durumunda link rengi */
-}
+    a:hover {
+      color: #FF9800; /* Hover durumunda link rengi */
+    }
 
-li {
-  border: 2px outset #9C27B0;
-  margin: 10px;
-  padding: 10px;
-  background-color: #212121; /* Normal durumda arka plan rengi */
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, background-color 0.3s ease; /* Arka plan rengi için transition eklendi */
-  width: 200px;
-  flex: 0 0 calc(20% - 20px);
-  color: #FFFFFF; /* Yazı rengi */
-}
+    li {
+      border: 2px outset #9C27B0;
+      margin: 10px;
+      padding: 10px;
+      background-color: #212121; /* Normal durumda arka plan rengi */
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, background-color 0.3s ease; /* Arka plan rengi için transition eklendi */
+      width: 200px;
+      flex: 0 0 calc(20% - 20px);
+      color: #FFFFFF; /* Yazı rengi */
+    }
 
-li:hover {
-  border: 2px outset #FF4081;
-  transform: translateY(-5px);
-  background-color: #424242; /* Hover durumunda arka plan rengi değiştirildi */
-}
-
-
+    li:hover {
+      border: 2px outset #FF4081;
+      transform: translateY(-5px);
+      background-color: #424242; /* Hover durumunda arka plan rengi değiştirildi */
+    }
 
     img {
       width: 100%;
       border-radius: 5px;
       cursor: url('cursor.png'), auto;
     }
-  
-
   
     @keyframes slideDown {
       from {
@@ -106,15 +101,36 @@ li:hover {
 <body>
 
 <div class="section">
-<span class="baslik animated-text">adored 1</span>
-
-<ul id="movieList"></ul>
+  <span class="baslik animated-text">adored 1</span>
+  <ul id="movieList"></ul>
 </div>
 
-<script src="movie.js"></script>
+<script>
+  fetch('https://api.themoviedb.org/3/list/8301529?api_key=58ec7b5f1bb87b37a5db4b0ad470798d')
+    .then(response => response.json())
+    .then(data => {
+      // IMDb puanına göre sırala
+      data.items.sort((a, b) => b.vote_average - a.vote_average);
+      // Her bir film öğesini döngüyle geç
+      const movieList = document.getElementById('movieList');
+      data.items.forEach(movie => {
+        const listItem = document.createElement('li');
+        // Başlık boşsa ismi kullan
+        const title = movie.title ? movie.title : movie.name;
+        // Arka plan görseli
+        const backdropPath = movie.backdrop_path ? 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path : '';
+        // Tıklanabilir bağlantı ekleyerek TMDb sayfasına yönlendir
+        listItem.innerHTML = `<a href="https://www.themoviedb.org/movie/${movie.id}" target="_blank"><img src="${backdropPath}" alt="${title}"><div>${title}</div></a>`;
+        movieList.appendChild(listItem);
+      });
+    })
+    .catch(error => {
+      console.error('API\'den veri alınamadı:', error);
+    });
+</script>
+
 <script src="animatedtext.js"></script>
 <script src="renk.js"></script>
 <script src="keyboardevent.js"></script>
-<style ></style>
 </body>
 </html>
