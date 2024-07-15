@@ -1,5 +1,5 @@
 
-fetch('https://api.themoviedb.org/3/list/8301529?api_key=0f07e31867110e665a9b2c304b153eb9')
+fetch('https://api.themoviedb.org/3/list/8301529?api_key=58ec7b5f1bb87b37a5db4b0ad470798d')
   .then(response => response.json())
   .then(data => {
     // IMDb puanına göre sırala
