@@ -36,28 +36,25 @@ document.getElementById("screen-resolution").textContent = "" + screenResolution
 const deviceScreenSize = window.innerWidth + "x" + window.innerHeight;
 document.getElementById("device-screen-size").textContent = "" + deviceScreenSize;
 
-
-// Cihazın tutuluş açısını sürekli olarak güncelle
 window.addEventListener("deviceorientation", function(event) {
     const orientationText = document.getElementById("oryantasyon");
-    const alpha = event.alpha; // Yatay olarak cihazın hareket yönü (derece cinsinden)
-    const beta = event.beta;   // Dikey olarak cihazın hareket yönü (derece cinsinden)
-    const gamma = event.gamma; // Cihazın sağa veya sola doğru eğimi (derece cinsinden)
+    const alpha = event.alpha; 
+    const beta = event.beta;  
+    const gamma = event.gamma; 
 
-    // Oryantasyon bilgisini belirle
+    // Determine the orientation information
     let orientation = "";
     if (beta > 45) {
-        orientation = "Ekranı dümdüz tutuyon";
+        orientation = "You're holding the screen flat";
     } else if (beta < -45) {
-        orientation = "Neden amuda kalktın?";
+        orientation = "Why are you upside down?";
     } else if (gamma > 45) {
-        orientation = "Sağa yatmışsın";
+        orientation = "You're tilted to the right";
     } else if (gamma < -45) {
-        orientation = "Sola yatmışsın";
+        orientation = "You're tilted to the left";
     } else {
-        orientation = "Mobil cihaz kullanmıyorsun";
+        orientation = "You are not using a mobile device";
     }
 
-    // Oryantasyon bilgisini ekrana yazdır
     orientationText.textContent = "" + orientation;
 });
