@@ -66,15 +66,9 @@
 
     <script>
         const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-        const apiKey = 'RGAPI-ead4e88d-1947-428f-b207-bcbb8eb3e44a'; 
+        const apiKey = 'RGAPI-ead4e88d-1947-428f-b207-bcbb8eb3e44a';
         const region = 'europe';
-
-        async function getSummonerPuuid(apiKey, region, summonerName, tagLine) {
-            const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`);
-            if (!response.ok) throw new Error('Summoner information could not be retrieved');
-            const data = await response.json();
-            return data.puuid;
-        }
+        const summonerPuuid = 'IBk2qjd_qg4l5AOxAI8GfqVgguMbrJFK_UNgjGD-Iav0JOfoHnuGf1E6EbY7C__LF-rtMo5jkUEAOQ'; // Use the provided PUUID
 
         async function getMatchIds(apiKey, region, summonerPuuid) {
             const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=10&api_key=${apiKey}`);
@@ -90,10 +84,8 @@
 
         async function fetchTurretDamage() {
             const summonerName = 'Revanche';
-            const tagLine = 'rev';
 
             try {
-                const summonerPuuid = await getSummonerPuuid(apiKey, region, summonerName, tagLine);
                 const matchIds = await getMatchIds(apiKey, region, summonerPuuid);
                 let totalTurretDamage = 0;
                 let lastMatchTurretDamage = 0;
