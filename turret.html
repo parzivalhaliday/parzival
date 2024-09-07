@@ -1,61 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Turret Damage </title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f0f4f8;
-                color: #333;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-    
-            h1 {
-                font-size: 2.5rem;
-                color: #4a4a4a;
-                margin-bottom: 1rem;
-            }
-    
-            #result {
-                font-size: 1.25rem;
-                color: #4a90e2;
-                font-weight: bold;
-            }
-    
-            /* Styling for the result paragraph */
-            p {
-                margin: 0;
-                padding: 0.5rem;
-                text-align: center;
-                border-radius: 5px;
-                background-color: #ffffff;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            }
-    
-            /* Adding a button style for future use */
-            button {
-                background-color: #4a90e2;
-                border: none;
-                color: white;
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-                cursor: pointer;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
-    
-            button:hover {
-                background-color: #357abd;
-            }
-        </style>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turret Damage Calculator</title>
+</head>
 <body>
     <p id="result">Yükleniyor...</p>
 
@@ -84,8 +33,8 @@
         }
 
         async function fetchTurretDamage() {
-            const summonerName = 'Revanche';
-            const tagLine = 'rev';
+            const summonerName = 'parzi';
+            const tagLine = 'adc';
 
             try {
                 const summonerPuuid = await getSummonerPuuid(apiKey, region, summonerName, tagLine);
@@ -100,7 +49,7 @@
                     }
                 }
 
-                document.getElementById('result').textContent = `${summonerName} ${totalTurretDamage} KULE HASARI VERDİ`;
+                document.getElementById('result').textContent = `${summonerName} ${tagLine} has given ${totalTurretDamage} turret damage.`;
             } catch (error) {
                 document.getElementById('result').textContent = `Error: ${error.message}`;
             }
