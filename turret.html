@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Turret Damage </title>
+        <title>Turret Damage</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -16,19 +16,19 @@
                 align-items: center;
                 height: 100vh;
             }
-    
+
             h1 {
                 font-size: 2.5rem;
                 color: #4a4a4a;
                 margin-bottom: 1rem;
             }
-    
+
             #result {
                 font-size: 1.25rem;
                 color: #4a90e2;
                 font-weight: bold;
             }
-    
+
             /* Styling for the result paragraph */
             p {
                 margin: 0;
@@ -38,7 +38,7 @@
                 background-color: #ffffff;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
-    
+
             /* Adding a button style for future use */
             button {
                 background-color: #4a90e2;
@@ -50,7 +50,7 @@
                 border-radius: 5px;
                 transition: background-color 0.3s;
             }
-    
+
             button:hover {
                 background-color: #357abd;
             }
@@ -63,13 +63,7 @@
         const corsProxy = 'https://cors-anywhere.herokuapp.com/';
         const apiKey = 'RGAPI-ead4e88d-1947-428f-b207-bcbb8eb3e44a'; 
         const region = 'europe';
-
-        async function getSummonerPuuid(apiKey, region, summonerName, tagLine) {
-            const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`);
-            if (!response.ok) throw new Error('Summoner information could not be retrieved');
-            const data = await response.json();
-            return data.puuid;
-        }
+        const summonerPuuid = 'IBk2qjd_qg4l5AOxAI8GfqVgguMbrJFK_UNgjGD-Iav0JOfoHnuGf1E6EbY7C__LF-rtMo5jkUEAOQ'; // Use the provided PUUID
 
         async function getMatchIds(apiKey, region, summonerPuuid) {
             const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=1&api_key=${apiKey}`);
@@ -85,10 +79,8 @@
 
         async function fetchTurretDamage() {
             const summonerName = 'Revanche';
-            const tagLine = 'rev';
 
             try {
-                const summonerPuuid = await getSummonerPuuid(apiKey, region, summonerName, tagLine);
                 const matchIds = await getMatchIds(apiKey, region, summonerPuuid);
                 let totalTurretDamage = 0;
 
