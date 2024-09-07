@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
             color: #333;
             margin: 0;
             padding: 0;
@@ -25,37 +24,13 @@
         }
 
         #result {
-            font-size: 1.25rem;
-            color: #4a90e2;
+            font-size:40px;
+            color: #4fa34e;
             font-weight: bold;
             margin-bottom: 1rem;
         }
 
-        /* Styling for the result paragraph */
-        p {
-            margin: 0;
-            padding: 0.5rem;
-            text-align: center;
-            border-radius: 5px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
 
-        /* Adding a button style for future use */
-        button {
-            background-color: #4a90e2;
-            border: none;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #357abd;
-        }
     </style>
 </head>
 <body>
@@ -96,7 +71,7 @@
                     }
                 }
 
-                document.getElementById('last-match').textContent = `Son Maç: ${summonerName} ${lastMatchTurretDamage} KULE HASARI VERDİ`;
+                document.getElementById('last-match').textContent = `Son Maç: ${lastMatchTurretDamage} KULE HASARI`;
             } catch (error) {
                 document.getElementById('last-match').textContent = `Son Maç: Hata - ${error.message}`;
             }
