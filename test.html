@@ -1,63 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Turret Damage </title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f0f4f8;
-                color: #333;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-    
-            h1 {
-                font-size: 2.5rem;
-                color: #4a4a4a;
-                margin-bottom: 1rem;
-            }
-    
-            #result {
-                font-size: 1.25rem;
-                color: #4a90e2;
-                font-weight: bold;
-            }
-    
-            /* Styling for the result paragraph */
-            p {
-                margin: 0;
-                padding: 0.5rem;
-                text-align: center;
-                border-radius: 5px;
-                background-color: #ffffff;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            }
-    
-            /* Adding a button style for future use */
-            button {
-                background-color: #4a90e2;
-                border: none;
-                color: white;
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-                cursor: pointer;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
-    
-            button:hover {
-                background-color: #357abd;
-            }
-        </style>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turret Damage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+        }
+
+        #result {
+            font-size: 1.25rem;
+            color: #4a90e2;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Styling for the result paragraph */
+        p {
+            margin: 0;
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Adding a button style for future use */
+        button {
+            background-color: #4a90e2;
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
 <body>
-    <p id="result">Yükleniyor...</p>
+    <div id="result">
+        <p id="last-match">Son Maç: Yükleniyor...</p>
+        <p id="last-10-matches">Son 10 Maç: Yükleniyor...</p>
+    </div>
 
     <script>
         const corsProxy = 'https://cors-anywhere.herokuapp.com/';
@@ -72,7 +77,7 @@
         }
 
         async function getMatchIds(apiKey, region, summonerPuuid) {
-            const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=1&api_key=${apiKey}`);
+            const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=10&api_key=${apiKey}`);
             if (!response.ok) throw new Error('Match history could not be retrieved');
             return await response.json();
         }
@@ -91,18 +96,24 @@
                 const summonerPuuid = await getSummonerPuuid(apiKey, region, summonerName, tagLine);
                 const matchIds = await getMatchIds(apiKey, region, summonerPuuid);
                 let totalTurretDamage = 0;
+                let lastMatchTurretDamage = 0;
 
-                for (const matchId of matchIds) {
+                for (const [index, matchId] of matchIds.entries()) {
                     const matchData = await getMatchData(apiKey, region, matchId);
                     const participant = matchData.info.participants.find(p => p.puuid === summonerPuuid);
                     if (participant) {
+                        if (index === 0) {
+                            lastMatchTurretDamage = participant.damageDealtToTurrets;
+                        }
                         totalTurretDamage += participant.damageDealtToTurrets;
                     }
                 }
 
-                document.getElementById('result').textContent = `${summonerName} ${totalTurretDamage} KULE HASARI VERDİ`;
+                document.getElementById('last-match').textContent = `Son Maç: ${summonerName} ${lastMatchTurretDamage} KULE HASARI VERDİ`;
+                document.getElementById('last-10-matches').textContent = `Son 10 Maçta ${summonerName} ${totalTurretDamage} KULE HASARI VERDİ`;
             } catch (error) {
-                document.getElementById('result').textContent = `Error: ${error.message}`;
+                document.getElementById('last-match').textContent = `Son Maç: Hata - ${error.message}`;
+                document.getElementById('last-10-matches').textContent = `Son 10 Maç: Hata - ${error.message}`;
             }
         }
 
