@@ -9,10 +9,21 @@
     <p id="result">Yükleniyor</p>
 
     <script>
+
+const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+const apiKey = 'RGAPI-ead4e88d-1947-428f-b207-bcbb8eb3e44a'; 
+const region = 'europe';
+
+async function getSummonerPuuid(apiKey, region, summonerName, tagLine) {
+    const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`);
+    if (!response.ok) throw new Error('Summoner information could not be retrieved');
+    const data = await response.json();
+    return data.puuid;
+}
+
         async function fetchTurretDamage() {
             const summonerName = 'parzi';
             const tagLine = 'adc';
-            const apiKey = 'RGAPI-ead4e88d-1947-428f-b207-bcbb8eb3e44a'; 
             const region = 'europe';
 
             try {
