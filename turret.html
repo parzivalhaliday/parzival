@@ -3,28 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hasar</title>
+    <title>Turret Damage Calculator</title>
 </head>
 <body>
-    <p id="result">Yükleniyor</p>
+    <p id="result">Yükleniyor...</p>
 
     <script>
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+        const apiKey = 'RGAPI-ead4e88d-1947-428f-b207-bcbb8eb3e44a'; 
+        const region = 'europe';
 
-const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-const apiKey = 'RGAPI-ead4e88d-1947-428f-b207-bcbb8eb3e44a'; 
-const region = 'europe';
+        async function getSummonerPuuid(apiKey, region, summonerName, tagLine) {
+            const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`);
+            if (!response.ok) throw new Error('Summoner information could not be retrieved');
+            const data = await response.json();
+            return data.puuid;
+        }
 
-async function getSummonerPuuid(apiKey, region, summonerName, tagLine) {
-    const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`);
-    if (!response.ok) throw new Error('Summoner information could not be retrieved');
-    const data = await response.json();
-    return data.puuid;
-}
+        async function getMatchIds(apiKey, region, summonerPuuid) {
+            const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=1&api_key=${apiKey}`);
+            if (!response.ok) throw new Error('Match history could not be retrieved');
+            return await response.json();
+        }
+
+        async function getMatchData(apiKey, region, matchId) {
+            const response = await fetch(`${corsProxy}https://${region}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${apiKey}`);
+            if (!response.ok) throw new Error('Match data could not be retrieved');
+            return await response.json();
+        }
 
         async function fetchTurretDamage() {
             const summonerName = 'parzi';
             const tagLine = 'adc';
-            const region = 'europe';
 
             try {
                 const summonerPuuid = await getSummonerPuuid(apiKey, region, summonerName, tagLine);
@@ -43,25 +53,6 @@ async function getSummonerPuuid(apiKey, region, summonerName, tagLine) {
             } catch (error) {
                 document.getElementById('result').textContent = `Error: ${error.message}`;
             }
-        }
-
-        async function getSummonerPuuid(apiKey, region, summonerName, tagLine) {
-            const response = await fetch(`https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`);
-            if (!response.ok) throw new Error('Summoner information could not be retrieved');
-            const data = await response.json();
-            return data.puuid;
-        }
-
-        async function getMatchIds(apiKey, region, summonerPuuid) {
-            const response = await fetch(`https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${summonerPuuid}/ids?start=0&count=1&api_key=${apiKey}`);
-            if (!response.ok) throw new Error('Match history could not be retrieved');
-            return await response.json();
-        }
-
-        async function getMatchData(apiKey, region, matchId) {
-            const response = await fetch(`https://${region}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${apiKey}`);
-            if (!response.ok) throw new Error('Match data could not be retrieved');
-            return await response.json();
         }
 
         fetchTurretDamage();
