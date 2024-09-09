@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,15 +26,29 @@
         }
         #result {
             position: absolute;
-            bottom: -10px; /* Metni resmin altına taşır */
+            bottom: -30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 20px; /* Yazılar arasındaki boşluk */
+            flex-direction: column;
+            gap: 10px;
             font-size: 24px;
             color: #ffffff;
             font-weight: bold;
             text-align: center;
+        }
+        #kills-near-turret {
+            font-size: 88px;
+            color: #000000;
+            position: absolute;
+            top: -510px;
+            left: 60px;
+            transform: translateX(-50%);
+        }
+        /* Yeni eklenen stil */
+        .stats {
+            display: flex;
+            gap: 20px; /* İki paragraf arasında boşluk */
         }
     </style>
 </head>
@@ -43,8 +56,11 @@
     <div class="container">
         <img id="turret-image" src="turret.png" alt="Turret Image">
         <div id="result">
-            <p id="last-match">0</p>
-            <p id="total-damage"> 0</p>
+            <p id="kills-near-turret">Kule Yakınında Öldürme: 0</p>
+            <div class="stats">
+                <p id="last-match">Turret Hasarı: 0</p>
+                <p id="total-damage">Alınan Toplam Hasar: 0</p>
+            </div>
         </div>
     </div>
 
@@ -65,11 +81,12 @@
             return await response.json();
         }
 
-        async function fetchTurretDamage() {
+        async function fetchMatchStats() {
             try {
                 const matchIds = await getMatchIds(apiKey, region, summonerPuuid);
                 let lastMatchTurretDamage = 0;
                 let lastMatchTotalDamageTaken = 0;
+                let lastMatchKillsNearTurret = 0;
 
                 if (matchIds.length > 0) {
                     const lastMatchId = matchIds[0];
@@ -78,18 +95,21 @@
                     if (participant) {
                         lastMatchTurretDamage = participant.damageDealtToTurrets;
                         lastMatchTotalDamageTaken = participant.totalDamageTaken;
+                        yikilankule = participant.challenges.turretTakedowns; 
                     }
                 }
 
-                document.getElementById('last-match').textContent = ` Turret Hasarı: \n${lastMatchTurretDamage}`;
-                document.getElementById('total-damage').textContent = `Alınan Hasar: ${lastMatchTotalDamageTaken}`;
+                document.getElementById('kills-near-turret').textContent = `${yikilankule}`;
+                document.getElementById('last-match').textContent = `Turret Hasarı: ${lastMatchTurretDamage}`;
+                document.getElementById('total-damage').textContent = `Alınan Toplam Hasar: ${lastMatchTotalDamageTaken}`;
             } catch (error) {
+                document.getElementById('kills-near-turret').textContent = `Hata: ${error.message}`;
                 document.getElementById('last-match').textContent = `Hata: ${error.message}`;
                 document.getElementById('total-damage').textContent = `Hata: ${error.message}`;
             }
         }
 
-        fetchTurretDamage();
+        fetchMatchStats();
     </script>
 </body>
 </html>
