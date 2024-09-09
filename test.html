@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turret Damage </title>
+    <title>Turret Damage</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,34 +17,34 @@
             background-color: #f0f0f0;
         }
         .container {
-    position: relative;
-    display: inline-block;
-    margin-top: 150px;
-}
-
-#turret-image {
-    width: 300px;
-    height: auto;
-}
-
-#result {
-    position: absolute;
-    bottom: -80px; /* Metni resmin altına taşır */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 90px;
-    color: #ffffff;
-    font-weight: bold;
-    text-align: center;
-}
-
+            position: relative;
+            display: inline-block;
+            margin-top: 150px;
+        }
+        #turret-image {
+            width: 300px;
+            height: auto;
+        }
+        #result {
+            position: absolute;
+            bottom: -10px; /* Metni resmin altına taşır */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px; /* Yazılar arasındaki boşluk */
+            font-size: 24px;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img id="turret-image" src="turret.png" alt="Turret Image">
         <div id="result">
-            <p id="last-match">taret hasarı</p>
+            <p id="last-match">0</p>
+            <p id="total-damage"> 0</p>
         </div>
     </div>
 
@@ -66,11 +66,10 @@
         }
 
         async function fetchTurretDamage() {
-            const summonerName = 'Revanche';
-
             try {
                 const matchIds = await getMatchIds(apiKey, region, summonerPuuid);
                 let lastMatchTurretDamage = 0;
+                let lastMatchTotalDamageTaken = 0;
 
                 if (matchIds.length > 0) {
                     const lastMatchId = matchIds[0];
@@ -78,12 +77,15 @@
                     const participant = lastMatchData.info.participants.find(p => p.puuid === summonerPuuid);
                     if (participant) {
                         lastMatchTurretDamage = participant.damageDealtToTurrets;
+                        lastMatchTotalDamageTaken = participant.totalDamageTaken;
                     }
                 }
 
-                document.getElementById('last-match').textContent = `${lastMatchTurretDamage}`;
+                document.getElementById('last-match').textContent = ` Turret Hasarı: \n${lastMatchTurretDamage}`;
+                document.getElementById('total-damage').textContent = `Alınan Hasar: ${lastMatchTotalDamageTaken}`;
             } catch (error) {
-                document.getElementById('last-match').textContent = `${error.message}`;
+                document.getElementById('last-match').textContent = `Hata: ${error.message}`;
+                document.getElementById('total-damage').textContent = `Hata: ${error.message}`;
             }
         }
 
