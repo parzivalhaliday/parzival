@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: #333;
             margin: 0;
             padding: 0;
             display: flex;
@@ -15,31 +14,42 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
+            background-color: #f0f0f0;
         }
+        .container {
+    position: relative;
+    display: inline-block;
+    margin-top: 150px;
+}
 
-        h1 {
-            font-size: 2.5rem;
-            color: #4a4a4a;
-            margin-bottom: 1rem;
-        }
+#turret-image {
+    width: 300px;
+    height: auto;
+}
 
-        #result {
-            font-size:40px;
-            color: #4fa34e;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
+#result {
+    position: absolute;
+    bottom: -80px; /* Metni resmin altına taşır */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 90px;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+}
 
     </style>
 </head>
 <body>
-    <div id="result">
-        <p id="last-match">düzenlicem</p>
+    <div class="container">
+        <img id="turret-image" src="turret.png" alt="Turret Image">
+        <div id="result">
+            <p id="last-match">taret hasarı</p>
+        </div>
     </div>
 
     <script>
-        const apiKey = 'key'; 
+        const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b'; 
         const region = 'europe';
         const summonerPuuid = 'IBk2qjd_qg4l5AOxAI8GfqVgguMbrJFK_UNgjGD-Iav0JOfoHnuGf1E6EbY7C__LF-rtMo5jkUEAOQ';
 
@@ -71,9 +81,9 @@
                     }
                 }
 
-                document.getElementById('last-match').textContent = `DÜZENLİCEM ${lastMatchTurretDamage} DÜZENLİCEM`;
+                document.getElementById('last-match').textContent = `${lastMatchTurretDamage}`;
             } catch (error) {
-                document.getElementById('last-match').textContent = `DÜZENLİCEM- ${error.message}`;
+                document.getElementById('last-match').textContent = `${error.message}`;
             }
         }
 
