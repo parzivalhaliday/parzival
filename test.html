@@ -45,10 +45,9 @@
             left: 60px;
             transform: translateX(-50%);
         }
-        /* Yeni eklenen stil */
         .stats {
             display: flex;
-            gap: 20px; /* İki paragraf arasında boşluk */
+            gap: 20px;
         }
     </style>
 </head>
@@ -110,6 +109,9 @@
         }
 
         fetchMatchStats();
+        
+        // Sayfayı her 60 saniyede bir güncelle
+        setInterval(fetchMatchStats, 60000);
     </script>
 </body>
 </html>
