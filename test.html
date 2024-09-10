@@ -29,27 +29,26 @@
         }
 
         #result {
-            position: absolute;
-            bottom: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            
-        }
+    position: absolute;
+    bottom: 20px; /* Aşağıdaki konumu yukarıya çekmek için artırıldı */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
 
-        #kulehasari {
-            font-size: 100px;
-            color: #000000;
-            position: absolute;
-            top: -560px;
-            left: 170px;
-            transform: translateX(-50%);
-        }
+#kulehasari {
+    font-size: 100px;
+    color: #000000;
+    position: absolute;
+    top: -550px; /* Kule hasarı yazısını yukarı taşımak için düzenlendi */
+    left: 120px;
+    transform: translateX(-50%);
+}
 
 
 
@@ -57,18 +56,20 @@
             display: flex;
             gap: 20px; /* İki kutu arasında boşluk */
             justify-content: center;
+            
         }
 
         .stat-box {
             color: white;
-            font-size: 28px;
+            font-size: 24px;
+            
+            
 
         }
 
         .stat-box span {
             display: block;
             font-size: 50px;
-            margin-top: 10px;
             color: #FF5733;
         }
 
@@ -83,7 +84,7 @@
             <p id="kulehasari">0</p>
             <div class="stats">
                 <div class="stat-box">
-                    KULE HASARI
+                    KULELERE
                     <span id="last-match">0</span>
                 </div>
                 <div class="stat-box">
