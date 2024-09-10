@@ -117,7 +117,7 @@
                 const matchIds = await getMatchIds(apiKey, region, summonerPuuid);
                 let lastMatchTurretDamage = 0;
                 let lastMatchTotalDamageTaken = 0;
-                let lastMatchKillsNearTurret = 0;
+                let turret_Takedowns = 0;
 
                 if (matchIds.length > 0) {
                     const lastMatchId = matchIds[0];
@@ -126,11 +126,11 @@
                     if (participant) {
                         lastMatchTurretDamage = participant.damageDealtToTurrets;
                         lastMatchTotalDamageTaken = participant.totalDamageTaken;
-                        lastMatchKillsNearTurret = participant.challenges.turretTakedowns;  // Yeni veri
+                        turret_Takedowns = participant.challenges.turretTakedowns;  // Yeni veri
                     }
                 }
 
-                document.getElementById('kulehasari').textContent = `${lastMatchKillsNearTurret}`;
+                document.getElementById('kulehasari').textContent = `${turret_Takedowns}`;
                 document.getElementById('last-match').textContent = `${lastMatchTurretDamage}`;
                 document.getElementById('total-damage-towers').textContent = `${lastMatchTotalDamageTaken}`;
             } catch (error) {
