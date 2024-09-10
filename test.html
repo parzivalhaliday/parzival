@@ -16,52 +16,82 @@
             height: 100vh;
             background-color: #f0f0f0;
         }
+
         .container {
             position: relative;
             display: inline-block;
-            margin-top: 150px;
+            margin-top: 50px;
         }
+
         #turret-image {
             width: 300px;
             height: auto;
         }
+
         #result {
             position: absolute;
-            bottom: -20px;
+            bottom: -50px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 20px;
             font-size: 24px;
-            color: #ffffff;
             font-weight: bold;
             text-align: center;
+            
         }
 
-        #kills-near-turret {
-            font-size: 88px;
+        #kulehasari {
+            font-size: 100px;
             color: #000000;
             position: absolute;
-            top: -500px;
-            left: 70px;
+            top: -560px;
+            left: 170px;
             transform: translateX(-50%);
         }
-        /* Yeni eklenen stil */
+
+
+
         .stats {
             display: flex;
-            gap: 20px; /* İki paragraf arasında boşluk */
+            gap: 20px; /* İki kutu arasında boşluk */
+            justify-content: center;
         }
+
+        .stat-box {
+            color: white;
+            font-size: 28px;
+
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 50px;
+            margin-top: 10px;
+            color: #FF5733;
+        }
+
+
+
     </style>
 </head>
 <body>
     <div class="container">
         <img id="turret-image" src="turret1.png" alt="Turret Image">
         <div id="result">
-            <p id="kills-near-turret"> 0</p>            <div class="stats">
-                <p id="last-match">Turret Hasarı: 0</p>
-                <p id="total-damage">Alınan Toplam Hasar: 0</p>
-            </div>        </div>
+            <p id="kulehasari">0</p>
+            <div class="stats">
+                <div class="stat-box">
+                    KULE HASARI
+                    <span id="last-match">0</span>
+                </div>
+                <div class="stat-box">
+                    Tanklanan
+                    <span id="total-damage-towers">0</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -99,22 +129,21 @@
                     }
                 }
 
-                document.getElementById('kills-near-turret').textContent = ` ${lastMatchKillsNearTurret}`;
-                document.getElementById('last-match').textContent = `Turret Hasarı: ${lastMatchTurretDamage}`;
-                document.getElementById('total-damage').textContent = `Alınan Toplam Hasar: ${lastMatchTotalDamageTaken}`;
+                document.getElementById('kulehasari').textContent = `${lastMatchKillsNearTurret}`;
+                document.getElementById('last-match').textContent = `${lastMatchTurretDamage}`;
+                document.getElementById('total-damage-towers').textContent = `${lastMatchTotalDamageTaken}`;
             } catch (error) {
-                document.getElementById('kills-near-turret').textContent = `Hata: ${error.message}`;
+                document.getElementById('kulehasari').textContent = `Hata: ${error.message}`;
                 document.getElementById('last-match').textContent = `Hata: ${error.message}`;
-                document.getElementById('total-damage').textContent = `Hata: ${error.message}`;
+                document.getElementById('total-damage-towers').textContent = `Hata: ${error.message}`;
             }
         }
 
         fetchMatchStats();
 
-
         setInterval(function() {
-        window.location.reload();
-    }, 10000);  // 10 saniye = 10000 milisaniye
+            window.location.reload();
+        }, 10000);  // 10 saniye = 10000 milisaniye
     </script>
 </body>
 </html>
