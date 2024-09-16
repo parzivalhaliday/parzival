@@ -38,12 +38,14 @@ body {
 }
 
 .name {
-    font-size: 1.5em; /* Yazı boyutunu artırdım */
+    font-size: 1.8em; /* Yazı boyutunu artırdım */
     margin-bottom: 5px;
     color: #66ff00;
+    font-weight: bold; /* Kalın yazı */
 }
 
 .tier, .league-points {
-    font-size: 1.5em; /* Yazı boyutunu artırdım */
-    color: #b5b5b5;
+    font-size: 1.8em; /* Yazı boyutunu artırdım */
+    color: #000000;
+    font-weight: bold; /* Kalın yazı */
 }
