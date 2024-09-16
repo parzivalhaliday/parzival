@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoL Summoner Rank</title>
+    <title>ranklar</title>
     <link rel="stylesheet" href="style.css"> <!-- Harici CSS dosyası -->
 </head>
 <body>
@@ -80,6 +80,10 @@
         }
 
         window.onload = getSummonerRankDetails;
+
+        setInterval(function() {
+            window.location.reload();
+        }, 100000); 
     </script>
 </body>
 </html>

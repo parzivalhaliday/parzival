@@ -12,21 +12,21 @@ body {
     align-items: center;
     margin-top: 20px;
 }
+
 .rank-card {
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, #2a2e58, #5865a0, #a091d3); /* LoL'e özgü koyu mavi-mor tonları */
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px; /* Padding'i artırdım */
     margin: 10px 0;
     width: 300px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
-
 .profile-img {
-    width: 50px;
-    height: 50px;
+    width: 80px; /* Resim boyutunu artırdım */
+    height: 80px; /* Resim boyutunu artırdım */
     border-radius: 50%;
     margin-right: 15px;
 }
@@ -38,12 +38,12 @@ body {
 }
 
 .name {
-    font-size: 1.2em;
+    font-size: 1.5em; /* Yazı boyutunu artırdım */
     margin-bottom: 5px;
-    color: #eaeaea;
+    color: #66ff00;
 }
 
 .tier, .league-points {
-    font-size: 1em;
+    font-size: 1.5em; /* Yazı boyutunu artırdım */
     color: #b5b5b5;
 }
