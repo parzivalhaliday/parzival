@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoL Summoner Rank</title>
+    <link rel="stylesheet" href="style.css"> <!-- Harici CSS dosyası -->
+</head>
+<body>
+    <div class="container">
+        <div id="rankDetails"></div>
+    </div>
+
+    <script>
+        async function getSummonerRankDetails() {
+            const summoners = [
+                { id: '3sAlurawaR3ygOefMXtW66gD4GjjVuTnE_lAf3bE8U0KPwM', name: 'Panky', img: 'panky.png' },
+                { id: 'HyUqgd0eUSOmeG_A7CMGcOhogHJLoGf7gwrWJgz3oncr9Zs', name: 'Elwind', img: 'elwind.png' },
+                { id: 'XHCVv6l8f_FUiSK2-syr7GUMIHKrAsTAth1E2A3H8rby8r8', name: 'Revanch', img: 'revanch.png' }
+            ];
+
+            const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b';  // Buraya kendi API key'inizi ekleyin
+            const summonerRankData = [];
+
+            try {
+                for (let summoner of summoners) {
+                    const url = `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summoner.id}?api_key=${apiKey}`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data.length > 0) {
+                        const soloQueueData = data.find(queue => queue.queueType === 'RANKED_SOLO_5x5');
+                        if (soloQueueData) {
+                            summonerRankData.push({
+                                name: summoner.name,
+                                tier: soloQueueData.tier,
+                                leaguePoints: soloQueueData.leaguePoints,
+                                img: summoner.img
+                            });
+                        }
+                    }
+                }
+
+                const tierOrder = {
+                    'CHALLENGER': 1,
+                    'GRANDMASTER': 2,
+                    'MASTER': 3,
+                    'DIAMOND': 4,
+                    'PLATINUM': 5,
+                    'GOLD': 6,
+                    'SILVER': 7,
+                    'BRONZE': 8,
+                    'IRON': 9
+                };
+
+                summonerRankData.sort((a, b) => {
+                    if (tierOrder[a.tier] !== tierOrder[b.tier]) {
+                        return tierOrder[a.tier] - tierOrder[b.tier];
+                    } else {
+                        return b.leaguePoints - a.leaguePoints;
+                    }
+                });
+
+                const rankDetailsElement = document.getElementById('rankDetails');
+                rankDetailsElement.innerHTML = summonerRankData.map(summoner => `
+                    <div class="rank-card">
+                        <img src="${summoner.img}" alt="${summoner.name}" class="profile-img">
+                        <div class="rank-info">
+                            <div class="name"><strong>${summoner.name}</strong></div>
+                            <div class="tier">${summoner.tier}</div>
+                            <div class="league-points">${summoner.leaguePoints} LP</div>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                document.getElementById('rankDetails').innerText = 'Bir hata oluştu.';
+                console.error(error);
+            }
+        }
+
+        window.onload = getSummonerRankDetails;
+    </script>
+</body>
+</html>

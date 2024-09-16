@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1d;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.rank-card {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #2a2e58, #5865a0, #a091d3); /* LoL'e özgü koyu mavi-mor tonları */
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    width: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.rank-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.name {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #eaeaea;
+}
+
+.tier, .league-points {
+    font-size: 1em;
+    color: #b5b5b5;
+}
