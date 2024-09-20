@@ -20,9 +20,6 @@
                 { id: 'u4mDD2yQ9wZ5f6PwFWL6VtakpnJYBlnDyOQAVqyz19RV4Ntku4M1a1feJQ', name: 'Stansfield', img: 'stans.png' },
                 { id: 'DDfWi-1ZP7qEef99lfqUh7ZRU-JpCVEfv7wS7QJksF_Tg8g', name: 'Zeitnot', img: 'zeitnot.png' },
                 { id: 't5kU2u0V1HDf8fysS-J95rR1Z3fbrQKqbTaOn3Kt3YxA6t0', name: 'Zeitnotsmurf', img: 'zeitnotsmurf.png' }
-
-
-
             ];
 
             const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b';  // Buraya kendi API key'inizi ekleyin
@@ -37,9 +34,15 @@
                     if (data.length > 0) {
                         const soloQueueData = data.find(queue => queue.queueType === 'RANKED_SOLO_5x5');
                         if (soloQueueData) {
+                            let tierText = soloQueueData.tier;
+
+                            if (['DIAMOND', 'PLATINUM', 'GOLD', 'SILVER', 'BRONZE', 'IRON'].includes(soloQueueData.tier)) {
+                                tierText = `${soloQueueData.tier} ${soloQueueData.rank}`;
+                            }
+
                             summonerRankData.push({
                                 name: summoner.name,
-                                tier: soloQueueData.tier,
+                                tier: tierText,
                                 leaguePoints: soloQueueData.leaguePoints,
                                 img: summoner.img
                             });
@@ -60,8 +63,11 @@
                 };
 
                 summonerRankData.sort((a, b) => {
-                    if (tierOrder[a.tier] !== tierOrder[b.tier]) {
-                        return tierOrder[a.tier] - tierOrder[b.tier];
+                    const tierA = a.tier.split(' ')[0];  // Sadece tier kısmını alıyoruz (Diamond, Platinum, vb.)
+                    const tierB = b.tier.split(' ')[0];
+
+                    if (tierOrder[tierA] !== tierOrder[tierB]) {
+                        return tierOrder[tierA] - tierOrder[tierB];
                     } else {
                         return b.leaguePoints - a.leaguePoints;
                     }
@@ -78,7 +84,6 @@
                         </div>
                     </div>
                 `).join('');
-
             } catch (error) {
                 document.getElementById('rankDetails').innerText = 'Bir hata oluştu.';
                 console.error(error);
