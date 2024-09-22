@@ -75,3 +75,12 @@ function pauseMusic() {
     audio.pause();
     audio.currentTime = 0;
 }
+
+
+function updateUnixTime() {
+  const unixTime = Math.floor(Date.now() / 1000);
+  document.getElementById('unix-time').textContent = unixTime;
+}
+
+updateUnixTime();
+setInterval(updateUnixTime, 1000); // Update every second
