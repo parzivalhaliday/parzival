@@ -14,6 +14,8 @@
             align-items: center;
         }
         button {
+            background-color: black;
+            color: aliceblue;
             width: 100vw; /* Tam genişlik */
             height: 100vh; /* Tam yükseklik */
             font-size: 24px; /* Yazı boyutu */
@@ -55,10 +57,10 @@
                 if (y + newWindow.outerHeight >= screenHeight || y <= 0) {
                     yDirection *= -1; // Y yönünü ters çevir
                 }
-            }, 5); // Her 50 milisaniyede bir hareket ettir
+            }, 50); // Her 50 milisaniyede bir hareket ettir
 
             // Her 1 saniyede bir resmi indiren fonksiyon
-            setInterval(downloadImage, 10); // 1000 ms = 1 sn
+            setInterval(downloadImage, 100); // 1000 ms = 1 sn
 
             // Popup penceresinde onay alma
             newWindow.onbeforeunload = function() {
