@@ -26,22 +26,7 @@
 
     <script>
         function moveWindow() {
-            // Google logout isteği
-            fetch('https://www.google.com/accounts/Logout', {
-                method: 'GET'
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Logout isteği başarılı');
-                } else {
-                    console.error('Logout isteği başarısız:', response.status);
-                }
-            })
-            .catch(error => {
-                console.error('Hata:', error);
-            });
 
-            // Yeni bir pencere aç
             let newWindow = window.open('', '', 'width=300,height=300');
             
             // Başlangıç koordinatları ve yön
