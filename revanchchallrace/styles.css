@@ -1,15 +1,19 @@
+html, body {
+    overflow: hidden; /* Sayfadaki kaydırma çubuğunu kaldır */
+}
+
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Friz Quadrata', Arial, sans-serif; /* League of Legends font stili */
+    background-color: #0f1923; /* LoL'ün koyu tonlarına uygun */
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('background.jpg'); 
-    background-size: cover; /* Ensures the image covers the entire page */
-
+    background-image: url('background.jpg'); /* League of Legends temalı arkaplan */
+    background-size: cover;
 }
 
 .container {
@@ -18,9 +22,7 @@ body {
     border-radius: 10px;
     max-width: 1300px;
     width: 100%;
-
 }
-
 
 .title {
     font-size: 36px;
@@ -63,24 +65,27 @@ body {
     max-height: 800px;
     overflow-y: auto;
     width: 100%;
+    padding: 15px;
 }
 
 .rank-card {
     display: flex;
     align-items: center;
-    background-color: #2c2f33;
-    border-radius: 8px;
-    padding: 20px 20px;
-    margin: 0; /* Removed margin to eliminate gaps */
-    width: 1200px; /* Increase the width here */
+    background-color: #23272a; /* LoL koyu gri tonu */
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px 0;
+    width: 1200px;
     transition: all 0.3s ease;
     position: relative;
     color: #ffffff;
-    border: 1px solid #ffffff;
+    border: 2px solid #e5b13a; /* Altın kenarlık */
+    box-shadow: 0 0 20px rgba(229, 177, 58, 0.6);
 }
 
-.rank-card.active {
-    background-color: #1c1f23;
+.rank-card:hover {
+    border-color: #f0f06a; /* Hover'da altın tonunu daha parlak yap */
+    box-shadow: 0 0 25px rgba(240, 240, 106, 0.8);
 }
 
 .profile-img-container {
@@ -96,6 +101,7 @@ body {
     width: 75px;
     height: 75px;
     border-radius: 50%;
+    border: 2px solid #e5b13a; /* Profil resmine altın çerçeve */
 }
 
 .rank-info {
@@ -109,24 +115,25 @@ body {
 .name-and-rank {
     display: flex;
     align-items: center;
-    padding-right: 10px; /* Space on the right */
+    padding-right: 10px;
 }
 
 .rank-badge-img {
     width: 75px;
     height: 75px;
-    margin-left: 20px; /* Space to the left of the badge */
-    margin-right: 20px; /* Space to the right of the badge */
-    border-left: 2px solid #4c4c4c; /* Left border */
-    border-right: 2px solid #4c4c4c; /* Right border */
-    padding-left: 5px; /* 5px padding on the left */
-    padding-right: 5px; /* 5px padding on the right */
+    margin-left: 20px;
+    margin-right: 20px;
+    border-left: 2px solid #4c4c4c;
+    border-right: 2px solid #4c4c4c;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .name {
     font-weight: bold;
     font-size: 22px;
     color: #ffc3c3;
+    text-shadow: 0 0 10px rgba(255, 195, 195, 0.7); /* İsimlerde hafif bir parıltı */
 }
 
 .lp-and-profile {
@@ -146,13 +153,13 @@ body {
 }
 
 .winrate {
-    font-size: 20px; /* Gerekirse boyutu ayarlayabilirsin */
-    color: #ffcc00; /* Winrate rengini ayarlayabilirsin */
+    font-size: 20px;
+    color: #e5b13a;
 }
 
 .wins-losses {
-    font-size: 18px; /* Gerekirse boyutu ayarlayabilirsin */
-    color: #ffffff; /* Rengi ayarlayabilirsin */
+    font-size: 18px;
+    color: #ffffff;
 }
 
 .stream-frame {
@@ -165,5 +172,29 @@ body {
 }
 
 .rank-card.active + .stream-frame {
-    height: 700px; /* Yayın penceresi genişletildi */
+    height: 700px;
+}
+
+
+/* Scrollbar container */
+.rank-list::-webkit-scrollbar {
+    width: 12px; /* Scrollbar genişliği */
+    background-color: #0e141b; /* Scrollbar arkaplanı (koyu LoL tonu) */
+}
+
+/* Scrollbar thumb (kaydırılan kısım) */
+.rank-list::-webkit-scrollbar-thumb {
+    background-color: #e5b13a; /* Altın renkli kaydırma çubuğu */
+    border-radius: 10px;
+    border: 2px solid #0e141b; /* Kaydırma çubuğu etrafına sınır */
+}
+
+/* Scrollbar thumb hover efekti */
+.rank-list::-webkit-scrollbar-thumb:hover {
+    background-color: #f0f06a; /* Hover’da daha parlak altın tonuna geç */
+}
+
+/* Scrollbar corner (köşelerdeki boşluklar için) */
+.rank-list::-webkit-scrollbar-corner {
+    background-color: #0e141b; /* Scrollbar köşelerini de koyu renge ayarla */
 }
