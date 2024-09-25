@@ -9,10 +9,9 @@ async function getSummonerRankDetails() {
         { id: 'QOULliyP0bO62Ykg1ZFatUqnDz1boyx_TMOdidABt9I0798', name: 'Crystal', img: 'players/crystal.png', profileUrl: 'https://www.op.gg/summoners/euw/yy%20mb%20we%2015-EUW', streamUrl: 'https://player.kick.com/crystal_lol' },
         { id: '_zynYKg5Fo5-cOXog340aHxacIhHuAMj-jx1LnPhV2Hgy763czywBQQ12A', name: 'Çerez', img: 'players/lynxcerez.png', profileUrl: 'https://www.op.gg/summoners/euw/zeitnotsmurf', streamUrl: 'https://player.kick.com/zeitnot' }
     ];
-    const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b'; // API key
+    const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b'; 
     const summonerRankData = [];
 
-    // Rank to Image Mapping
     const rankImageMap = {
         'CHALLENGER I': 'challenger.webp',
         'GRANDMASTER I': 'grandmaster.webp',
@@ -58,7 +57,6 @@ async function getSummonerRankDetails() {
             }
         }
 
-        // Sort and display the rank data
         summonerRankData.sort((a, b) => {
             const tierOrder = {
                 'CHALLENGER': 1,
@@ -83,15 +81,13 @@ async function getSummonerRankDetails() {
             if (tierOrder[tierA] !== tierOrder[tierB]) {
                 return tierOrder[tierA] - tierOrder[tierB];
             } else {
-                return b.leaguePoints - a.leaguePoints; // Sort by LP if tiers are equal
-            }
+                return b.leaguePoints - a.leaguePoints;              }
         });
 
         const rankDetailsElement = document.getElementById('rankDetails');
         rankDetailsElement.innerHTML = summonerRankData.map(summoner => {
-            const tierKey = summoner.tier.split(' ')[0]; // e.g., 'DIAMOND'
-            const rankKey = summoner.tier.split(' ')[1]; // e.g., 'IV'
-            const rankImage = rankImageMap[tierKey + (rankKey ? ' ' + rankKey : '')] || 'default.webp'; // Default image if not found
+            const tierKey = summoner.tier.split(' ')[0];              const rankKey = summoner.tier.split(' ')[1]; 
+            const rankImage = rankImageMap[tierKey + (rankKey ? ' ' + rankKey : '')] || 'default.webp'; 
             
             return `
             <div class="rank-card">
@@ -113,36 +109,24 @@ async function getSummonerRankDetails() {
                     </div>
                 </div>
             </div>
-            <iframe class="stream-frame" src="${summoner.streamUrl}" frameborder="0" allowfullscreen="true"></iframe>
+            <iframe class="stream-frame" src="${summoner.streamUrl}" frameborder="0" allowfullscreen="false"></iframe>
             `;
         }).join('');
         
-        // Event handling for card clicks
-        const cards = document.querySelectorAll('.rank-card');
-        cards.forEach(card => {
-            card.addEventListener('click', function (event) {
-                if (event.target.classList.contains('opgg-icon') || event.target.closest('.profile-link')) {
-                    return;
-                }
+const cards = document.querySelectorAll('.rank-card');
 
-                const isActive = this.classList.contains('active');
-                cards.forEach(c => {
-                    c.classList.remove('active');
-                    const iframe = c.nextElementSibling;
-                    if (iframe) {
-                        iframe.style.height = '0';
-                    }
-                });
-                
-                if (!isActive) {
-                    this.classList.add('active');
-                    const iframe = this.nextElementSibling;
-                    if (iframe) {
-                        iframe.style.height = '700px';
-                    }
-                }
-            });
+cards.forEach(card => {
+    card.addEventListener('click', function () {
+        const isActive = card.classList.toggle('active');
+        
+        cards.forEach(otherCard => {
+            if (otherCard !== card) {
+                otherCard.classList.remove('active');
+            }
         });
+    });
+});
+
 
     } catch (error) {
         document.getElementById('rankDetails').innerText = 'Bir hata oluştu.';
@@ -152,7 +136,6 @@ async function getSummonerRankDetails() {
 
 window.onload = getSummonerRankDetails;
 
-// Refresh the page every 100 seconds
 setInterval(function () {
     window.location.reload();
 }, 100000);
