@@ -28,6 +28,8 @@ body {
     position: relative;
     display: inline-block;
     color: #ffcc00;
+    top: -20px; /* Başlığı yukarı taşır, değeri ihtiyaca göre ayarla */
+
 }
 
 .title::before {
@@ -36,8 +38,8 @@ body {
     background-image: url('lefttitle.png'); /* Replace with your left image URL */
     background-size: contain;
     background-repeat: no-repeat;
-    width: 75px; /* Adjust the width based on the image */
-    height: 75px; /* Adjust the height based on the image */
+    width: 100px; /* Adjust the width based on the image */
+    height: 100px; /* Adjust the height based on the image */
     margin-right: 10px; /* Space between image and text */
     vertical-align: middle; /* Aligns the image vertically */
 }
@@ -48,8 +50,8 @@ body {
     background-image: url('righttitle.png'); /* Replace with your right image URL */
     background-size: contain;
     background-repeat: no-repeat;
-    width: 75px; /* Adjust the width based on the image */
-    height: 75px; /* Adjust the height based on the image */
+    width: 100px; /* Adjust the width based on the image */
+    height: 100px; /* Adjust the height based on the image */
     margin-left: 10px; /* Space between text and image */
     vertical-align: middle; /* Aligns the image vertically */
 }
