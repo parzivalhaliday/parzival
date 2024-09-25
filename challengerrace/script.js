@@ -21,7 +21,7 @@ async function getSummonerRankDetails() {
         'DIAMOND II': 'diamond2.webp',
         'DIAMOND III': 'diamond3.webp',
         'DIAMOND IV': 'diamond4.webp',
-        'PLATINUM': 'platinum.webp',
+        'PLATINUM I': 'platinum.webp',
         'GOLD': 'gold.webp',
         'SILVER': 'silver.webp',
         'BRONZE': 'bronze.webp',
