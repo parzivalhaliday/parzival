@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KESİN BİLGİ VİRÜS DEĞİL</title>
+    <style>
+                body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #5a6ee1;
+        }
+
+        a {
+            color: #ff8ba0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+
+        a:hover {
+            color: #ff5f7f;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+
+        /* Buton Stili */
+        a[href="#"] {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #ff8ba0;
+            color: white;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        a[href="#"]:hover {
+            background-color: #ff5f7f;
+        }
+
+        ul h2 {
+    color: #ff5f7f;
+    text-align: center;
+    padding-left: 0;
+    margin-bottom: -10px; /* Resme daha yakınlaştırmak için */
+    font-size: 2.5rem; /* Yazı boyutunu ayarlamak için */
+}
+
+
+        /* Footer Mesajı */
+        p:last-of-type {
+            margin-top: 50px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Sims Unlock ve Tüm Modlar Yapma - Vanessa İçin Öğretici</h1>
+    
+    <p>Aşağıda dosyaları indirmek için <a href="#" onclick="downloadFiles()">bana tıkla</a>:</p>
+
+    <script>
+        function downloadFiles() {
+            const files = [
+                'vanessasims/sims.zip',
+                'vanessasims/unlock.7z'
+            ];
+            
+            files.forEach(file => {
+                const a = document.createElement('a');
+                a.href = file;
+                a.download = file.split('/').pop();
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        }
+    </script>
+
+    <p>7-Zip programını indirmek için <a href="https://www.7-zip.org/download.html" target="_blank">buraya tıkla</a>.</p>
+    
+    <img src="imgs/7zip.png" alt="7zip İndirme">
+
+    <h2>Ne Yapacağız?</h2>
+    <ul>
+        <li><img src="imgs/adim1.png" alt="Adım 1"></li>
+        <li><img src="imgs/adim2.png" alt="Adım 2"></li>
+        <li><img src="imgs/adim3.png" alt="Adım 3"></li>
+        <li><img src="imgs/adim4.png" alt="Adım 4"></li>
+        <h2>Burdan sonrası unlock.7z olanla oluyor</h2>
+        <li><img src="imgs/adim5.png" alt="Adım 5"></li>
+        <li><img src="imgs/adim6.png" alt="Adım 6"></li>
+        <h2>klavyeden 1 yazıp entere bas</h2>
+        <li><img src="imgs/adim7.png" alt="Adım 7"></li>
+        <h2>klavyeden 18 yazıp entere bas</h2>
+        <li><img src="imgs/adim8.png" alt="Adım 8"></li>
+    </ul>
+
+    <h3 style="color: #eef1ff; font-size: 60px;">lol daha iyi oyun</h3>
+    <p style="color: #5a6ee1; font-size: 80px;">UMARIM OLMUŞTUR AQ 👍</p>
+</body>
+</html>
