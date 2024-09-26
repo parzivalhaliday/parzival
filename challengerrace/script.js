@@ -75,15 +75,25 @@ async function getSummonerRankDetails() {
                 'IRON': 14
             };
 
-            const tierA = a.tier;
-            const tierB = b.tier;
+            const rankOrder = {
+                'I': 1,
+                'II': 2,
+                'III': 3,
+                'IV': 4
+            };
 
+            // Ayırarak ana derece (tier) ve alt derece (rank) alınır
+            const [tierA, rankA] = a.tier.split(' ');
+            const [tierB, rankB] = b.tier.split(' ');
+
+            // Önce ana dereceye göre karşılaştırma yapılır
             if (tierOrder[tierA] !== tierOrder[tierB]) {
                 return tierOrder[tierA] - tierOrder[tierB];
             } else {
-                return b.leaguePoints - a.leaguePoints;              }
+                // Aynı ana derecede iseler, alt dereceye göre karşılaştırma yapılır
+                return rankOrder[rankA] - rankOrder[rankB];
+            }
         });
-
         const rankDetailsElement = document.getElementById('rankDetails');
         rankDetailsElement.innerHTML = summonerRankData.map(summoner => {
             const tierKey = summoner.tier.split(' ')[0];              const rankKey = summoner.tier.split(' ')[1]; 
