@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GÖZLERİM İÇİN ÖZÜR DİLERİM</title>
+  <style>
+    /* Normalize and remove default margin */
+    html, body {
+      background-color: khaki;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Prevent scrolling */
+      
+    }
+
+    /* Page wrapper */
+    #page {
+      width: 900px; /* Set width according to your images */
+      height: 900px; /* Set height according to your images */
+      position: relative;
+      
+    }
+
+    /* Our wrapper */
+    .wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    /* Our image information */
+    .before, .after {
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-color: white;
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .content-image {
+      height: 100%;
+      pointer-events: none; /* Disable pointer events on images */
+    }
+
+    .after {
+      width: 125px; /* Adjust according to your requirement */
+    }
+
+    .scroller {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      left: 100px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background-color: transparent;
+      opacity: 0.9;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .scroller:hover {
+      opacity: 1;
+    }
+
+    .scrolling {
+      pointer-events: none;
+      opacity: 1;
+    }
+
+    .scroller__thumb {
+      width: 100%;
+      height: 100%;
+      padding: 5px;
+    }
+
+    .scroller:before, .scroller:after {
+      content: " ";
+      display: block;
+      width: 7px;
+      height: 9999px;
+      position: absolute;
+      left: 50%;
+      margin-left: -3.5px;
+      z-index: 30;
+      transition: 0.1s;
+    }
+
+    .scroller:before {
+      top: 100%;
+    }
+
+    .scroller:after {
+      bottom: 100%;
+    }
+
+    /* If you want to change the colors, make sure you change the fill in the svgs to match */
+    .scroller {
+      border: 5px solid #fff;
+    }
+
+    .scroller:before, .scroller:after {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="page">
+  <div class="wrapper">
+    <div class="before">
+      <img class="content-image" src="resim1.png" />
+    </div>
+    <div class="after">
+      <img class="content-image" src="resim2.png" />
+    </div>
+    <div class="scroller">
+      <svg class="scroller__thumb" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+        <polygon points="0 50 37 68 37 32 0 50" style="fill:#fff" />
+        <polygon points="100 50 64 32 64 68 100 50" style="fill:#fff" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+// Let’s do this! The 'active' variable lets us know when we're using it
+let active = false;
+
+// Set up event listeners
+document.querySelector('.scroller').addEventListener('mousedown', function () {
+  active = true;
+  document.querySelector('.scroller').classList.add('scrolling');
+});
+document.body.addEventListener('mouseup', function () {
+  active = false;
+  document.querySelector('.scroller').classList.remove('scrolling');
+});
+document.body.addEventListener('mouseleave', function () {
+  active = false;
+  document.querySelector('.scroller').classList.remove('scrolling');
+});
+
+// Track mouse movement
+document.body.addEventListener('mousemove', function (e) {
+  if (!active) return;
+  let x = e.pageX;
+  x -= document.querySelector('.wrapper').getBoundingClientRect().left;
+  scrollIt(x);
+});
+
+function scrollIt(x) {
+  let transform = Math.max(0, Math.min(x, document.querySelector('.wrapper').offsetWidth));
+  document.querySelector('.after').style.width = transform + "px";
+  document.querySelector('.scroller').style.left = transform - 25 + "px";
+}
+
+// Set opening state
+scrollIt(150);
+
+// Handle touch events
+document.querySelector('.scroller').addEventListener('touchstart', function () {
+  active = true;
+  document.querySelector('.scroller').classList.add('scrolling');
+});
+document.body.addEventListener('touchend', function () {
+  active = false;
+  document.querySelector('.scroller').classList.remove('scrolling');
+});
+document.body.addEventListener('touchcancel', function () {
+  active = false;
+  document.querySelector('.scroller').classList.remove('scrolling');
+});
+</script>
+
+</body>
+</html>
