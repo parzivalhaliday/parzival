@@ -59,42 +59,42 @@ async function getSummonerRankDetails() {
                 }
             }
         }
-
         summonerRankData.sort((a, b) => {
             const tierOrder = {
                 'CHALLENGER': 1,
                 'GRANDMASTER': 2,
                 'MASTER': 3,
                 'DIAMOND': 4,
-                'DIAMOND I': 5,
-                'DIAMOND II': 6,
-                'DIAMOND III': 7,
-                'DIAMOND IV': 8,
-                'EMERALD': 9,
-                'PLATINUM': 10,
-                'GOLD': 11,
-                'SILVER': 12,
-                'BRONZE': 13,
-                'IRON': 14
+                'EMERALD': 5,
+                'PLATINUM': 6,
+                'GOLD': 7,
+                'SILVER': 8,
+                'BRONZE': 9,
+                'IRON': 10
             };
-
+        
             const rankOrder = {
                 'I': 1,
                 'II': 2,
                 'III': 3,
                 'IV': 4
             };
-
-            // Ayırarak ana derece (tier) ve alt derece (rank) alınır
+        
+            // Split the tier and rank
             const [tierA, rankA] = a.tier.split(' ');
             const [tierB, rankB] = b.tier.split(' ');
-
-            // Önce ana dereceye göre karşılaştırma yapılır
+        
+            // Compare tiers
             if (tierOrder[tierA] !== tierOrder[tierB]) {
                 return tierOrder[tierA] - tierOrder[tierB];
             } else {
-                // Aynı ana derecede iseler, alt dereceye göre karşılaştırma yapılır
-                return rankOrder[rankA] - rankOrder[rankB];
+                // If tiers are the same, compare ranks
+                if (rankOrder[rankA] !== rankOrder[rankB]) {
+                    return rankOrder[rankA] - rankOrder[rankB];
+                } else {
+                    // If both tier and rank are the same, compare league points
+                    return b.leaguePoints - a.leaguePoints; // Sort by LP in descending order
+                }
             }
         });
         const rankDetailsElement = document.getElementById('rankDetails');
