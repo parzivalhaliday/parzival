@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refresh Rate Test - Dark Theme</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #info {
+            text-align: center;
+        }
+        #fps {
+            font-size: 3em;
+            color: #00ff00;
+        }
+        p {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">
+        <p>Current Refresh Rate:</p>
+        <div id="fps">0</div>
+        <p>Frames Per Second (FPS)</p>
+    </div>
+
+    <script>
+        let frameCount = 0;
+        let lastTime = performance.now();
+        let fpsDisplay = document.getElementById('fps');
+
+        function updateFrame() {
+            frameCount++;
+            const currentTime = performance.now();
+            const delta = currentTime - lastTime;
+
+            if (delta >= 1000) {
+                const fps = Math.round((frameCount / delta) * 1000);
+                fpsDisplay.textContent = fps;
+                frameCount = 0;
+                lastTime = currentTime;
+            }
+
+            requestAnimationFrame(updateFrame);
+        }
+
+        requestAnimationFrame(updateFrame);
+    </script>
+</body>
+</html>
