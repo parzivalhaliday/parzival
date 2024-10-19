@@ -7,7 +7,8 @@ async function getSummonerRankDetails() {
         { id: 'DDfWi-1ZP7qEef99lfqUh7ZRU-JpCVEfv7wS7QJksF_Tg8g', name: 'Zeitnot', img: 'players/zeitnot.png', profileUrl: 'https://www.op.gg/summoners/euw/zeitnot-7149', streamUrl: 'https://player.kick.com/zeitnot' },
         { id: '_VWMhsAQy58uoIjzqEHU0EptiHRKqwFEdEeBV9UPUrJp5k0', name: 'Fabfabulous', img: 'players/fabfab.png', profileUrl: 'https://www.op.gg/summoners/euw/FABFABFAB-EUW', streamUrl: 'https://player.kick.com/fabfabulous' },
         { id: 'QOULliyP0bO62Ykg1ZFatUqnDz1boyx_TMOdidABt9I0798', name: 'Crystal', img: 'players/crystal.png', profileUrl: 'https://www.op.gg/summoners/euw/yy%20mb%20we%2015-EUW', streamUrl: 'https://player.kick.com/crystal_lol' },
-        { id: '_zynYKg5Fo5-cOXog340aHxacIhHuAMj-jx1LnPhV2Hgy763czywBQQ12A', name: 'Çerez', img: 'players/lynxcerez.png', profileUrl: 'https://www.op.gg/summoners/euw/zeitnotsmurf', streamUrl: 'https://player.kick.com/zeitnot' }
+        { id: '_zynYKg5Fo5-cOXog340aHxacIhHuAMj-jx1LnPhV2Hgy763czywBQQ12A', name: 'Çerez', img: 'players/lynxcerez.png', profileUrl: 'https://www.op.gg/summoners/euw/LynxCerez-7777', streamUrl: 'https://player.kick.com/lynxcerezlol' },
+        { id: 'XRkbSdzhJMda6i-_L4jKq_Fifeg80pTEaoLPG3C_DX-x1V0H', name: 'Trix', img: 'players/trix.png', profileUrl: 'https://www.op.gg/summoners/euw/Voodoo%20Style-EUW', streamUrl: 'https://player.kick.com/trixucator' }
     ];
     const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b'; 
     const summonerRankData = [];
