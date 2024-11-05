@@ -1,1 +1,128 @@
-seviyom seni güzel kız
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <link rel="icon" href="icons/favicon1.ico">
+    <title id="dusurdunbeni"> Dilay bulmaca </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            overflow: hidden;
+            background-color: #282c34;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='%23FF0000' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") 12 12, auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .falling-text, .falling-emoji {
+            position: absolute;
+            top: 0;
+            animation: fall 5s linear infinite;
+            font-size: 24px;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <script>
+
+        
+var basliklar = ["Dilay", "Umarım burayı bulursun", "Ve bulmacayı tamamlarsın", "Seviyom seni", "Burayı bulunca bana söyleme","Bulmacayı bulunca söyle","Biraz zor xd"];
+
+var currentIndex = 0;
+
+function baslikDegistir() {
+    var pageTitle = document.getElementById("dusurdunbeni");
+    pageTitle.innerText = basliklar[currentIndex];
+    currentIndex = (currentIndex + 1) % basliklar.length;
+}
+
+setInterval(baslikDegistir, 1500);
+
+
+
+
+const favicons = ["icons/favicon1.ico", "icons/favicon2.ico"];
+
+const changeInterval = 1000;
+
+let faviconIndex = 0;
+setFavicon(favicons[faviconIndex]);
+
+setInterval(() => {
+    faviconIndex = (faviconIndex + 1) % favicons.length;
+    setFavicon(favicons[faviconIndex]);
+}, changeInterval);
+
+function setFavicon(favicon) {
+    const link = document.querySelector("link[rel='icon']");
+    link.href = favicon;
+}
+
+// Sayfanın yüklenmesini bekle
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(showAlert, 2500);
+});
+
+
+function showAlert() {
+    alert('Burayı keşfedersen aşırı komplike yapılmış bi bulmacaya hazır mısın xd');
+
+    document.body.classList.add('custom-alert');
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.body.style.cursor = 'url("icons/cookie.ico"), auto';
+});
+        const colors = ["#ff0000", "#ff69b4", "#8a2be2", "#1e90ff", "#ff6347", "#ff1493", "#ff4500", "#ff69b4", "#ffd700", "#ff69b4", "#32cd32", "#ffffff", "#000000", "#ffb6c1", "#dc143c", "#ff8c00", "#ff69b4", "#ff69b4", "#a52a2a"];
+        const emojis = ["❤️", "💕", "💜", "💙", "💔", "💖", "♥️", "💗", "💛", "💓", "💚", "🤍", "🖤", "💞", "❣️", "💘", "🧡", "💝", "💟", "🤎"];
+        const fonts = ["Arial", "Verdana", "Courier New", "Georgia", "Times New Roman", "Comic Sans MS", "Impact", "Lucida Console", "Palatino", "Trebuchet MS"];
+
+        // Düşme sıklığı parametreleri (milisaniye cinsinden)
+        const textFrequency = 1000; // "DİLAY" yazısı düşme sıklığı
+        const emojiFrequency = 700; // Kalp emojisi düşme sıklığı
+
+        function createFallingText() {
+            const text = document.createElement("div");
+            text.innerText = "DİLAY";
+            text.classList.add("falling-text");
+            text.style.left = `${Math.random() * 100}vw`;
+            text.style.color = colors[Math.floor(Math.random() * colors.length)];
+            text.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
+            document.body.appendChild(text);
+
+            text.addEventListener("animationend", () => {
+                text.remove();
+            });
+        }
+
+        function createFallingEmoji() {
+            const emoji = document.createElement("div");
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.classList.add("falling-emoji");
+            emoji.style.left = `${Math.random() * 100}vw`;
+            document.body.appendChild(emoji);
+
+            emoji.addEventListener("animationend", () => {
+                emoji.remove();
+            });
+        }
+
+        setInterval(createFallingText, textFrequency);
+        setInterval(createFallingEmoji, emojiFrequency);
+    </script>
+</body>
+</html>
