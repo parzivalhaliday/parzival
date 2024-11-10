@@ -19,7 +19,6 @@
     function parseLocalStorage(key, fallback) {
         try {
             const value = JSON.parse(localStorage.getItem(`mango:${key}`));
-            console.log(key, value);
             return typeof value === typeof fallback ? value : fallback;
         } catch (e) {
             console.error(e);
@@ -360,7 +359,6 @@
     create();
 
     function setVariant(arr) {
-        console.log(arr);
 
         localStorage.setItem("mango:variant", `"${arr}"`);
         mangoEl.style.backgroundImage = `url('mango.gif')`;
