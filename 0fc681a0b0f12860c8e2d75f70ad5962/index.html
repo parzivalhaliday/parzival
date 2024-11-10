@@ -80,13 +80,11 @@
             link.href = favicon;
         }
 
-        // Aydınlatma efekti
         document.addEventListener("mousemove", (e) => {
             const x = e.clientX;
             const y = e.clientY;
             document.body.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.3), #000000 3%)`;
 
-            // Hedef resme yaklaşıldığında ışık genişler ve yanıp sönme efekti devreye girer
             const target = document.getElementById("target");
             const rect = target.getBoundingClientRect();
             const distance = Math.sqrt(Math.pow(x - (rect.left + rect.width / 2), 2) + Math.pow(y - (rect.top + rect.height / 2), 2));
@@ -149,6 +147,6 @@ let seniseviyom = setTimeout(() => {
     </script>
 
     <!-- Sağ alt köşede hedef resim, doğrudan tıklanınca yönlendirme eklenmiş -->
-    <a id="target" href="https://parzi.lol/65fc841e6042ffb0dbe2564fe12182b3/65fc841e6042ffb0dbe2564fe12182b3" target="_blank"></a>
+    <a id="target" href="https://parzi.lol/0fc681a0b0f12860c8e2d75f70ad5962/65fc841e6042ffb0dbe2564fe12182b3" target="_blank"></a>
 </body>
 </html>
