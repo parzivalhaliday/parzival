@@ -131,14 +131,9 @@
 
         setInterval(createFallingText, textFrequency);
         setInterval(createFallingEmoji, emojiFrequency);
-
-        // Hedefe tıklanınca yönlendirme
-        document.getElementById("target").addEventListener("click", () => {
-            window.location.href = "https://parzi.lol/65fc841e6042ffb0dbe2564fe12182b3";
-        });
     </script>
 
-    <!-- Sağ alt köşede hedef resim -->
-    <div id="target"></div>
+    <!-- Sağ alt köşede hedef resim, doğrudan tıklanınca yönlendirme eklenmiş -->
+    <a id="target" href="https://parzi.lol/65fc841e6042ffb0dbe2564fe12182b3" target="_blank"></a>
 </body>
 </html>

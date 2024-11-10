@@ -1,8 +1,7 @@
 
 body {
     background-image: url("bgimage.jpg");
-    background-color: #cccccc;
-    cursor: none;
-   }
+    cursor: url('cookie.png'), auto;
+}
    
    

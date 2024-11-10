@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="icons/favicon1.ico" type="image/x-icon">
+    <link rel="icon" href="/0fc681a0b0f12860c8e2d75f70ad5962/icons/favicon1.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="rina.css">
-    <title id="dusurdunbeni"> Rina </title>
+    <link rel="stylesheet" href="susam.css">
+    <title id="dusurdunbeni"> dilayyyyyyy </title>
 
 </head>
 
@@ -15,15 +15,42 @@
     <!-- Diğer HTML içeriği buraya gelecek -->
 
     <div id="orina" style="position: fixed; z-index: 99;">
-        <a href="https://discord.gg/MHZmPMuGWH" target="_blank">
+        <a href="parzi.lol/b68a969c7e4939276974f1736fb0c11f" target="_blank">
             <img
                 src="pixel.png" 
-                width="30"
-                height="30"
-                style="position: absolute; top: 800px; left: 1535px; image-rendering: pixelated; filter: none;"
+                width="20"
+                height="20"
+                style="position: absolute; top: 300px; left: 535px; image-rendering: pixelated; filter: none;"
             />
         </a>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js"></script>,
+    <script>
+                var basliklar = ["Aşama 2 ye geçtin", "Burdan sonrası", "çoook zor ve şifreler bulman gerek", "Sonuç seni", "Mutlu edecek","xd","Umarım"];
+        var currentIndex = 0;
+
+        function baslikDegistir() {
+            var pageTitle = document.getElementById("dusurdunbeni");
+            pageTitle.innerText = basliklar[currentIndex];
+            currentIndex = (currentIndex + 1) % basliklar.length;
+        }
+        setInterval(baslikDegistir, 1500);
+
+        // Favicon değiştirme
+        const favicons = ["/0fc681a0b0f12860c8e2d75f70ad5962/icons/favicon2.ico", "/0fc681a0b0f12860c8e2d75f70ad5962/icons/favicon1.ico"];
+        const changeInterval = 1000;
+        let faviconIndex = 0;
+        setFavicon(favicons[faviconIndex]);
+
+        setInterval(() => {
+            faviconIndex = (faviconIndex + 1) % favicons.length;
+            setFavicon(favicons[faviconIndex]);
+        }, changeInterval);
+
+        function setFavicon(favicon) {
+            const link = document.querySelector("link[rel='icon']");
+            link.href = favicon;
+        }
+    </script>
 </body>
 </html>
