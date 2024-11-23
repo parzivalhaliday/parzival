@@ -10,7 +10,6 @@
     <script src="./renk.js"></script>
     <script src="keyboardevent.js"></script>
 
-
     <style>
         * {
             margin: 0;
@@ -21,7 +20,6 @@
         body {
             overflow: hidden;
             cursor: url('icons/cookie.ico'), auto;
-
         }
 
         canvas {
@@ -41,29 +39,40 @@
         #countdown {
             font-size: 54px;
             font-weight: bold;
-            margin-top: 40px;
-            
+            margin-top: 20px;
         }
-        .renkcount{
+        .renkcount {
             color: aqua;
         }
+        #unixTime, #remainingUnix {
+            font-size: 24px;
+            color: lightgray;
+            margin-top: 10px;
+        }
     </style>
-    <script>
-                function updateCountdown() {
-            var unixTime = 1718417053; 
 
-            var currentTime = Math.floor(Date.now() / 1000);
+    <script>
+        function updateCountdown() {
+            var unixTime = 1741215128; // Hedef Unix zamanı
+
+            var currentTime = Math.floor(Date.now() / 1000); // Mevcut Unix zamanı
             var timeDifference = unixTime - currentTime;
 
             if (timeDifference <= 0) {
-                document.getElementById('countdown').innerHTML = "son kez gemide soundtrack dinledim.";
+                document.getElementById('countdown').innerHTML = "son kez xd yazdım";
+                document.getElementById('unixTime').innerHTML = "";
+                document.getElementById('remainingUnix').innerHTML = "";
+                document.getElementById('test').innerHTML = "";
+
             } else {
                 var days = Math.floor(timeDifference / (60 * 60 * 24));
                 var hours = Math.floor((timeDifference % (60 * 60 * 24)) / (60 * 60));
                 var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
                 var seconds = timeDifference % 60;
 
-                document.getElementById('countdown').innerHTML = "" + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+                document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                document.getElementById('unixTime').innerHTML = `${currentTime}`;
+                document.getElementById('remainingUnix').innerHTML = `${timeDifference}`;
             }
         }
 
@@ -71,13 +80,12 @@
     </script>
 </head>
 <body>
-    <div id="htmlOverlay" class="renk">
-        <p id="head">XD</p>
-        <br>
-        <br>
+    <div id="htmlOverlay">
+        <p style="font-size: 55px;" id="head">XD</p>
         <p id="countdown" class="renkcount"></p>
-
+        <p style="font-size: 35px;" id="test">gün sonra bulmaca çıkacak umarım çözersiniz</p>
+        <p id="unixTime"></p> <!-- Mevcut Unix zamanı -->
+        <p id="remainingUnix"></p> <!-- Hedefe kalan Unix zamanı -->
     </div>
-    
 </body>
 </html>
