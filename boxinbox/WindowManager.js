@@ -11,6 +11,7 @@ class WindowManager
 	{
 		let that = this;
 
+		// event listener for when localStorage is changed from another window
 		addEventListener("storage", (event) => 
 		{
 			if (event.key == "windows")
@@ -27,15 +28,18 @@ class WindowManager
 			}
 		});
 
+		// event listener for when current window is about to ble closed
 		window.addEventListener('beforeunload', function (e) 
 		{
 			let index = that.getWindowIndexFromId(that.#id);
 
+			//remove this window from the list and update local storage
 			that.#windows.splice(index, 1);
 			that.updateWindowsLocalStorage();
 		});
 	}
 
+	// check if theres any changes to the window list
 	#didWindowsChange (pWins, nWins)
 	{
 		if (pWins.length != nWins.length)
@@ -55,6 +59,7 @@ class WindowManager
 		}
 	}
 
+	// initiate current window (add metadata for custom data to store with each window instance)
 	init (metaData)
 	{
 		this.#windows = JSON.parse(localStorage.getItem("windows")) || [];
@@ -95,8 +100,10 @@ class WindowManager
 
 	update ()
 	{
+		//console.log(step);
 		let winShape = this.getWinShape();
 
+		//console.log(winShape.x, winShape.y);
 
 		if (winShape.x != this.#winData.shape.x ||
 			winShape.y != this.#winData.shape.y ||
@@ -109,6 +116,7 @@ class WindowManager
 			let index = this.getWindowIndexFromId(this.#id);
 			this.#windows[index].shape = winShape;
 
+			//console.log(windows);
 			if (this.#winShapeChangeCallback) this.#winShapeChangeCallback();
 			this.updateWindowsLocalStorage();
 		}
