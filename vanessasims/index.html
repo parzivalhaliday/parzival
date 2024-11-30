@@ -1,67 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gideceksin az bekle</title>
-    <link rel="icon" href="icons/cookie.ico" type="image/x-icon">
-
-    <style>
-        *{
-            cursor: none;
-
-        }
-        body {
-            
-            background-color: #383a40; /* Koyu arka plan rengi */
-            color: #d4af37; /* Altın renkli metin */
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            pointer-events: none;
-            cursor: none;
-
-        }
-        h1 {
-            font-size: 5rem;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 3.2rem;
-        }
-    </style>
-    <script>
-        setTimeout(function() {
-            window.location.href = "https://parzi.lol/goodbyeworld";
-        }, 300000);
-
-        // Change the text after 1 minute (60 seconds)
-        setTimeout(function() {
-            document.querySelector('p').textContent = "https://www.youtube.com/watch?v=c8TaJEGyt70";
-
-            // After 10 seconds, change to another message
-            setTimeout(function() {
-                document.querySelector('p').textContent = "linki görmek için sayfayı mı yenileyeceksin yoksa asıl sayfaya ulaşmak için bekleyecek misin";
-
-                // After another 10 seconds, change back to "hmm"
-                setTimeout(function() {
-                    document.querySelector('p').textContent = "hmm";
-                }, 5000);  // 10 seconds
-            }, 2000);  // 10 seconds
-        }, 120000);  // 60,000 milliseconds = 1 minute
-    </script>
+    <title>Beni Oku</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <h1>xd</h1>
-        <p>hmm</p>
-        <p style="font-size: 34px;">bence sayfada yeteri kadar beklemezsin</p>
-        <p style="font-size: 1px;">seni seviyorum dilay <3</p>
-
+    <div class="container">
+        <div class="text-content" id="textContent">
+            <!-- İçerik JavaScript ile yüklenecek -->
+        </div>
+        <p id="messageText"></p>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
