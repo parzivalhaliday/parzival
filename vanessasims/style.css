@@ -1,20 +1,29 @@
 body {
+    background-color: #151515;
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a;  /* Koyu arka plan */
+    position: relative;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: none;
 }
 
 .container {
+    background-color: transparent;
     display: flex;
+    flex-direction: column;
+    gap: 50px;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #1a1a1a;  /* Container arka planı */
 }
 
 .text-content {
-    background-color: #2d2d2d;  /* Metin kutusu arka planı */
-    color: #ffffff;  /* Metin rengi beyaz */
+    background-color: #2d2d2d;
+    color: #ffffff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 2px 15px rgba(255,105,180,0.1);
@@ -24,6 +33,11 @@ body {
     border: 1px solid #ff69b4;
     text-align: center;
     line-height: 1.6;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: auto;
 }
 
 .text-content.visible {
@@ -36,6 +50,7 @@ body {
     font-size: 18px;
     color: #fff;
     text-shadow: 0 0 2px rgba(255,255,255,0.1);
+    pointer-events: none;
 }
 
 .text-content:hover {
@@ -48,7 +63,7 @@ body {
     margin-top: 20px;
     text-align: center;
     position: fixed;
-    bottom: 30px;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
     opacity: 1;
@@ -60,6 +75,7 @@ body {
     border-radius: 8px;
     border: 2px solid #ff69b4;
     z-index: 1000;
+    pointer-events: none;
 }
 
 #messageText:hover {
@@ -68,4 +84,69 @@ body {
     transform: translateX(-50%) scale(1.05);
     text-shadow: 0 0 15px rgba(255,105,180,0.8);
     border-color: #ff1493;
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+}
+
+@keyframes flowerFall {
+    0% {
+        transform: translateY(-20px) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(50vh) rotate(180deg) scale(0.9);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.8);
+        opacity: 0.6;
+    }
+}
+
+.flower {
+    position: fixed;
+    color: rgba(255, 223, 0, 0.9);
+    text-shadow: 
+        0 0 15px rgba(255, 215, 0, 0.7),
+        0 0 25px rgba(255, 255, 0, 0.5);
+    pointer-events: none;
+    z-index: -1;
+    font-size: 35px;
+    top: -20px;
+}
+
+.cursor {
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    font-size: 24px;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 0 10px rgba(255, 192, 203, 0.8))
+           drop-shadow(0 0 20px rgba(255, 105, 180, 0.5));
+    animation: cursorGlow 2s ease-in-out infinite;
+}
+
+@keyframes cursorGlow {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(255, 192, 203, 0.8))
+               drop-shadow(0 0 20px rgba(255, 105, 180, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(255, 192, 203, 0.9))
+               drop-shadow(0 0 30px rgba(255, 105, 180, 0.7))
+               drop-shadow(0 0 40px rgba(255, 20, 147, 0.4));
+    }
+    100% {
+        filter: drop-shadow(0 0 10px rgba(255, 192, 203, 0.8))
+               drop-shadow(0 0 20px rgba(255, 105, 180, 0.5));
+    }
 } 
