@@ -14,6 +14,23 @@ if ("geolocation" in navigator) {
     });
 }
  
+function getOperatingSystem() {
+    const userAgent = window.navigator.userAgent;
+    let os = "Unknown Operating System";
+
+    if (userAgent.indexOf("Win") !== -1) os = "Windows";
+    else if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
+    else if (userAgent.indexOf("Linux") !== -1) os = "Linux";
+    else if (userAgent.indexOf("Android") !== -1) os = "Android";
+    else if (userAgent.indexOf("iOS") !== -1) os = "iOS";
+
+    return os;
+}
+
+// Print operating system
+document.getElementById("operating-system").textContent = "" + getOperatingSystem();
+
+
 
 function updateLocationInfo(position) {
     const latitude = position.coords.latitude;
