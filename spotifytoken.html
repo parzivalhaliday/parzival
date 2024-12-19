@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Token</title>
+    <style>
+        body {
+            background-color: #1DB954;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .url {
+            word-break: break-all;
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            font-family: monospace;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .url:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .instructions {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .copy-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            animation: fadeInOut 2s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-message" id="copyMessage">URL Kopyalandı!</div>
+    <div class="container">
+        <h1>Spotify Token</h1>
+        <div class="url" id="urlText" onclick="copyURL()">
+            <script>document.write(window.location.href)</script>
+        </div>
+        <p class="instructions">
+            URL'yi kopyalamak için kutuya tıklayın.<br>
+            Ardından konsola yapıştırabilirsiniz.
+        </p>
+    </div>
+
+    <script>
+        function copyURL() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const message = document.getElementById('copyMessage');
+                message.style.display = 'block';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html> 
