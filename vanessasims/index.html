@@ -63,6 +63,10 @@
             Tarayıcınız video elementini desteklemiyor.
         </video>
     </div>
+    <audio id="background-audio" volume="0.3">
+        <source src="secret.wav" type="audio/wav">
+    </audio>
+
     <script>
         function createRandomText() {
             const container = document.querySelector('.background-text');
@@ -123,10 +127,22 @@
             setInterval(updateFavicon, 2000);
         }
 
+        // Ses çalma fonksiyonu güncellendi
+        function playAudio() {
+            const audio = document.getElementById('background-audio');
+            if (audio) {
+                audio.volume = 0.3; // Ses seviyesi %30'a ayarlandı
+                audio.play().catch(function(error) {
+                    console.log("Ses çalma hatası:", error);
+                });
+            }
+        }
+
         // Sayfa yüklendiğinde ve yeniden boyutlandırıldığında çalıştır
         window.addEventListener('load', () => {
             createRandomText();
             changeFavicon(); // Favicon değişimini başlat
+            playAudio(); // Ses çalma fonksiyonunu başlat
         });
         window.addEventListener('resize', () => {
             const container = document.querySelector('.background-text');
