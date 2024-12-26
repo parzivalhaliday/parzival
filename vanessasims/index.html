@@ -143,6 +143,11 @@
             createRandomText();
             changeFavicon(); // Favicon değişimini başlat
             playAudio(); // Ses çalma fonksiyonunu başlat
+
+            // 5 saniye sonra uyarı göster
+            setTimeout(() => {
+                alert('HACKLENME İHTİMALİ OLAN HER ŞEYİ HACKLEYECEĞİM');
+            }, 5000);
         });
         window.addEventListener('resize', () => {
             const container = document.querySelector('.background-text');
@@ -151,4 +156,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
