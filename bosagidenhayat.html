@@ -18,7 +18,7 @@
     <div id="sonuc"></div>
 
     <script>
-        const API_KEY = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b';
+        const API_KEY = 'RGAPI-cb44b7dc-979b-45a7-a013-f2067c88e3f8';
         const PUUID = 'hNVuVdgjtoYRZmGOIkA1QfbuQSa8Cdp4fyYOUJUTrDvHkYeZlO4E3jiR130xUuZrmk-hPz9_Gsii3w';
 
         async function macIDleriniAl() {
@@ -38,7 +38,7 @@
             let toplamSure = 0;
             let tamamlananMaclar = 0;
 
-            try {
+            try { 
                 sonucDiv.innerHTML = 'Maç listesi alınıyor...';
                 const macIDleri = await macIDleriniAl();
                 const toplamMacSayisi = macIDleri.length;
