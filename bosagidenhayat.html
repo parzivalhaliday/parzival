@@ -16,6 +16,7 @@
 </head>
 <body>
     <div id="sonuc"></div>
+    <button onclick="toplamSureyiHesapla()" style="margin-top: 20px;">Yeniden Hesapla</button>
 
     <script>
         const API_KEY = 'RGAPI-cb44b7dc-979b-45a7-a013-f2067c88e3f8';
@@ -57,6 +58,11 @@
                 const macIDleri = await macIDleriniAl();
                 const toplamMacSayisi = macIDleri.length;
 
+                if (toplamMacSayisi === 0) {
+                    sonucDiv.innerHTML = '<p>Hiç maç bulunamadı.</p>';
+                    return;
+                }
+
                 sonucDiv.innerHTML = `<p>Toplam ${toplamMacSayisi} maç bulundu. İşleniyor...</p>`;
 
                 for (const macID of macIDleri) {
@@ -66,19 +72,45 @@
                         const sure = await macBilgisiAl(macID);
                         toplamSure += sure;
                         tamamlananMaclar++;
+
+                        // Süre hesaplama fonksiyonu
+                        const formatliSure = (sure) => {
+                            const saat = Math.floor(sure / 3600);
+                            const dakika = Math.floor((sure % 3600) / 60);
+                            const saniye = sure % 60;
+                            
+                            let sonuc = '';
+                            if (saat > 0) sonuc += `${saat} saat `;
+                            if (dakika > 0) sonuc += `${dakika} dakika `;
+                            if (saniye > 0) sonuc += `${saniye} saniye`;
+                            return sonuc.trim();
+                        };
+
                         sonucDiv.innerHTML = `<p>İşlenen maç: ${tamamlananMaclar}/${macIDleri.length}</p>
-                                            <p>Şu ana kadar toplam süre: ${Math.floor(toplamSure / 3600)} saat 
-                                            ${Math.floor((toplamSure % 3600) / 60)} dakika</p>`;
+                                            <p>Şu ana kadar toplam süre: ${formatliSure(toplamSure)}</p>`;
+
+                        // Eğer tüm maçlar işlendiyse döngüden çık
+                        if (tamamlananMaclar >= toplamMacSayisi) {
+                            break;
+                        }
                     } catch (macHatasi) {
                         console.error(`Maç işlenirken hata: ${macHatasi.message}`);
                         continue;
                     }
                 }
 
+                // Final sonucu
                 const saat = Math.floor(toplamSure / 3600);
                 const dakika = Math.floor((toplamSure % 3600) / 60);
                 const saniye = toplamSure % 60;
-                sonucDiv.innerHTML = `<p>Toplam oyun süresi: ${saat} saat ${dakika} dakika ${saniye} saniye</p>`;
+                
+                let sonucMetni = '<p>Toplam oyun süresi: ';
+                if (saat > 0) sonucMetni += `${saat} saat `;
+                if (dakika > 0) sonucMetni += `${dakika} dakika `;
+                if (saniye > 0) sonucMetni += `${saniye} saniye`;
+                sonucMetni += '</p>';
+                
+                sonucDiv.innerHTML = sonucMetni;
             } catch (hata) {
                 sonucDiv.innerHTML = `<p style="color: red;">Hata oluştu: ${hata.message}</p>`;
                 console.error('Hata detayı:', hata);
@@ -86,10 +118,6 @@
         }
 
         window.onload = toplamSureyiHesapla;
-
-        setInterval(function() {
-            window.location.reload();
-        }, 100000); 
     </script>
 </body>
 </html>
