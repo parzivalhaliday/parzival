@@ -20,16 +20,25 @@
             max-width: 1000px;
         }
 
-        .summoner-info h3 {
-            margin: 0 0 15px 0;
-            font-size: 28px;
-            color: #ffffff;
+        .rank-text {
+            text-align: center;
         }
 
-        .summoner-info p {
+        .rank-text p {
             margin: 10px 0;
-            font-size: 18px;
-            color: #cccccc;
+        }
+
+        .rank-text p:first-child {
+            font-size: 42px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .winrate {
+            font-size: 36px;
+            font-weight: 600;
+            color: #74b9ff;
+            margin-top: 15px;
         }
 
         .match-history {
@@ -46,10 +55,6 @@
             width: 85px;
             transition: transform 0.2s;
             background-color: #363636;
-        }
-
-        .match:hover {
-            transform: translateY(-3px);
         }
 
         .win {
@@ -83,33 +88,6 @@
 
         .loss .score {
             color: #ff7675;
-        }
-
-        .rank-info {
-            padding: 35px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .rank-text {
-            text-align: center;
-        }
-
-        .rank-text p {
-            margin: 10px 0;
-        }
-
-        .rank-text p:first-child {
-            font-size: 42px;
-            color: #ffffff;
-            font-weight: bold;
-        }
-
-        .winrate {
-            font-size: 36px;
-            font-weight: 600;
-            color: #74b9ff;
-            margin-top: 15px;
         }
     </style>
 </head>
@@ -194,21 +172,17 @@
                 const rankDetailsElement = document.getElementById('rankDetails');
                 rankDetailsElement.innerHTML = summonerRankData.map(summoner => `
                     <div class="summoner-card">
-                        <div class="summoner-info">
-                            <div class="rank-info">
-                                <div class="rank-text">
-                                    <p>${summoner.tier} - ${summoner.leaguePoints} LP</p>
-                                    <p class="winrate">Winrate: ${summoner.winrate}% (${summoner.wins}W/${summoner.losses}L)</p>
+                        <div class="rank-text">
+                            <p>${summoner.tier} - ${summoner.leaguePoints} LP</p>
+                            <p class="winrate">Winrate: ${summoner.winrate}% (${summoner.wins}W/${summoner.losses}L)</p>
+                        </div>
+                        <div class="match-history">
+                            ${summoner.matchHistory.map(match => `
+                                <div class="match ${match.win ? 'win' : 'loss'}">
+                                    <img src="${match.championIcon}" alt="${match.champion}" class="champion-icon">
+                                    <div class="score">${match.kills}/${match.deaths}/${match.assists}</div>
                                 </div>
-                            </div>
-                            <div class="match-history">
-                                ${summoner.matchHistory.map(match => `
-                                    <div class="match ${match.win ? 'win' : 'loss'}">
-                                        <img src="${match.championIcon}" alt="${match.champion}" class="champion-icon">
-                                        <div class="score">${match.kills}/${match.deaths}/${match.assists}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
+                            `).join('')}
                         </div>
                     </div>
                 `).join('');
