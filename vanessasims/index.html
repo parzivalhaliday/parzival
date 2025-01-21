@@ -1,0 +1,18 @@
+ne sikime hala buraya bakıyon<br>
+neden amk<br>
+NEDEN AMINAKOYİM<br>
+<div id="randomNumber"></div>
+
+<script>
+function generateNumber() {
+    let number = Math.floor(Math.random() * 1000000000000);
+    // 12 haneye tamamlamak için başına 0 ekleme
+    number = String(number).padStart(12, '0');
+    document.getElementById('randomNumber').innerHTML = number;
+}
+
+// İlk sayıyı hemen göster
+generateNumber();
+// Her saniye yeni sayı üret
+setInterval(generateNumber, 100);
+</script> 
