@@ -1,12 +1,11 @@
-isteseydim kazanırdım<br>
-
+isteseydim kazanırdım
 <div id="randomNumber"></div>
 
 <script>
 function generateNumber() {
-    let number = Math.floor(Math.random() * 1000000000000);
+    let number = Math.floor(Math.random() * 100000000000000000000);
     // 12 haneye tamamlamak için başına 0 ekleme
-    number = String(number).padStart(30, '0');
+    number = String(number).padStart(20, '0');
     document.getElementById('randomNumber').innerHTML = number;
 }
 
