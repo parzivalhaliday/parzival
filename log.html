@@ -54,12 +54,66 @@
     <p id="bluetooth">Bluetooth Desteği: Bekleniyor...</p>
     <p id="ambient-light">Ortam Işığı Sensörü: Bekleniyor...</p>
     <p id="device-memory">Toplam Cihaz Belleği: Bekleniyor...</p>
+    <p id="device-memory-detailed">Detaylı Bellek Bilgisi: Bekleniyor...</p>
     <p id="network-type">Ağ Türü (WiFi/Cellular): Bekleniyor...</p>
     <p id="browser-permissions">İzin Durumları: Bekleniyor...</p>
     <p id="screen-brightness">Ekran Parlaklığı: Bekleniyor...</p>
     <p id="audio-devices">Ses Cihazları: Bekleniyor...</p>
     <p id="camera-info">Kamera Bilgisi: Bekleniyor...</p>
     <p id="device-charging-time">Tam Şarj Süresi: Bekleniyor...</p>
+    <p id="webgl-info">WebGL Desteği: Bekleniyor...</p>
+    <p id="canvas-support">Canvas Desteği: Bekleniyor...</p>
+    <p id="web-worker">Web Worker Desteği: Bekleniyor...</p>
+    <p id="websocket">WebSocket Desteği: Bekleniyor...</p>
+    <p id="webrtc">WebRTC Desteği: Bekleniyor...</p>
+    <p id="gamepad">Gamepad Desteği: Bekleniyor...</p>
+    <p id="vr-support">VR Desteği: Bekleniyor...</p>
+    <p id="midi-support">MIDI Desteği: Bekleniyor...</p>
+    <p id="usb-support">USB Desteği: Bekleniyor...</p>
+    <p id="serial-support">Seri Port Desteği: Bekleniyor...</p>
+    <p id="nfc-support">NFC Desteği: Bekleniyor...</p>
+    <p id="battery-health">Pil Sağlığı: Bekleniyor...</p>
+    <p id="screen-color-depth">Ekran Renk Derinliği: Bekleniyor...</p>
+    <p id="screen-orientation-angle">Ekran Yönü Açısı: Bekleniyor...</p>
+    <p id="screen-refresh-rate">Ekran Yenileme Hızı: Bekleniyor...</p>
+    <p id="hardware-concurrency">İşlemci Thread Sayısı: Bekleniyor...</p>
+    <p id="device-architecture">İşlemci Mimarisi: Bekleniyor...</p>
+    <p id="keyboard-layout">Klavye Düzeni: Bekleniyor...</p>
+    <p id="pointer-type">İşaretçi Türü: Bekleniyor...</p>
+    <p id="max-touch-points">Maksimum Dokunma Noktası: Bekleniyor...</p>
+    <p id="network-rtt">Ağ RTT: Bekleniyor...</p>
+    <p id="network-bandwidth">Ağ Bant Genişliği: Bekleniyor...</p>
+    <p id="network-save-data">Veri Tasarrufu Modu: Bekleniyor...</p>
+    <p id="installed-apps">Yüklü PWA Sayısı: Bekleniyor...</p>
+    <p id="media-capabilities">Medya Yetenekleri: Bekleniyor...</p>
+    <p id="speech-support">Konuşma Tanıma Desteği: Bekleniyor...</p>
+    <p id="payment-support">Ödeme API Desteği: Bekleniyor...</p>
+    <p id="credentials-support">Kimlik Bilgileri API: Bekleniyor...</p>
+    <p id="share-support">Paylaşım API: Bekleniyor...</p>
+    <p id="clipboard-support">Pano API: Bekleniyor...</p>
+    <p id="bluetooth-version">Bluetooth Versiyonu: Bekleniyor...</p>
+    <p id="wifi-strength">WiFi Sinyal Gücü: Bekleniyor...</p>
+    <p id="cellular-strength">Hücresel Sinyal Gücü: Bekleniyor...</p>
+    <p id="cellular-type">Hücresel Ağ Türü: Bekleniyor...</p>
+    <p id="audio-output-devices">Ses Çıkış Cihazları: Bekleniyor...</p>
+    <p id="audio-input-devices">Ses Giriş Cihazları: Bekleniyor...</p>
+    <p id="camera-capabilities">Kamera Özellikleri: Bekleniyor...</p>
+    <p id="screen-brightness-level">Ekran Parlaklık Seviyesi: Bekleniyor...</p>
+    <p id="ambient-temperature">Ortam Sıcaklığı: Bekleniyor...</p>
+    <p id="device-pressure">Basınç Sensörü: Bekleniyor...</p>
+    <p id="device-proximity">Yakınlık Sensörü: Bekleniyor...</p>
+    <p id="device-gravity">Yerçekimi Sensörü: Bekleniyor...</p>
+    <p id="device-gyroscope">Jiroskop: Bekleniyor...</p>
+    <p id="device-magnetometer">Manyetometre: Bekleniyor...</p>
+    <p id="device-accelerometer">İvmeölçer: Bekleniyor...</p>
+    <p id="virtual-keyboard">Sanal Klavye Desteği: Bekleniyor...</p>
+    <p id="installed-fonts">Yüklü Yazı Tipleri: Bekleniyor...</p>
+    <p id="graphics-driver">Grafik Sürücüsü: Bekleniyor...</p>
+    <p id="webgl-extensions">WebGL Uzantıları: Bekleniyor...</p>
+    <p id="audio-worklet">Audio Worklet Desteği: Bekleniyor...</p>
+    <p id="video-codecs">Video Codec Desteği: Bekleniyor...</p>
+    <p id="audio-codecs">Ses Codec Desteği: Bekleniyor...</p>
+    <p id="image-formats">Desteklenen Resim Formatları: Bekleniyor...</p>
 
 <script>
     // Cihaz hızını al
@@ -83,13 +137,21 @@
         document.getElementById("cpu-cores").textContent = "CPU Çekirdek Sayısı: " + navigator.hardwareConcurrency;
     }
 
-    // GPU bilgisi
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl');
-    if (gl) {
-        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-        const gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-        document.getElementById("gpu").textContent = "GPU Bilgisi: " + gpu;
+    // GPU bilgisi için güvenlik kontrolü
+    try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl');
+        if (gl) {
+            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+            if (debugInfo) {
+                const gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                document.getElementById("gpu").textContent = "GPU Bilgisi: " + gpu;
+            } else {
+                document.getElementById("gpu").textContent = "GPU Bilgisi: Erişim engellendi";
+            }
+        }
+    } catch (e) {
+        document.getElementById("gpu").textContent = "GPU Bilgisi: Alınamadı";
     }
 
     // Maksimum ağ hızı
@@ -116,12 +178,20 @@
         });
     }
 
-    // Bellek kullanımı
-    if (performance && performance.memory) {
-        const memoryUsage = (performance.memory.usedJSHeapSize / 
-            performance.memory.totalJSHeapSize * 100).toFixed(2);
+    // Bellek kullanımı için düzeltme
+    try {
+        if (performance && performance.memory) {
+            const memoryUsage = (performance.memory.usedJSHeapSize / 
+                performance.memory.totalJSHeapSize * 100).toFixed(2);
+            document.getElementById("memory-usage").textContent = 
+                "Bellek Kullanımı: %" + memoryUsage;
+        } else {
+            document.getElementById("memory-usage").textContent = 
+                "Bellek Kullanımı: API desteklenmiyor";
+        }
+    } catch (e) {
         document.getElementById("memory-usage").textContent = 
-            "Bellek Kullanımı: %" + memoryUsage;
+            "Bellek Kullanımı: Alınamadı";
     }
 
     // Do Not Track ayarı
@@ -145,51 +215,85 @@
             });
     }
 
-    // Ortam ışığı sensörü
-    if ('AmbientLightSensor' in window) {
-        const sensor = new AmbientLightSensor();
-        sensor.onreading = () => {
+    // Ortam ışığı sensörü için düzeltme
+    try {
+        if ('AmbientLightSensor' in window) {
+            const sensor = new AmbientLightSensor();
+            sensor.onreading = () => {
+                document.getElementById("ambient-light").textContent = 
+                    "Ortam Işığı Seviyesi: " + sensor.illuminance + " lux";
+            };
+            sensor.onerror = (event) => {
+                document.getElementById("ambient-light").textContent = 
+                    "Ortam Işığı Sensörü: Hata (" + event.error.name + ")";
+            };
+            sensor.start();
+        } else {
             document.getElementById("ambient-light").textContent = 
-                "Ortam Işığı Seviyesi: " + sensor.illuminance + " lux";
-        };
-        sensor.start();
-    } else {
+                "Ortam Işığı Sensörü: Desteklenmiyor";
+        }
+    } catch (e) {
         document.getElementById("ambient-light").textContent = 
-            "Ortam Işığı Sensörü: Desteklenmiyor";
+            "Ortam Işığı Sensörü: Erişim engellendi";
     }
 
-    // Cihaz bellek bilgisi
-    if (navigator.deviceMemory) {
+    // Gelişmiş bellek bilgisi kontrolü
+    try {
+        if (navigator.deviceMemory) {
+            const approximateMemory = navigator.deviceMemory;
+            const detailedMemory = performance.memory ? 
+                (performance.memory.jsHeapSizeLimit / (1024 * 1024 * 1024)).toFixed(2) : 'Bilinmiyor';
+            
+            document.getElementById("device-memory").textContent = 
+                `Toplam Cihaz Belleği (Yaklaşık): ${approximateMemory} GB`;
+            document.getElementById("device-memory-detailed").textContent = 
+                `Detaylı Bellek Bilgisi: ${detailedMemory} GB`;
+        } else {
+            document.getElementById("device-memory").textContent = 
+                "Toplam Cihaz Belleği: API desteklenmiyor";
+            document.getElementById("device-memory-detailed").textContent = 
+                "Detaylı Bellek Bilgisi: API desteklenmiyor";
+        }
+    } catch (e) {
         document.getElementById("device-memory").textContent = 
-            "Toplam Cihaz Belleği: " + navigator.deviceMemory + " GB";
+            "Toplam Cihaz Belleği: Alınamadı";
+        document.getElementById("device-memory-detailed").textContent = 
+            "Detaylı Bellek Bilgisi: Alınamadı";
     }
 
     // Ağ türü detaylı bilgi
-    if (navigator.connection) {
-        const connection = navigator.connection;
-        document.getElementById("network-type").textContent = 
-            `Ağ Türü: ${connection.type}, Etkin Tür: ${connection.effectiveType}`;
-        
-        connection.addEventListener('change', function() {
+    try {
+        if ('connection' in navigator) {
+            const connection = navigator.connection;
             document.getElementById("network-type").textContent = 
-                `Ağ Türü: ${connection.type}, Etkin Tür: ${connection.effectiveType}`;
-        });
+                `Ağ Türü: ${connection.type || 'bilinmiyor'}, Etkin Tür: ${connection.effectiveType || 'bilinmiyor'}`;
+        } else {
+            document.getElementById("network-type").textContent = "Ağ Türü: API desteklenmiyor";
+        }
+    } catch (e) {
+        document.getElementById("network-type").textContent = "Ağ Türü: Alınamadı";
     }
 
     // Tarayıcı izinleri
-    const permissions = [
-        'geolocation', 'notifications', 'camera', 'microphone', 'midi'
-    ];
+    try {
+        const permissions = [
+            'geolocation', 'notifications', 'camera', 'microphone'
+        ];
 
-    Promise.all(permissions.map(permission =>
-        navigator.permissions.query({name: permission})
-    )).then(results => {
-        const permissionStatus = results.map(result => 
-            `${result.name}: ${result.state}`
-        ).join(', ');
+        Promise.all(permissions.map(permission =>
+            navigator.permissions.query({name: permission})
+                .catch(() => ({name: permission, state: 'desteklenmiyor'}))
+        )).then(results => {
+            const permissionStatus = results.map(result => 
+                `${result.name}: ${result.state}`
+            ).join(', ');
+            document.getElementById("browser-permissions").textContent = 
+                "İzin Durumları: " + permissionStatus;
+        });
+    } catch (e) {
         document.getElementById("browser-permissions").textContent = 
-            "İzin Durumları: " + permissionStatus;
-    });
+            "İzin Durumları: Alınamadı";
+    }
 
     // Ses cihazları
     if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
@@ -227,6 +331,124 @@
             }
         });
     }
+
+    // WebGL Desteği
+    try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        document.getElementById("webgl-info").textContent = 
+            `WebGL Desteği: ${gl ? 'WebGL ' + gl.getParameter(gl.VERSION) : 'Desteklenmiyor'}`;
+        
+        if (gl) {
+            const extensions = gl.getSupportedExtensions();
+            document.getElementById("webgl-extensions").textContent = 
+                `WebGL Uzantıları: ${extensions.length} adet destekleniyor`;
+        }
+    } catch (e) {
+        document.getElementById("webgl-info").textContent = "WebGL Desteği: Alınamadı";
+    }
+
+    // Canvas Desteği
+    try {
+        const canvas = document.createElement('canvas');
+        document.getElementById("canvas-support").textContent = 
+            `Canvas Desteği: ${canvas.getContext('2d') ? 'Var' : 'Yok'}`;
+    } catch (e) {
+        document.getElementById("canvas-support").textContent = "Canvas Desteği: Alınamadı";
+    }
+
+    // Web Worker Desteği
+    document.getElementById("web-worker").textContent = 
+        `Web Worker Desteği: ${typeof Worker !== 'undefined' ? 'Var' : 'Yok'}`;
+
+    // WebSocket Desteği
+    document.getElementById("websocket").textContent = 
+        `WebSocket Desteği: ${typeof WebSocket !== 'undefined' ? 'Var' : 'Yok'}`;
+
+    // WebRTC Desteği
+    document.getElementById("webrtc").textContent = 
+        `WebRTC Desteği: ${navigator.mediaDevices && navigator.mediaDevices.getUserMedia ? 'Var' : 'Yok'}`;
+
+    // Gamepad Desteği
+    document.getElementById("gamepad").textContent = 
+        `Gamepad Desteği: ${navigator.getGamepads ? 'Var' : 'Yok'}`;
+
+    // Ekran Renk Derinliği
+    document.getElementById("screen-color-depth").textContent = 
+        `Ekran Renk Derinliği: ${screen.colorDepth} bit`;
+
+    // İşlemci Thread Sayısı
+    document.getElementById("hardware-concurrency").textContent = 
+        `İşlemci Thread Sayısı: ${navigator.hardwareConcurrency || 'Bilinmiyor'}`;
+
+    // Maksimum Dokunma Noktası
+    document.getElementById("max-touch-points").textContent = 
+        `Maksimum Dokunma Noktası: ${navigator.maxTouchPoints || 0}`;
+
+    // Ağ Bilgileri
+    if (navigator.connection) {
+        document.getElementById("network-rtt").textContent = 
+            `Ağ RTT: ${navigator.connection.rtt || 'Bilinmiyor'} ms`;
+        document.getElementById("network-bandwidth").textContent = 
+            `Ağ Bant Genişliği: ${navigator.connection.downlink || 'Bilinmiyor'} Mbps`;
+        document.getElementById("network-save-data").textContent = 
+            `Veri Tasarrufu Modu: ${navigator.connection.saveData ? 'Açık' : 'Kapalı'}`;
+    }
+
+    // Sensör Bilgileri
+    if ('Accelerometer' in window) {
+        try {
+            const accelerometer = new Accelerometer();
+            document.getElementById("device-accelerometer").textContent = 
+                "İvmeölçer: Var";
+        } catch(e) {
+            document.getElementById("device-accelerometer").textContent = 
+                "İvmeölçer: Erişim Engellendi";
+        }
+    }
+
+    if ('Gyroscope' in window) {
+        try {
+            const gyroscope = new Gyroscope();
+            document.getElementById("device-gyroscope").textContent = 
+                "Jiroskop: Var";
+        } catch(e) {
+            document.getElementById("device-gyroscope").textContent = 
+                "Jiroskop: Erişim Engellendi";
+        }
+    }
+
+    // Medya Yetenekleri
+    if ('mediaCapabilities' in navigator) {
+        const videoConfig = {
+            type: 'file',
+            video: {
+                contentType: 'video/mp4; codecs="avc1.42E01E"',
+                width: 1920,
+                height: 1080,
+                bitrate: 2000000,
+                framerate: 30
+            }
+        };
+
+        navigator.mediaCapabilities.decodingInfo(videoConfig)
+            .then(result => {
+                document.getElementById("media-capabilities").textContent = 
+                    `Medya Yetenekleri: 1080p Video Oynatma ${result.supported ? 'Destekleniyor' : 'Desteklenmiyor'}`;
+            });
+    }
+
+    // Ses ve Video Codec Desteği
+    const audioTypes = ['audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a', 'audio/aac'];
+    const videoTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+    const audio = document.createElement('audio');
+    const video = document.createElement('video');
+
+    const supportedAudioCodecs = audioTypes.filter(type => audio.canPlayType(type) !== '').join(', ');
+    const supportedVideoCodecs = videoTypes.filter(type => video.canPlayType(type) !== '').join(', ');
+
+    document.getElementById("audio-codecs").textContent = `Ses Codec Desteği: ${supportedAudioCodecs}`;
+    document.getElementById("video-codecs").textContent = `Video Codec Desteği: ${supportedVideoCodecs}`;
 </script>
 
     <script>
@@ -334,10 +556,13 @@
 
         // IP adresini al
         const getIP = async () => {
-            const response = await fetch('https://api64.ipify.org?format=json');
-            const data = await response.json();
-            const ipAddress = data.ip;
-            document.getElementById("ipAddress").textContent = "IP Adresi: " + ipAddress;
+            try {
+                const response = await fetch('https://api64.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById("ipAddress").textContent = "IP Adresi: " + data.ip;
+            } catch (e) {
+                document.getElementById("ipAddress").textContent = "IP Adresi: Alınamadı";
+            }
         };
 
         getIP();
