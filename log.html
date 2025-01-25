@@ -39,8 +39,27 @@
     <p id="device-orientation">Cihaz Oryantasyonu: Bekleniyor...</p>
     <p id="connection-type">İnternet Bağlantısı Türü: Bekleniyor...</p>
     <p id="timezone">İşletim Sistemi Saat Dilimi: Bekleniyor...</p>
-<p id="deviceSpeed">Cihaz Hızı: Bekleniyor...</p>
-<p id="storage">Depolama Alanı: Bekleniyor...</p>
+    <p id="deviceSpeed">Cihaz Hızı: Bekleniyor...</p>
+    <p id="storage">Depolama Alanı: Bekleniyor...</p>
+    <p id="ram">RAM Miktarı: Bekleniyor...</p>
+    <p id="cpu-cores">CPU Çekirdek Sayısı: Bekleniyor...</p>
+    <p id="gpu">GPU Bilgisi: Bekleniyor...</p>
+    <p id="network-max-speed">Maksimum Ağ Hızı: Bekleniyor...</p>
+    <p id="battery-charging">Şarj Durumu: Bekleniyor...</p>
+    <p id="battery-time">Kalan Şarj Süresi: Bekleniyor...</p>
+    <p id="memory-usage">Bellek Kullanımı: Bekleniyor...</p>
+    <p id="do-not-track">Do Not Track Ayarı: Bekleniyor...</p>
+    <p id="vibration">Titreşim Desteği: Bekleniyor...</p>
+    <p id="touch-support">Dokunmatik Ekran: Bekleniyor...</p>
+    <p id="bluetooth">Bluetooth Desteği: Bekleniyor...</p>
+    <p id="ambient-light">Ortam Işığı Sensörü: Bekleniyor...</p>
+    <p id="device-memory">Toplam Cihaz Belleği: Bekleniyor...</p>
+    <p id="network-type">Ağ Türü (WiFi/Cellular): Bekleniyor...</p>
+    <p id="browser-permissions">İzin Durumları: Bekleniyor...</p>
+    <p id="screen-brightness">Ekran Parlaklığı: Bekleniyor...</p>
+    <p id="audio-devices">Ses Cihazları: Bekleniyor...</p>
+    <p id="camera-info">Kamera Bilgisi: Bekleniyor...</p>
+    <p id="device-charging-time">Tam Şarj Süresi: Bekleniyor...</p>
 
 <script>
     // Cihaz hızını al
@@ -55,10 +74,160 @@
         });
     }
 
-    
+    // RAM ve performans bilgileri
+    if (navigator.deviceMemory) {
+        document.getElementById("ram").textContent = "RAM Miktarı: " + navigator.deviceMemory + " GB";
+    }
+
+    if (navigator.hardwareConcurrency) {
+        document.getElementById("cpu-cores").textContent = "CPU Çekirdek Sayısı: " + navigator.hardwareConcurrency;
+    }
+
+    // GPU bilgisi
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl');
+    if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        const gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+        document.getElementById("gpu").textContent = "GPU Bilgisi: " + gpu;
+    }
+
+    // Maksimum ağ hızı
+    if (navigator.connection) {
+        document.getElementById("network-max-speed").textContent = "Maksimum Ağ Hızı: " + 
+            (navigator.connection.downlinkMax || 'Bilinmiyor') + " Mbps";
+    }
+
+    // Gelişmiş pil bilgileri
+    if (navigator.getBattery) {
+        navigator.getBattery().then(function(battery) {
+            document.getElementById("battery-charging").textContent = 
+                "Şarj Durumu: " + (battery.charging ? "Şarj Oluyor" : "Şarj Olmuyor");
+            
+            if (battery.charging) {
+                document.getElementById("battery-time").textContent = 
+                    "Şarj Dolma Süresi: " + (battery.chargingTime === Infinity ? 
+                        "Hesaplanamıyor" : battery.chargingTime + " saniye");
+            } else {
+                document.getElementById("battery-time").textContent = 
+                    "Kalan Şarj Süresi: " + (battery.dischargingTime === Infinity ? 
+                        "Hesaplanamıyor" : battery.dischargingTime + " saniye");
+            }
+        });
+    }
+
+    // Bellek kullanımı
+    if (performance && performance.memory) {
+        const memoryUsage = (performance.memory.usedJSHeapSize / 
+            performance.memory.totalJSHeapSize * 100).toFixed(2);
+        document.getElementById("memory-usage").textContent = 
+            "Bellek Kullanımı: %" + memoryUsage;
+    }
+
+    // Do Not Track ayarı
+    document.getElementById("do-not-track").textContent = 
+        "Do Not Track Ayarı: " + (navigator.doNotTrack || "Ayarlanmamış");
+
+    // Titreşim desteği
+    document.getElementById("vibration").textContent = 
+        "Titreşim Desteği: " + (navigator.vibrate ? "Var" : "Yok");
+
+    // Dokunmatik ekran desteği
+    document.getElementById("touch-support").textContent = 
+        "Dokunmatik Ekran: " + (('ontouchstart' in window) ? "Var" : "Yok");
+
+    // Bluetooth desteği
+    if (navigator.bluetooth) {
+        navigator.bluetooth.getAvailability()
+            .then(available => {
+                document.getElementById("bluetooth").textContent = 
+                    "Bluetooth Desteği: " + (available ? "Var" : "Yok");
+            });
+    }
+
+    // Ortam ışığı sensörü
+    if ('AmbientLightSensor' in window) {
+        const sensor = new AmbientLightSensor();
+        sensor.onreading = () => {
+            document.getElementById("ambient-light").textContent = 
+                "Ortam Işığı Seviyesi: " + sensor.illuminance + " lux";
+        };
+        sensor.start();
+    } else {
+        document.getElementById("ambient-light").textContent = 
+            "Ortam Işığı Sensörü: Desteklenmiyor";
+    }
+
+    // Cihaz bellek bilgisi
+    if (navigator.deviceMemory) {
+        document.getElementById("device-memory").textContent = 
+            "Toplam Cihaz Belleği: " + navigator.deviceMemory + " GB";
+    }
+
+    // Ağ türü detaylı bilgi
+    if (navigator.connection) {
+        const connection = navigator.connection;
+        document.getElementById("network-type").textContent = 
+            `Ağ Türü: ${connection.type}, Etkin Tür: ${connection.effectiveType}`;
+        
+        connection.addEventListener('change', function() {
+            document.getElementById("network-type").textContent = 
+                `Ağ Türü: ${connection.type}, Etkin Tür: ${connection.effectiveType}`;
+        });
+    }
+
+    // Tarayıcı izinleri
+    const permissions = [
+        'geolocation', 'notifications', 'camera', 'microphone', 'midi'
+    ];
+
+    Promise.all(permissions.map(permission =>
+        navigator.permissions.query({name: permission})
+    )).then(results => {
+        const permissionStatus = results.map(result => 
+            `${result.name}: ${result.state}`
+        ).join(', ');
+        document.getElementById("browser-permissions").textContent = 
+            "İzin Durumları: " + permissionStatus;
+    });
+
+    // Ses cihazları
+    if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+        navigator.mediaDevices.enumerateDevices()
+            .then(devices => {
+                const audioDevices = devices.filter(device => 
+                    device.kind === 'audioinput' || device.kind === 'audiooutput'
+                ).length;
+                document.getElementById("audio-devices").textContent = 
+                    "Ses Cihazları Sayısı: " + audioDevices;
+            });
+    }
+
+    // Kamera bilgisi
+    if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+        navigator.mediaDevices.enumerateDevices()
+            .then(devices => {
+                const cameras = devices.filter(device => 
+                    device.kind === 'videoinput'
+                ).length;
+                document.getElementById("camera-info").textContent = 
+                    "Kamera Sayısı: " + cameras;
+            });
+    }
+
+    // Şarj olma süresi tahmini
+    if (navigator.getBattery) {
+        navigator.getBattery().then(battery => {
+            if (battery.charging) {
+                const timeToFull = battery.chargingTime;
+                document.getElementById("device-charging-time").textContent = 
+                    "Tam Şarj Süresi: " + 
+                    (timeToFull === Infinity ? "Hesaplanamıyor" : 
+                    Math.floor(timeToFull / 60) + " dakika");
+            }
+        });
+    }
 </script>
-
-
 
     <script>
         // Pil seviyesini al
@@ -188,8 +357,6 @@
         // İnternet bağlantısı türü
         const connectionType = navigator.connection.effectiveType;
         document.getElementById("connection-type").textContent = "İnternet Bağlantısı Türü: " + connectionType;
-
-
 
         // İşletim sistemi saat dilimi
         const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
