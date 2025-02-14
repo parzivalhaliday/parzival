@@ -6,6 +6,7 @@
 <link rel="icon" href="icons/film.ico" type="image/x-icon">
 <title>My Films</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   
     .section {
@@ -13,7 +14,7 @@
       overflow: hidden;
     }
     .baslik {
-      font-size: 24px;
+      font-size: 44px;
       font-weight: bold;
       margin-bottom: 20px;
       display: inline-block;
@@ -35,7 +36,7 @@
     ul {
       list-style-type: none;
       padding: 0;
-      margin: 0;
+      margin: 20px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -53,25 +54,28 @@
     }
 
     li {
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: none;
       margin: 10px;
       padding: 15px;
-      background: rgba(33, 33, 33, 0.8);
-      backdrop-filter: blur(10px);
+      background: rgba(33, 33, 33, 0.4);
+      backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(10px);
       border-radius: 16px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       width: 200px;
       flex: 0 0 calc(20% - 20px);
       color: #FFFFFF;
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
 
-    li:hover {
-      border-color: rgba(255, 64, 129, 0.3);
-      transform: translateY(-5px) scale(1.02);
-      background: rgba(66, 66, 66, 0.9);
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    .movie-card-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.6s;
     }
 
     img {
@@ -79,6 +83,7 @@
       border-radius: 12px;
       cursor: url('cursor.png'), auto;
       transition: transform 0.3s ease;
+      transform-style: preserve-3d;
     }
 
     img:hover {
@@ -104,7 +109,25 @@
         opacity: 1;
       }
     }
-  </style>
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    
+    .section {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        overflow: hidden;
+        padding-top: 50px;
+        border: none;
+        background: none;
+        box-shadow: none;
+    }
+</style>
   
 </head>
 <body>
@@ -116,7 +139,196 @@
 
 <script src="animatedtext.js"></script>
 <script src="renk.js"></script>
-<script src="keyboardevent.js"></script>
-<script src="movie.js"></script>
+
+<script>
+
+// Three.js kurulumu
+let scene, camera, renderer, particles;
+
+function initThree() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.insertBefore(renderer.domElement, document.body.firstChild);
+
+    // Parçacık sistemi oluştur
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    
+    for (let i = 0; i < 5000; i++) {
+        vertices.push(
+            Math.random() * 2000 - 1000,
+            Math.random() * 2000 - 1000,
+            Math.random() * 2000 - 1000
+        );
+    }
+    
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    
+    const material = new THREE.PointsMaterial({
+        color: 0xFF5722,
+        size: 2,
+        transparent: true,
+        opacity: 0.6
+    });
+    
+    particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+    
+    camera.position.z = 500;
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    updateParticles();
+    particles.rotation.x += 0.0003;
+    particles.rotation.y += 0.0002;
+    renderer.render(scene, camera);
+}
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener('resize', onWindowResize);
+
+// Three.js başlat
+initThree();
+animate();
+
+const apiKey = '58ec7b5f1bb87b37a5db4b0ad470798d';
+const listId = '8301529';
+const movieList = document.getElementById('movieList');
+
+let currentPage = 1;
+let totalPages = 1;
+const allMovies = [];
+
+function fetchMovies(page) {
+  fetch(`https://api.themoviedb.org/3/list/${listId}?api_key=${apiKey}&page=${page}`)
+    .then(response => response.json())
+    .then(data => {
+      totalPages = data.total_pages;
+      allMovies.push(...data.items);
+      if (currentPage < totalPages) {
+        currentPage++;
+        fetchMovies(currentPage);
+      } else {
+        displayMovies();
+      }
+    })
+    .catch(error => {
+      console.error('API\'den veri alınamadı:', error);
+    });
+}
+
+function createMovieCard(movie) {
+    const listItem = document.createElement('li');
+    const title = movie.title ? movie.title : movie.name;
+    const backdropPath = movie.backdrop_path ? 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path : '';
+    
+    const cardContent = document.createElement('div');
+    cardContent.className = 'movie-card-content';
+    
+    cardContent.innerHTML = `
+        <a href="https://www.themoviedb.org/movie/${movie.id}" target="_blank">
+            <img src="${backdropPath}" alt="${title}">
+            <div>${title}</div>
+        </a>
+    `;
+    
+    listItem.appendChild(cardContent);
+    
+    // Kart için 3D efektler
+    listItem.addEventListener('mousemove', (e) => {
+        const rect = listItem.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        
+        cardContent.style.transform = `
+            rotateX(${rotateX}deg) 
+            rotateY(${rotateY}deg)
+            translateZ(20px)
+        `;
+        
+        // Parlaklık efekti
+        const shine = document.createElement('div');
+        shine.style.background = `radial-gradient(circle at ${x}px ${y}px, 
+            rgba(255,255,255,0.3) 0%, 
+            rgba(255,255,255,0) 80%)`;
+        shine.style.position = 'absolute';
+        shine.style.top = '0';
+        shine.style.left = '0';
+        shine.style.right = '0';
+        shine.style.bottom = '0';
+        shine.style.pointerEvents = 'none';
+        
+        const existingShine = cardContent.querySelector('.shine');
+        if (existingShine) {
+            existingShine.remove();
+        }
+        shine.className = 'shine';
+        cardContent.appendChild(shine);
+    });
+    
+    listItem.addEventListener('mouseleave', () => {
+        cardContent.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+        const shine = cardContent.querySelector('.shine');
+        if (shine) {
+            shine.remove();
+        }
+    });
+    
+    return listItem;
+}
+
+function displayMovies() {
+    allMovies.sort((a, b) => b.vote_average - a.vote_average);
+    allMovies.forEach(movie => {
+        const movieCard = createMovieCard(movie);
+        movieList.appendChild(movieCard);
+    });
+}
+
+// Parçacık sistemini film kartlarıyla etkileşimli hale getir
+function updateParticles() {
+    const cards = document.querySelectorAll('li');
+    cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        particles.geometry.attributes.position.array.forEach((value, index) => {
+            if (index % 3 === 0) {
+                const x = value;
+                const y = particles.geometry.attributes.position.array[index + 1];
+                const z = particles.geometry.attributes.position.array[index + 2];
+                
+                const distance = Math.sqrt(
+                    Math.pow(x - centerX, 2) + 
+                    Math.pow(y - centerY, 2)
+                );
+                
+                if (distance < 100) {
+                    particles.geometry.attributes.position.array[index + 2] += Math.sin(Date.now() * 0.001) * 0.5;
+                }
+            }
+        });
+        particles.geometry.attributes.position.needsUpdate = true;
+    });
+}
+
+fetchMovies(currentPage);
+</script>
 </body>
 </html>
+
