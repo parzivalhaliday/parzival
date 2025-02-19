@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #33ff33;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow: hidden;
+        }
+
+        #terminal {
+            padding: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .command-line {
+            margin: 2px 0;
+            opacity: 0;
+            animation: fadeIn 0.1s forwards;
+        }
+
+        .prompt {
+            color: #00ff00;
+        }
+
+        .error {
+            color: #ff3333;
+        }
+
+        .success {
+            color: #33ff33;
+        }
+
+        .warning {
+            color: #ffff33;
+        }
+
+        .ip {
+            color: #3399ff;
+        }
+
+        .progress {
+            display: inline-block;
+            margin: 2px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: #33ff33;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal"></div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        let commandIndex = 0;
+        let targetIP = '';
+
+        async function getPublicIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return '8.8.8.8'; // Fallback IP if API fails
+            }
+        }
+
+        const commands = [
+            { text: () => `root@kali:~# ./exploit.sh ${targetIP}`, delay: 1000 },
+            { text: "[*] Initializing system scan...", delay: 800 },
+            { text: "[+] Detecting open ports...", delay: 1200 },
+            { text: "PORT     STATE    SERVICE", delay: 300 },
+            { text: "22/tcp   open     ssh", delay: 200 },
+            { text: "80/tcp   open     http", delay: 200 },
+            { text: "443/tcp  open     https", delay: 200 },
+            { text: "3306/tcp open     mysql", delay: 200 },
+            { text: "[*] Running vulnerability scan...", delay: 1500 },
+            { text: "[+] Found vulnerability: SQL Injection at /admin/login.php", delay: 800, class: "warning" },
+            { text: "[*] Attempting privilege escalation...", delay: 1000 },
+            { text: "mysql> SELECT @@version;", delay: 800 },
+            { text: "+-----------+", delay: 200 },
+            { text: "| 8.0.27-0ubuntu0.20.04.1 |", delay: 200 },
+            { text: "+-----------+", delay: 200 },
+            { text: "[*] Injecting payload...", delay: 1000 },
+            { text: "root@target:~# id", delay: 1000 },
+            { text: "uid=0(root) gid=0(root) groups=0(root)", delay: 300, class: "error" },
+            { text: "[+] Root access gained!", delay: 500, class: "success" },
+            { text: "[*] Downloading sensitive data...", delay: 1000 },
+            { text: "Downloading: /etc/passwd [####################] 100%", delay: 800 },
+            { text: "Downloading: /var/log/auth.log [####################] 100%", delay: 800 },
+            { text: "[*] Cleaning tracks...", delay: 1000 },
+            { text: "rm -rf /var/log/*", delay: 500 },
+            { text: "[+] Operation completed successfully.", delay: 500, class: "success" },
+            { text: "[*] Self-destructing in 3...", delay: 1000, class: "warning" },
+            { text: "[*] Self-destructing in 2...", delay: 1000, class: "warning" },
+            { text: "[*] Self-destructing in 1...", delay: 1000, class: "warning" },
+            { text: "[!] Connection terminated.", delay: 500, class: "error" }
+        ];
+
+        function addLine(text, className = '') {
+            const line = document.createElement('div');
+            line.className = `command-line ${className}`;
+            line.textContent = typeof text === 'function' ? text() : text;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function typeCommand() {
+            if (commandIndex < commands.length) {
+                const command = commands[commandIndex];
+                addLine(command.text, command.class || '');
+                commandIndex++;
+                setTimeout(typeCommand, command.delay);
+            } else {
+                const cursor = document.createElement('div');
+                cursor.className = 'cursor';
+                terminal.appendChild(cursor);
+                setTimeout(() => {
+                    window.close();
+                }, 1000);
+            }
+        }
+
+        // Start the sequence
+        async function init() {
+            targetIP = await getPublicIP();
+            addLine(`Connecting to target: ${targetIP}`, 'ip');
+            setTimeout(typeCommand, 1000);
+        }
+
+        init();
+    </script>
+</body>
+</html>
