@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanessa Sims</title>
+    <title>xd</title>
     <script>
         window.onload = function() {
             // "xd" yazısını ekrana yazdır
             document.body.innerHTML = "<h1>xd</h1>";
             
-            // 1 salise sonra yeni sekmede yönlendirme
+            // 1 salise sonra doğrudan yönlendirme
             setTimeout(function() {
-                var newWindow = window.open("https://log.parzi.lol/", "_blank");
-                // 1 saniye sonra yeni sekmeyi kapat
-                setTimeout(function() {
-                    newWindow.close();
-                }, 500);
-            }, 500);
+                window.location.href = "https://log.parzi.lol/";
+            }, 1000);
         };
     </script>
     <style>
