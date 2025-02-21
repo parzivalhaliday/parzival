@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resim Galerisi</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px 0 20px 0;
+            transition: background-color 0.3s;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+        .image-container {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resim Galerisi</h1>
+    <div id="gallery"></div>
+    <script>
+        const gallery = document.getElementById('gallery');
+        
+        const images = [
+            '2025-01-31_19.48.51.png',
+            '2025-01-31_19.49.02.png',
+            '2025-01-31_19.49.11.png',
+            '2025-01-31_19.49.40.png',
+            '2025-01-31_19.49.44.png',
+            '2025-01-31_19.51.45.png',
+            '2025-01-31_19.51.57.png',
+            '2025-01-31_20.13.48.png',
+            '2025-01-31_21.03.58.png',
+            '2025-01-31_21.04.01.png',
+            '2025-01-31_21.04.09.png',
+            '2025-01-31_21.06.24.png',
+            '2025-02-02_21.27.54.png',
+            '2025-02-02_21.49.55.png',
+            '2025-02-02_22.37.52.png',
+            '2025-02-02_22.38.07.png',
+            '2025-02-02_22.38.15.png',
+            '2025-02-02_22.38.25.png',
+            '2025-02-07_21.03.05.png',
+            '2025-02-07_21.07.48.png',
+            '2025-02-07_21.08.47.png',
+            '2025-02-07_21.09.03.png',
+            '2025-02-07_21.10.06.png',
+            '2025-02-07_21.13.37.png',
+            '2025-02-09_21.21.01.png',
+            '2025-02-09_22.38.02.png',
+            '2025-02-09_22.38.04.png',
+            '2025-02-09_22.38.07.png',
+            '2025-02-15_21.50.24.png',
+            '2025-02-15_22.22.03.png',
+            '2025-02-16_01.03.25.png',
+            '2025-02-16_01.03.54.png',
+            '2025-02-16_01.04.07.png',
+            '2025-02-16_16.18.17.png',
+            '2025-02-21_20.56.40.png',
+            '2025-02-21_20.56.45.png'
+        ];
+
+        images.forEach(image => {
+            const container = document.createElement('div');
+            container.className = 'image-container';
+
+            const imgElement = document.createElement('img');
+            imgElement.src = `./${image}`;
+            imgElement.alt = image;
+
+            const downloadButton = document.createElement('a');
+            downloadButton.href = `./${image}`;
+            downloadButton.download = image;
+            downloadButton.innerText = 'İndir';
+            downloadButton.className = 'download-btn';
+
+            container.appendChild(imgElement);
+            container.appendChild(downloadButton);
+            gallery.appendChild(container);
+        });
+    </script>
+</body>
+</html>
