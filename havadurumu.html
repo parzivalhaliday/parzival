@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hava Durumu</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #1a1a1a;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .location {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        .weather-card {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(to bottom, #252b59, #1e2142);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .weather-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: left;
+            margin-top: 10px;
+            z-index: 10;
+        }
+
+        .temperature {
+            font-size: 64px;
+            font-weight: bold;
+            margin-top: auto;
+            margin-bottom: 10px;
+            z-index: 10;
+        }
+
+        .details {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            z-index: 10;
+        }
+
+        .details-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .last-updated {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Güneş Animasyonu */
+        .sun {
+            width: 80px;
+            height: 80px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 30px #FFD700;
+        }
+
+        .sunny-bg {
+            background: linear-gradient(to bottom, #4a5bcc, #2e3a87);
+        }
+
+        .clear-bg {
+            background: linear-gradient(to bottom, #2e3a87, #1e2142);
+        }
+
+        /* Bulut Stili */
+        .cloud-container {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 60px;
+        }
+
+        .cloud {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
+            position: absolute;
+        }
+
+        .cloud-base {
+            width: 100px;
+            height: 30px;
+            bottom: 0;
+            left: 25px;
+        }
+
+        .cloud-circle-1 {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            bottom: 10px;
+            left: 25px;
+        }
+
+        .cloud-circle-2 {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            bottom: 5px;
+            left: 55px;
+        }
+
+        .cloud-circle-3 {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            bottom: 10px;
+            left: 90px;
+        }
+
+        /* Yağmur Animasyonu */
+        .rain {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: #4a95ff;
+        }
+
+        /* Kar Animasyonu */
+        .snow {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Rüzgar Animasyonu */
+        .wind-line {
+            position: absolute;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+        }
+
+        /* Kar zemini */
+        .snow-ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: white;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+
+        .refresh-btn {
+            padding: 10px 20px;
+            background: #3a3f6d;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .refresh-btn:hover {
+            background: #4a5095;
+        }
+
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            border-radius: 15px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Hava Durumu</h1>
+    <div class="location">Parzi ev</div>
+    
+    <div class="weather-card" id="weather-card">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+        </div>
+        <div class="weather-title" id="weather-condition">Yükleniyor...</div>
+        <div class="temperature" id="temperature">--°C</div>
+        <div class="details-container">
+            <div class="details" id="feels-like">Hissedilen: --°C</div>
+            <div class="details" id="humidity">Nem: --%</div>
+            <div class="details" id="wind">Rüzgar: -- km/s</div>
+        </div>
+        <div class="last-updated" id="last-updated">Son güncelleme: --:--</div>
+    </div>
+
+    <button class="refresh-btn" id="refresh-btn">Yenile</button>
+
+    <script>
+        // API anahtarı
+        const apiKey = 'bc9ee4dc966affd2c33c7358511d1510';
+        const city = 'arnavutköy';
+        
+        // DOM elemanları
+        const weatherCard = document.getElementById('weather-card');
+        const weatherCondition = document.getElementById('weather-condition');
+        const temperatureElement = document.getElementById('temperature');
+        const feelsLikeElement = document.getElementById('feels-like');
+        const humidityElement = document.getElementById('humidity');
+        const windElement = document.getElementById('wind');
+        const lastUpdatedElement = document.getElementById('last-updated');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const loadingElement = document.getElementById('loading');
+        
+        // Animasyon değişkenleri
+        let animationsRunning = false;
+        let rainInterval, snowInterval, windInterval;
+        
+        // Kelvin'i Celsius'a çevir
+        function kelvinToCelsius(kelvin) {
+            return Math.round(kelvin - 273.15);
+        }
+        
+        // Tarih formatı
+        function formatDateTime(timestamp) {
+            const date = new Date(timestamp * 1000);
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+        
+        // Hava durumu verilerini getir
+        async function getWeatherData() {
+            loadingElement.style.display = 'flex';
+            
+            try {
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`);
+                const data = await response.json();
+                
+                if (data.cod === 200) {
+                    updateWeatherUI(data);
+                } else {
+                    alert('Hava durumu verileri alınamadı: ' + data.message);
+                }
+            } catch (error) {
+                alert('Hava durumu verileri alınamadı: ' + error.message);
+            } finally {
+                loadingElement.style.display = 'none';
+            }
+        }
+        
+        // UI'ı güncelle
+        function updateWeatherUI(data) {
+            // Temel veriler
+            const temp = kelvinToCelsius(data.main.temp);
+            const feelsLike = kelvinToCelsius(data.main.feels_like);
+            const weatherMain = data.weather[0].main;
+            const weatherDesc = data.weather[0].description;
+            const humidity = data.main.humidity;
+            const windSpeed = data.wind.speed;
+            
+            // UI güncelleme
+            temperatureElement.textContent = `${temp}°C`;
+            feelsLikeElement.textContent = `Hissedilen: ${feelsLike}°C`;
+            humidityElement.textContent = `Nem: ${humidity}%`;
+            windElement.textContent = `Rüzgar: ${windSpeed} m/s`;
+            
+            // Türkçe hava durumu başlığı
+            let turkishWeather = '';
+            switch(weatherMain) {
+                case 'Clear': 
+                    turkishWeather = 'Açık'; 
+                    break;
+                case 'Clouds': 
+                    turkishWeather = 'Bulutlu'; 
+                    break;
+                case 'Rain': 
+                    turkishWeather = 'Yağmurlu'; 
+                    break;
+                case 'Snow': 
+                    turkishWeather = 'Karlı'; 
+                    break;
+                case 'Thunderstorm': 
+                    turkishWeather = 'Fırtınalı'; 
+                    break;
+                case 'Drizzle': 
+                    turkishWeather = 'Çiseleyen Yağmur'; 
+                    break;
+                case 'Mist': 
+                case 'Fog': 
+                    turkishWeather = 'Sisli'; 
+                    break;
+                default: 
+                    turkishWeather = weatherMain;
+            }
+            
+            weatherCondition.textContent = turkishWeather;
+            
+            // Son güncelleme zamanı
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            lastUpdatedElement.textContent = `Son güncelleme: ${hours}:${minutes}`;
+            
+            // Mevcut animasyonları temizle
+            clearAnimations();
+            
+            // Arka plan ve animasyonları ayarla
+            setupWeatherAnimation(weatherMain);
+        }
+        
+        // Animasyonları temizle
+        function clearAnimations() {
+            if (animationsRunning) {
+                clearInterval(rainInterval);
+                clearInterval(snowInterval);
+                clearInterval(windInterval);
+                animationsRunning = false;
+            }
+            
+            // Mevcut animasyon elemanlarını temizle
+            document.querySelectorAll('.rain, .snow, .wind-line, .sun, .cloud-container').forEach(el => el.remove());
+            
+            // Arka plan sınıflarını temizle
+            weatherCard.classList.remove('sunny-bg', 'clear-bg');
+        }
+        
+        // Hava durumuna göre animasyon ayarla
+        function setupWeatherAnimation(weatherMain) {
+            switch(weatherMain) {
+                case 'Clear':
+                    setupSunnyAnimation();
+                    break;
+                case 'Clouds':
+                    setupCloudyAnimation();
+                    break;
+                case 'Rain':
+                case 'Drizzle':
+                    setupRainyAnimation();
+                    break;
+                case 'Snow':
+                    setupSnowyAnimation();
+                    break;
+                case 'Thunderstorm':
+                    setupThunderstormAnimation();
+                    break;
+                default:
+                    // Varsayılan olarak bulutlu göster
+                    setupCloudyAnimation();
+            }
+        }
+        
+        // Güneşli animasyon
+        function setupSunnyAnimation() {
+            weatherCard.classList.add('sunny-bg');
+            
+            const sun = document.createElement('div');
+            sun.classList.add('sun');
+            weatherCard.appendChild(sun);
+        }
+        
+        // Bulutlu animasyon
+        function setupCloudyAnimation() {
+            const cloudContainer = document.createElement('div');
+            cloudContainer.classList.add('cloud-container');
+            
+            const cloudBase = document.createElement('div');
+            cloudBase.classList.add('cloud', 'cloud-base');
+            
+            const cloudCircle1 = document.createElement('div');
+            cloudCircle1.classList.add('cloud', 'cloud-circle-1');
+            
+            const cloudCircle2 = document.createElement('div');
+            cloudCircle2.classList.add('cloud', 'cloud-circle-2');
+            
+            const cloudCircle3 = document.createElement('div');
+            cloudCircle3.classList.add('cloud', 'cloud-circle-3');
+            
+            cloudContainer.appendChild(cloudBase);
+            cloudContainer.appendChild(cloudCircle1);
+            cloudContainer.appendChild(cloudCircle2);
+            cloudContainer.appendChild(cloudCircle3);
+            
+            weatherCard.appendChild(cloudContainer);
+            
+            // Hafif rüzgar efekti
+            animationsRunning = true;
+            windInterval = setInterval(createLightWind, 1000);
+        }
+        
+        // Yağmurlu animasyon
+        function setupRainyAnimation() {
+            // Önce bulutları ekle
+            setupCloudyAnimation();
+            
+            // Yağmur animasyonu
+            animationsRunning = true;
+            rainInterval = setInterval(createRain, 200);
+        }
+        
+        // Karlı animasyon
+        function setupSnowyAnimation() {
+            // Önce bulutları ekle
+            setupCloudyAnimation();
+            
+            // Kar zemini ekle
+            const snowGround = document.createElement('div');
+            snowGround.classList.add('snow-ground');
+            weatherCard.appendChild(snowGround);
+            
+            // Kar animasyonu
+            animationsRunning = true;
+            snowInterval = setInterval(createSnow, 300);
+        }
+        
+        // Fırtınalı animasyon
+        function setupThunderstormAnimation() {
+            // Önce yağmurlu animasyonu ekle
+            setupRainyAnimation();
+            
+            // Şimşek efekti ekle
+            function createLightning() {
+                weatherCard.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                setTimeout(() => {
+                    weatherCard.style.backgroundColor = '';
+                }, 100);
+            }
+            
+            // Rastgele şimşek çak
+            setInterval(createLightning, 3000 + Math.random() * 5000);
+        }
+        
+        // Yağmur damlası oluştur
+        function createRain() {
+            const drop = document.createElement('div');
+            drop.classList.add('rain');
+            drop.style.left = Math.random() * 260 + 20 + 'px';
+            drop.style.top = '120px';
+            weatherCard.appendChild(drop);
+
+            let position = 120;
+            const fall = setInterval(() => {
+                position += 5;
+                drop.style.top = position + 'px';
+                
+                if (position > 400) {
+                    clearInterval(fall);
+                    drop.remove();
+                }
+            }, 20);
+        }
+
+        // Kar tanesi oluştur
+        function createSnow() {
+            const flake = document.createElement('div');
+            flake.classList.add('snow');
+            flake.style.left = Math.random() * 260 + 20 + 'px';
+            flake.style.top = '120px';
+            weatherCard.appendChild(flake);
+
+            let position = 120;
+            let offset = Math.random() * 4 - 2;
+            let horizontalPos = parseFloat(flake.style.left);
+
+            const fall = setInterval(() => {
+                position += 2;
+                horizontalPos += offset;
+                flake.style.top = position + 'px';
+                flake.style.left = horizontalPos + 'px';
+                
+                if (position > 350) {
+                    clearInterval(fall);
+                    flake.remove();
+                }
+            }, 50);
+        }
+
+        // Hafif rüzgar çizgisi oluştur
+        function createLightWind() {
+            const line = document.createElement('div');
+            line.classList.add('wind-line');
+            
+            const yPos = Math.random() * 150 + 80;
+            line.style.top = yPos + 'px';
+            line.style.left = '20px';
+            line.style.width = '0px';
+            
+            weatherCard.appendChild(line);
+
+            let width = 0;
+            const grow = setInterval(() => {
+                width += 3;
+                line.style.width = width + 'px';
+                
+                if (width > 100) {
+                    clearInterval(grow);
+                    setTimeout(() => line.remove(), 100);
+                }
+            }, 30);
+        }
+        
+        // Sayfa yüklendiğinde ve yenile düğmesine tıklandığında hava durumunu getir
+        window.addEventListener('load', getWeatherData);
+        refreshBtn.addEventListener('click', getWeatherData);
+        
+        // Otomatik yenileme (5 dakikada bir)
+        setInterval(getWeatherData, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
