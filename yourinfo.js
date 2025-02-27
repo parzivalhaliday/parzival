@@ -5,14 +5,7 @@ const getIP = async () => {
     document.getElementById("ipAddress").textContent = "" + ipAddress;
 };
 
-window.onload = function() {
-    getIP(); 
-};
-if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-        updateLocationInfo(position);
-    });
-}
+
  
 function getOperatingSystem() {
     const userAgent = window.navigator.userAgent;
