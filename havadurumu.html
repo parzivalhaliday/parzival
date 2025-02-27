@@ -2,6 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hava Durumu</title>
     <style>
         body {
@@ -9,28 +10,33 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             background: #1a1a1a;
             font-family: Arial, sans-serif;
             color: white;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin: 20px 0 10px 0;
             color: white;
+            text-align: center;
         }
 
         .location {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            margin-bottom: 20px;
             color: #ccc;
+            text-align: center;
         }
 
         .weather-card {
-            width: 300px;
-            height: 400px;
+            width: min(90%, 300px);
+            min-height: 380px;
+            height: auto;
             background: linear-gradient(to bottom, #252b59, #1e2142);
             border-radius: 15px;
             position: relative;
@@ -41,10 +47,11 @@
             justify-content: space-between;
             padding: 20px;
             box-sizing: border-box;
+            margin: 10px auto;
         }
 
         .weather-title {
-            font-size: 28px;
+            font-size: clamp(1.5rem, 6vw, 28px);
             font-weight: bold;
             text-align: left;
             margin-top: 10px;
@@ -52,7 +59,7 @@
         }
 
         .temperature {
-            font-size: 64px;
+            font-size: clamp(2.5rem, 8vw, 64px);
             font-weight: bold;
             margin-top: auto;
             margin-bottom: 10px;
@@ -60,9 +67,9 @@
         }
 
         .details {
-            font-size: 16px;
+            font-size: clamp(0.9rem, 4vw, 16px);
             opacity: 0.8;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             z-index: 10;
         }
 
@@ -183,15 +190,17 @@
         }
 
         .refresh-btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: #3a3f6d;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             color: white;
-            font-size: 16px;
+            font-size: clamp(0.9rem, 4vw, 16px);
             cursor: pointer;
             transition: background 0.3s;
             margin-top: 20px;
+            width: min(90%, 200px);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .refresh-btn:hover {
@@ -223,6 +232,48 @@
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .weather-card {
+                padding: 15px;
+            }
+
+            .cloud-container {
+                transform: scale(0.8) translateX(-60%);
+            }
+
+            .sun {
+                transform: scale(0.8) translateX(-60%);
+            }
+
+            .details-container {
+                gap: 3px;
+            }
+
+            .last-updated {
+                font-size: 11px;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            body {
+                justify-content: flex-start;
+                padding-top: 10px;
+            }
+
+            h1 {
+                margin-top: 10px;
+            }
+
+            .weather-card {
+                min-height: 320px;
+            }
         }
     </style>
 </head>
