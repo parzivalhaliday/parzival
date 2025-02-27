@@ -1,11 +1,34 @@
 const getIP = async () => {
-    const response = await fetch('https://api64.ipify.org?format=json');
-    const data = await response.json();
-    const ipAddress = data.ip;
-    document.getElementById("ipAddress").textContent = "" + ipAddress;
+    try {
+        // IP adresini al
+        const response = await fetch('https://api64.ipify.org?format=json');
+        const data = await response.json();
+        const ipAddress = data.ip;
+        document.getElementById("ipAddress").textContent = ipAddress;
+
+        // IP'den konum bilgisini al
+        const locationResponse = await fetch(`https://ipapi.co/${ipAddress}/json/`);
+        const locationData = await locationResponse.json();
+        
+        // Konum bilgilerini göster - şehir tekrarını önle
+        document.getElementById("location").textContent = 
+            `${locationData.city}, ${locationData.country_name}`;
+        
+    } catch (error) {
+        console.error("IP veya konum bilgisi alınamadı:", error);
+        document.getElementById("ipAddress").textContent = "Bilgi alınamadı";
+        document.getElementById("location").textContent = "Bilgi alınamadı";
+    }
 };
 
-
+window.onload = function() {
+    getIP(); 
+};
+if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        updateLocationInfo(position);
+    });
+}
  
 function getOperatingSystem() {
     const userAgent = window.navigator.userAgent;
