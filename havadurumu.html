@@ -17,6 +17,7 @@
             color: white;
             padding: 20px;
             box-sizing: border-box;
+            height: 100vh;
         }
 
         h1 {
@@ -47,7 +48,7 @@
             justify-content: space-between;
             padding: 20px;
             box-sizing: border-box;
-            margin: 10px auto;
+            margin: 0;
         }
 
         .weather-title {
@@ -236,11 +237,13 @@
 
         @media (max-width: 480px) {
             body {
-                padding: 10px;
+                padding: 0;
             }
 
             .weather-card {
-                padding: 15px;
+                padding: 20px;
+                height: auto;
+                margin: 10px;
             }
 
             .cloud-container {
@@ -258,6 +261,20 @@
             .last-updated {
                 font-size: 11px;
                 margin-top: 15px;
+            }
+
+            .refresh-btn {
+                width: 100%;
+                padding: 15px;
+                font-size: clamp(1rem, 5vw, 18px);
+            }
+
+            .temperature {
+                font-size: clamp(3rem, 10vw, 80px);
+            }
+
+            .details {
+                font-size: clamp(1rem, 5vw, 18px);
             }
         }
 
