@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fikir</title>
+    <title>Rastgele Düşen Yazılar</title>
     <style>
         body {
             overflow: hidden;
-            background-color: #f0f0f0;
+            background-color: #333; /* Daha koyu arka plan */
             font-family: Arial, sans-serif;
         }
         .random-text {
             position: absolute;
             white-space: nowrap;
-            color: #333;
             animation: scroll 10s linear infinite;
         }
         @keyframes scroll {
@@ -24,19 +23,29 @@
 </head>
 <body>
     <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color; // Rastgele renk oluştur
+        }
+
         function createRandomText() {
             const text = document.createElement('div');
             text.className = 'random-text';
             text.innerText = 'nolur fikir ver';
             text.style.fontSize = Math.random() * 30 + 10 + 'px'; // 10px ile 40px arasında rastgele boyut
             text.style.left = Math.random() * window.innerWidth + 'px'; // Ekranın genişliğine göre rastgele konum
+            text.style.color = getRandomColor(); // Rastgele renk
             document.body.appendChild(text);
             setTimeout(() => {
                 text.remove(); // 10 saniye sonra yazıyı kaldır
             }, 10000);
         }
 
-        setInterval(createRandomText, 100); // Her saniyede bir rastgele yazı oluştur
+        setInterval(createRandomText, 100); // Her 100 milisaniyede bir rastgele yazı oluştur
     </script>
 </body>
 </html>
