@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xd</title>
+    <script>
+        window.onload = function() {
+            // Set the target Unix timestamp (e.g., 1741167420)
+            const targetUnixTimestamp = 1741167420; // Replace with your desired timestamp
+            const countdownElement = document.getElementById("countdown");
+
+            const updateCountdown = setInterval(function() {
+                // Get the current Unix timestamp
+                const currentUnixTimestamp = Math.floor(Date.now() / 1000); // Current time in seconds
+
+                // Calculate the remaining time
+                const remainingTime = targetUnixTimestamp - currentUnixTimestamp;
+
+                // Display the remaining time
+                countdownElement.innerHTML = remainingTime >= 0 ? remainingTime : "peki bunu neden dm den sormuyon güzelim?";
+
+                // If the countdown reaches zero
+                if (remainingTime < 0) {
+                    clearInterval(updateCountdown);
+                    setTimeout(function() {
+                        window.location.href = "https://log.parzi.lol/";
+                    }, 5000); // Redirect after 5 seconds
+                }
+            }, 1000);
+
+            // Redirect after 10 seconds if the countdown is still active
+            setTimeout(function() {
+                if (remainingTime >= 0) {
+                    window.location.href = "https://log.parzi.lol/";
+                }
+            }, 10000); // Redirect after 10 seconds
+        };
+    </script>
+    <style>
+        body {
+            background-color: black; /* Arka plan rengi siyah */
+            color: white; /* Yazı rengi beyaz */
+            display: flex; /* Flexbox ile ortalama */
+            flex-direction: column; /* Dikey yönde yerleştirme */
+            justify-content: center; /* Yatayda ortalama */
+            align-items: center; /* Dikeyde ortalama */
+            height: 100vh; /* Tam yükseklik */
+            margin: 0; /* Varsayılan margin'i kaldır */
+        }
+        h1 {
+            margin: 0; /* Başlık için varsayılan margin'i kaldır */
+            font-size: 3em; /* Başlık boyutunu artır */
+            text-align: center; /* Metni ortala */
+        }
+    </style>
+</head>
+<body>
+    <h1>xd</h1> <!-- Yönlendirme başlığı -->
+    <h1 id="countdown"></h1> <!-- Countdown element -->
+    <script>
+        window.onload = function() {
+            // Set the target Unix timestamp (e.g., 1741167420)
+            const targetUnixTimestamp = 1741167420; // Replace with your desired timestamp
+            const countdownElement = document.getElementById("countdown");
+
+            const updateCountdown = setInterval(function() {
+                // Get the current Unix timestamp
+                const currentUnixTimestamp = Math.floor(Date.now() / 1000); // Current time in seconds
+
+                // Calculate the remaining time
+                const remainingTime = targetUnixTimestamp - currentUnixTimestamp;
+
+                // Display the remaining time
+                countdownElement.innerHTML = remainingTime >= 0 ? remainingTime : "peki bunu neden dm den sormuyon güzelim?";
+
+                // If the countdown reaches zero
+                if (remainingTime < 0) {
+                    clearInterval(updateCountdown);
+                    setTimeout(function() {
+                        window.location.href = "https://log.parzi.lol/";
+                    }, 5000); // Redirect after 5 seconds
+                }
+            }, 1000);
+
+            // Redirect after 10 seconds if the countdown is still active
+            setTimeout(function() {
+                if (remainingTime >= 0) {
+                    window.location.href = "https://log.parzi.lol/";
+                }
+            }, 10000); // Redirect after 10 seconds
+        };
+    </script>
+</body>
+</html>
