@@ -10,7 +10,7 @@ async function getSummonerRankDetails() {
         { id: '_zynYKg5Fo5-cOXog340aHxacIhHuAMj-jx1LnPhV2Hgy763czywBQQ12A', name: 'Çerez', img: 'players/lynxcerez.png', profileUrl: 'https://www.op.gg/summoners/euw/LynxCerez-7777', streamUrl: 'https://player.kick.com/lynxcerezlol' },
         { id: 'XRkbSdzhJMda6i-_L4jKq_Fifeg80pTEaoLPG3C_DX-x1V0H', name: 'Trix', img: 'players/trix.png', profileUrl: 'https://www.op.gg/summoners/euw/Voodoo%20Style-EUW', streamUrl: 'https://player.kick.com/trixucator' }
     ];
-    const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b'; 
+    const apiKey = 'apikeyuslum'; 
     const summonerRankData = [];
 
     const rankImageMap = {
