@@ -112,6 +112,23 @@
             z-index: 1001;
             border: 3px solid #556B2F;
         }
+
+        .petal {
+            position: fixed;
+            z-index: 999;
+            pointer-events: none;
+            animation: fall linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate(0, -10%) rotate(0deg);
+            }
+            100% {
+                transform: translate(20px, 100vh) rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -120,6 +137,36 @@
     <div id="fullscreenOverlay" class="fullscreen-overlay"></div>
 
     <script>
+        // Kiraz yaprağı oluşturma fonksiyonu
+        function createPetal() {
+            const petal = document.createElement('img');
+            petal.src = './petal.png';
+            petal.className = 'petal';
+            
+            // Rastgele boyut (20px ile 40px arası)
+            const size = Math.random() * 20 + 20;
+            petal.style.width = `${size}px`;
+            
+            // Rastgele başlangıç pozisyonu
+            const startPosition = Math.random() * window.innerWidth;
+            petal.style.left = `${startPosition}px`;
+            petal.style.top = '-50px';
+            
+            // Rastgele animasyon süresi (5-15 saniye arası)
+            const animationDuration = Math.random() * 10 + 5;
+            petal.style.animationDuration = `${animationDuration}s`;
+            
+            document.body.appendChild(petal);
+            
+            // Yaprak yere düştükten sonra silme
+            setTimeout(() => {
+                petal.remove();
+            }, animationDuration * 1000);
+        }
+
+        // Her 500ms'de bir yeni yaprak oluştur
+        setInterval(createPetal, 500);
+
         const gallery = document.getElementById('gallery');
         const overlay = document.getElementById('fullscreenOverlay');
         
