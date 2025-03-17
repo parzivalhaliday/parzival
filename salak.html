@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salak</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #0f0f0f;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .salak-text {
+            position: absolute;
+            color: #ff0000;
+            font-weight: bold;
+            transform: translate(-50%, -50%);
+            animation: spin 2s infinite linear;
+            z-index: 2;
+            cursor: pointer;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            user-select: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas"></div>
+
+    <script>
+        // Three.js kurulumu
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas').appendChild(renderer.domElement);
+
+        // Kamera pozisyonu
+        camera.position.z = 5;
+
+        // Rastgele renkler
+        const renkler = [
+            '#FF5733', '#33FF57', '#3357FF', '#FF33F5', 
+            '#F5FF33', '#33FFF5', '#FF3333', '#FFFF33'
+        ];
+
+        // 3D metin oluşturan fonksiyon
+        function rastgeleSalakEkle3D() {
+            const geometry = new THREE.TextGeometry('SALAK', {
+                size: 0.5,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelOffset: 0,
+                bevelSegments: 5
+            });
+            
+            const material = new THREE.MeshPhongMaterial({ 
+                color: renkler[Math.floor(Math.random() * renkler.length)],
+                specular: 0xffffff
+            });
+            
+            const mesh = new THREE.Mesh(geometry, material);
+            
+            // Rastgele pozisyon
+            mesh.position.x = Math.random() * 8 - 4;
+            mesh.position.y = Math.random() * 8 - 4;
+            mesh.position.z = Math.random() * 4 - 2;
+            
+            // Rastgele rotasyon
+            mesh.rotation.x = Math.random() * Math.PI;
+            mesh.rotation.y = Math.random() * Math.PI;
+            
+            scene.add(mesh);
+        }
+
+        // 2D metin oluşturan fonksiyon
+        function rastgeleSalakEkle2D() {
+            const salak = document.createElement('div');
+            salak.className = 'salak-text';
+            salak.textContent = 'SALAK';
+            
+            // Rastgele boyut (30px - 100px)
+            const boyut = Math.floor(Math.random() * 70) + 30;
+            salak.style.fontSize = `${boyut}px`;
+            
+            // Rastgele pozisyon
+            const x = Math.floor(Math.random() * window.innerWidth);
+            const y = Math.floor(Math.random() * window.innerHeight);
+            salak.style.left = `${x}px`;
+            salak.style.top = `${y}px`;
+            
+            // Rastgele renk
+            salak.style.color = renkler[Math.floor(Math.random() * renkler.length)];
+            
+            // Rastgele rotasyon
+            const rotasyon = Math.floor(Math.random() * 360);
+            salak.style.transform = `translate(-50%, -50%) rotate(${rotasyon}deg)`;
+            
+            // Tıklama işlevi
+            salak.addEventListener('click', function() {
+                this.style.fontSize = `${parseInt(this.style.fontSize) + 10}px`;
+                this.textContent += '!';
+                this.style.color = renkler[Math.floor(Math.random() * renkler.length)];
+            });
+            
+            document.body.appendChild(salak);
+            
+            // 5 saniye sonra kaldır
+            setTimeout(() => {
+                salak.remove();
+            }, 5000);
+        }
+
+        // Işık ekle
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(0, 0, 5);
+        scene.add(light);
+        
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+
+        // Her 0.5 saniyede bir 2D metin ekle
+        setInterval(rastgeleSalakEkle2D, 500);
+
+        // Animasyon döngüsü
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Sahneyi döndür
+            scene.rotation.x += 0.003;
+            scene.rotation.y += 0.005;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Pencere boyutu değiştiğinde yeniden boyutlandır
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
