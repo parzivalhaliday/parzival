@@ -304,6 +304,19 @@
                 updateProgress();
                 messageElement.textContent = "Bunu çözeceğini sanmıyordum";
                 messageElement.style.color = "#33ff33";
+                
+                // İlk uyarı mesajı
+                setTimeout(() => {
+                    messageElement.textContent = "😡 cemre 😡";
+                    messageElement.style.color = "#ff3333";
+                    
+                    // İkinci uyarı mesajı
+                    setTimeout(() => {
+                        messageElement.textContent = "2 kelime";
+                        messageElement.style.color = "#33ff33";
+                    }, 60000); // 1 dakika sonra
+                }, 1500);
+                
                 setTimeout(goToNextStage, 1500);
             } else {
                 messageElement.textContent = "Yanlış xd";
