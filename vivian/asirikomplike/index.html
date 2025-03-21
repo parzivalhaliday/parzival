@@ -305,17 +305,8 @@
                 messageElement.textContent = "Bunu çözeceğini sanmıyordum";
                 messageElement.style.color = "#33ff33";
                 
-                // 1 dakika sonra uyarı göster ve 3 saniye daha bekleyip diğer aşamaya geç
-                setTimeout(() => {
-                    messageElement.textContent = "😡 cemre 😡";
-                    messageElement.style.color = "#ff3333";
-                    
-                    // Uyarı gösterildikten 3 saniye sonra diğer aşamaya geç
-                    setTimeout(goToNextStage, 3000);
-                }, 60000); // 60000 ms = 1 dakika
-                
-                // Hemen sonraki aşamaya geçmeyi iptal et
-                // setTimeout(goToNextStage, 1500);
+                // Hemen sonraki aşamaya geç
+                setTimeout(goToNextStage, 1500);
             } else {
                 messageElement.textContent = "Yanlış xd";
                 messageElement.style.color = "#ff3333";
@@ -384,14 +375,14 @@
                 messageElement.textContent = "YANİ UMARIM KODLAMIŞIMDIR SONRAKİ AŞAMAYI";
                 messageElement.style.color = "#33ff33";
                 setTimeout(() => {
-                    window.location.href = "vivianbulmaca.parzi.lol";
+                    window.location.href = "vivian.parzi.lol";
                 }, 2000);
             } else if (input === "test") {
                 // Test amaçlı yönlendirme
                 messageElement.textContent = "YANİ UMARIM KODLAMIŞIMDIR SONRAKİ AŞAMAYI";
                 messageElement.style.color = "#33ff33";
                 setTimeout(() => {
-                    window.location.href = "https://example.com";
+                    window.location.href = "vivian.parzi.lol";
                 }, 1500);
             } else {
                 messageElement.textContent = "bilemedin xd";
