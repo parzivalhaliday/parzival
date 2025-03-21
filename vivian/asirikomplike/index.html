@@ -214,7 +214,7 @@
         
         <!-- Stage 3: Kısaltma Bilmecesi -->
         <div class="puzzle-stage" id="stage3">
-            <h2>aönceki kolaydı</h2>
+            <h2>az önceki kolaydı</h2>
             <p>parzi</p>
             
             <div class="binary-code">
@@ -232,16 +232,16 @@
         
         <!-- Stage 4: Zar Bilmecesi -->
         <div class="puzzle-stage" id="stage4">
-            <h2>Şarkı</h2>
-            <p>en kolay tur fr</p>
-            <p>DÜNYANIN EN İYİ ŞARKISININ SÖZLERİNDEN Bİ KISIM</p>
+            <h2>Hayvan</h2>
+            <p>en zor tur (söyemiştim)</p>
+            <p>en sevdiğim hayvan</p>
             
             <div class="input-container">
                 <input type="text" id="stage4Input" placeholder="Cevabı girin">
                 <button onclick="checkStage4()">Gönder</button>
                 <div class="message" id="stage4Message"></div>
                 <button class="hint-btn" onclick="toggleHint('hint4')">İpucu Göster</button>
-                <div class="hint-text" id="hint4">🎲</div>
+                <div class="hint-text" id="hint4">kuş</div>
             </div>
         </div>
         
@@ -267,7 +267,7 @@
             1: { answer: "tamam cemre", completed: false },
             2: { answer: "😡", completed: false },
             3: { answer: "xd", completed: false },
-            4: { answer: "zarlar hep bir", completed: false },
+            4: { answer: "karga", completed: false },
             5: { answer: "ayak", completed: false }
         };
         
@@ -375,14 +375,14 @@
                 messageElement.textContent = "YANİ UMARIM KODLAMIŞIMDIR SONRAKİ AŞAMAYI";
                 messageElement.style.color = "#33ff33";
                 setTimeout(() => {
-                    window.location.href = "vivian.parzi.lol";
+                    window.location.href = "https://vivian.parzi.lol";
                 }, 2000);
             } else if (input === "test") {
                 // Test amaçlı yönlendirme
                 messageElement.textContent = "YANİ UMARIM KODLAMIŞIMDIR SONRAKİ AŞAMAYI";
                 messageElement.style.color = "#33ff33";
                 setTimeout(() => {
-                    window.location.href = "vivian.parzi.lol";
+                    window.location.href = "https://vivian.parzi.lol";
                 }, 1500);
             } else {
                 messageElement.textContent = "bilemedin xd";
