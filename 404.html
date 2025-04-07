@@ -15,7 +15,10 @@
             background: #b3d4fc;
             text-shadow: none;
         }
-
+        .action-text {
+            margin-top: 40px;
+            color: #FFF;
+        }
         html {
             padding: 30px 10px;
             font-size: 20px;
@@ -80,11 +83,27 @@
             height: 120px;
             margin: 20px auto;
         }
+
+        /* Blinking cursor styles */
+        .cursor {
+            display: inline-block;
+            width: 10px; /* Adjust width as needed */
+            height: 1.2em; /* Match line height */
+            background-color: orange; /* Cursor color */
+            margin-left: 5px;
+            animation: blink 1s step-end infinite;
+            vertical-align: bottom; /* Align with text baseline */
+        }
+
+        @keyframes blink {
+            from, to { background-color: transparent }
+            50% { background-color: orange; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Not found</h1>
+        <h1>404 Not found</h1>
         <p>Sorry, but the page you were trying to view does not exist.</p>
         <p>There could be a lot of reasons behind this:</p>
         <ul>
@@ -96,7 +115,10 @@
             <li>You followed an <strong>OLD, DEAD, BROKEN</strong> URL, thus.</li>
             <li>Or you are just missing Windows Blue Screen, thus.</li>
         </ul>
-        <p>'nough said, now <a href="javascript:window.history.back()">go back</a> or return to <a href="/">homepage</a>.</p>
+        <div class="action-text">
+            Press <a href="javascript:window.history.back()">BACK</a> to return to previous page
+            or <a href="/">HOMEPAGE</a> to restart from beginning<span class="cursor"></span>
+        </div>
     </div>
 </body>
 </html>
