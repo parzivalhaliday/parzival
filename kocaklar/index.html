@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koçaklar Unlu Mamülleri - Arnavutköy İstanbul</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #873e23;
+            --secondary-color: #f5ebdc;
+            --accent-color: #d4a76a;
+            --text-color: #333;
+            --light-text: #fff;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--box-shadow);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background-color: var(--primary-color);
+        }
+        
+        header.scrolled .nav-link {
+            color: var(--light-text);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        header.scrolled .logo {
+            color: var(--light-text);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin: 0 15px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        header.scrolled .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        header.scrolled .nav-link::after {
+            background-color: var(--accent-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled .bar {
+            background-color: var(--light-text);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1568254183919-78a4f43a2877?q=80&w=1969&auto=format&fit=crop') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--light-text);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .cta-btn:hover {
+            background-color: transparent;
+            color: var(--light-text);
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-down a {
+            color: var(--light-text);
+            font-size: 24px;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Hakkımızda */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            transition: all 0.5s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        /* Ürünlerimiz */
+        .products {
+            background-color: #fff;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .product-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .product-info .price {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Çalışma Saatleri */
+        .hours {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+        }
+        
+        .hours .section-title h2 {
+            color: var(--light-text);
+        }
+        
+        .hours-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        .hours-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            flex: 1;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hours-card h3 {
+            color: var(--light-text);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .hours-list {
+            list-style: none;
+        }
+        
+        .hours-list li {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .special-note {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-style: italic;
+        }
+        
+        /* İletişim */
+        .contact-container {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .info-item i {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+        
+        .info-details h4 {
+            margin-bottom: 5px;
+        }
+        
+        .contact-map {
+            flex: 1;
+            min-height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-logo h3 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+        
+        .footer-links {
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        .footer-links h4 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            text-decoration: none;
+            box-shadow: var(--box-shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--accent-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .hours-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: -100%;
+                left: 0;
+                width: 100%;
+                background-color: #fff;
+                flex-direction: column;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+            
+            header.scrolled .nav-menu {
+                background-color: var(--primary-color);
+            }
+            
+            .nav-menu.active {
+                top: 70px;
+            }
+            
+            .nav-item {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                height: 90vh;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo"><i class="fas fa-bread-slice"></i> Koçaklar Fırını</a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#home" class="nav-link">Ana Sayfa</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">Hakkımızda</a></li>
+                    <li class="nav-item"><a href="#products" class="nav-link">Ürünlerimiz</a></li>
+                    <li class="nav-item"><a href="#hours" class="nav-link">Çalışma Saatleri</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">İletişim</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Koçaklar Fırını</h1>
+                <p>1975'ten beri geleneksel lezzetleri, taze ve kaliteli ürünlerle sofralarınıza taşıyoruz.</p>
+                <a href="#products" class="cta-btn">Ürünlerimizi Keşfedin</a>
+            </div>
+        </div>
+        <div class="scroll-down">
+            <a href="#about"><i class="fas fa-chevron-down"></i></a>
+        </div>
+    </section>
+
+    <!-- Hakkımızda Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hakkımızda</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="https://st3.depositphotos.com/12982378/18887/i/450/depositphotos_188872308-stock-photo-close-view-freshly-baked-bakery.jpg" alt="Kocaklar Fırını Tarihi">
+                </div>
+                <div class="about-text">
+                    <h3>Geleneksel Lezzetler, Modern Dokunuşlar</h3>
+                    <p>1975 yılında Çetin Koçak tarafından küçük bir aile işletmesi olarak kurulan Koçaklar Fırını, yarım asra yaklaşan tecrübesiyle geleneksel Türk fırın kültürünü yaşatmaya devam ediyor.</p>
+                    <p>Her gün taze ekmek, simit ve poğaça çeşitleri üretiyoruz. Kaliteden ödün vermeyen anlayışımız ve müşteri memnuniyetini ön planda tutan hizmet anlayışımızla, mahallemizin vazgeçilmez lezzet durağı olmaktan gurur duyuyoruz.</p>
+                    <p> daha fazla yazı daha fazla yazı  daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı daha fazla yazı  </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ürünlerimiz Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ürünlerimiz</h2>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/p_HdXhpwdN7NXjfTVOMsJUzJCISQMYf8tUy70i4ktBwKdgTri-xkXnrVBoCHl8192GO_ALA9PERzYMro=s265-w265-h265" alt="Geleneksel Ekmek">
+                    </div>
+                    <div class="product-info">
+                        <h3>Ekmek</h3>
+                        <p>Ekşi maya ile hazırlanan, taş fırında pişirilen geleneksel ekmeğimiz</p>
+                        <div class="price">₺12.50</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1486887396153-fa416526c108?q=80&w=2080&auto=format&fit=crop" alt="Tam Buğday Ekmeği">
+                    </div>
+                    <div class="product-info">
+                        <h3>Tam Buğday Ekmeği</h3>
+                        <p>%100 tam buğday unundan yapılan sağlıklı ekmek çeşidimiz</p>
+                        <div class="price">₺25.00</div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://www.datocms-assets.com/43891/1627555566-puf-puf-pogaca.jpg?auto=compress%2Cformat&fit=crop&h=450&w=800" alt="Açma">
+                    </div>
+                    <div class="product-info">
+                        <h3>Açma</h3>
+                        <p>Yumuşacık hamuruyla kahvaltıların vazgeçilmezi</p>
+                        <div class="price">₺15.00</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://www.datocms-assets.com/43891/1627555566-puf-puf-pogaca.jpg?auto=compress%2Cformat&fit=crop&h=450&w=800" alt="Poğaça">
+                    </div>
+                    <div class="product-info">
+                        <h3>Poğaça</h3>
+                        <p>Peynirli, patatesli ve zeytinli çeşitleri ile sevilen atıştırmalığımız</p>
+                        <div class="price">₺15.00</div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/20000149/20000149_0_MC/8796291661874_1706771271990.jpg" alt="Simit">
+                    </div>
+                    <div class="product-info">
+                        <h3>Simit</h3>
+                        <p>Susamlı, çıtır kabuklu, yumuşak içli geleneksel Türk gevreği</p>
+                        <div class="price">₺25.00</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Çalışma Saatleri Section -->
+    <section id="hours" class="hours">
+        <div class="container">
+            <div class="section-title">
+                <h2>Çalışma Saatleri</h2>
+            </div>
+            <div class="hours-container">
+                <div class="hours-card">
+                    <h3>Haftaiçi</h3>
+                    <ul class="hours-list">
+                        <li><span>Pazartesi</span> <span>06:00 - 21:00</span></li>
+                        <li><span>Salı</span> <span>06:00 - 21:00</span></li>
+                        <li><span>Çarşamba</span> <span>06:00 - 21:00</span></li>
+                        <li><span>Perşembe</span> <span>06:00 - 21:00</span></li>
+                        <li><span>Cuma</span> <span>06:00 - 21:30</span></li>
+                    </ul>
+                </div>
+                <div class="hours-card">
+                    <h3>Haftasonu</h3>
+                    <ul class="hours-list">
+                        <li><span>Cumartesi</span> <span>07:00 - 21:30</span></li>
+                        <li><span>Pazar</span> <span>07:00 - 20:00</span></li>
+                    </ul>
+                    <div class="special-note">
+                        <p>Dini ve milli bayramlarda açığız</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>İletişim</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Bize Ulaşın</h3>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="info-details">
+                            <h4>Adres</h4>
+                            <p>Koçaklar Unlu Mamülleri̇, İslambey, Çalışkan Sk., 34275 Arnavutköy/İstanbul</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="info-details">
+                            <h4>Telefon</h4>
+                            <p>+90 537 333 02 03</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="info-details">
+                            <h4>E-posta</h4>
+                            <p>info@kocaklarfirin.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="info-details">
+                            <h4>Çalışma Saatleri</h4>
+                            <p>Haftaiçi: 06:00 - 21:00</p>
+                            <p>Haftasonu: 07:00 - 21:30</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/905373330203" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <a href="https://maps.app.goo.gl/jUy2PrQK242Z1Nng8" target="_blank">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3002.6575745613836!2d28.7184833!3d41.1777429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab37d6a2c53e3%3A0x7a7b033e712f85bd!2zS29yw6Fha2xhciBVbmx1IE1hbcO8bGxlcmnMh8SX!5e0!3m2!1str!2str!4v1713038040161!5m2!1str!2str" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3><i class="fas fa-bread-slice"></i> Koçaklar Fırını</h3>
+                    <p>1975'ten beri geleneksel lezzetleri, taze ve kaliteli ürünlerle sofralarınıza taşıyoruz.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/905373330203" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Hızlı Erişim</h4>
+                    <ul>
+                        <li><a href="#home">Ana Sayfa</a></li>
+                        <li><a href="#about">Hakkımızda</a></li>
+                        <li><a href="#products">Ürünlerimiz</a></li>
+                        <li><a href="#hours">Çalışma Saatleri</a></li>
+                        <li><a href="#contact">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Ürünlerimiz</h4>
+                    <ul>
+                        <li><a href="#products">Ekmek Çeşitleri</a></li>
+                        <li><a href="#products">Poğaça Çeşitleri</a></li>
+                        <li><a href="#products">Tam Buğday Ekmeği</a></li>
+                        <li><a href="#products">Simit</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><a href="#contact">Koçaklar Unlu Mamülleri̇</a></li>
+                        <li><a href="#contact">İslambey, Çalışkan Sk.</a></li>
+                        <li><a href="#contact">34275 Arnavutköy/İstanbul</a></li>
+                        <li><a href="#contact">Çalışma Saatleri</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Koçaklar Fırını. Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const header = document.querySelector('#header');
+        const backToTop = document.querySelector('#backToTop');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+        
+        // Scroll Effects
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+                backToTop.classList.add('show');
+            } else {
+                header.classList.remove('scrolled');
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Back to top button özel işlev
+        document.getElementById('backToTop').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Animation on Scroll (Simple Version)
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.product-card, .about-img, .about-text, .hours-card, .contact-info, .contact-map');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Initialize animation styles
+        document.querySelectorAll('.product-card, .about-img, .about-text, .hours-card, .contact-info, .contact-map').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.8s ease';
+        });
+        
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
