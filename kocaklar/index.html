@@ -7,10 +7,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #1a237e;
-            --secondary-color: #ff8f00;
-            --light-color: #f5f5f5;
-            --dark-color: #333;
+            --primary-color: #4158d0;
+            --secondary-color: #ff7e5f;
+            --light-color: #f7f9fc;
+            --dark-color: #33334d;
+            --text-color: #455a64;
+            --bg-color: #f7f9fc;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(149, 157, 165, 0.1);
+            --header-bg: linear-gradient(135deg, #4158d0 0%, #6c63ff 100%);
+            --header-text: #ffffff;
+            --footer-bg: #33334d;
+            --footer-text: #ffffff;
+            --title-color: #33334d;
+        }
+        
+        /* Koyu tema değişkenleri */
+        [data-theme="dark"] {
+            --text-color: #e4e6eb;
+            --bg-color: #18191a;
+            --card-bg: #242526;
+            --card-shadow: rgba(0, 0, 0, 0.4);
+            --header-bg: linear-gradient(135deg, #32325d 0%, #424890 100%);
+            --header-text: #ffffff;
+            --footer-bg: #121212;
+            --footer-text: #e4e6eb;
+            --title-color: #e4e6eb;
         }
         
         * {
@@ -23,28 +45,34 @@
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px;
+            overflow-x: hidden;
         }
         
         body {
-            background-color: var(--light-color);
-            color: var(--dark-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+            width: 100%;
         }
         
         header {
-            background-color: var(--primary-color);
-            color: white;
+            background: var(--header-bg);
+            color: var(--header-text);
             padding: 1rem;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
+            overflow: hidden;
         }
         
         .header-content {
@@ -53,16 +81,28 @@
             align-items: center;
         }
         
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
             display: flex;
             align-items: center;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .logo span {
+            color: #ffffff;
         }
         
         .logo i {
             margin-right: 10px;
             color: var(--secondary-color);
+            text-shadow: none;
         }
         
         nav ul {
@@ -75,13 +115,34 @@
         }
         
         nav ul li a {
-            color: white;
+            color: #ffffff;
             text-decoration: none;
             transition: color 0.3s;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         nav ul li a:hover {
             color: var(--secondary-color);
+        }
+
+        /* Tema değiştirici düğme */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(255,255,255,0.1);
         }
         
         .hero {
@@ -131,13 +192,15 @@
         
         section {
             padding: 5rem 0;
+            overflow: hidden;
+            width: 100%;
         }
         
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: var(--primary-color);
+            color: var(--title-color);
             position: relative;
         }
         
@@ -158,30 +221,35 @@
             gap: 2rem;
         }
         
-        .service-card {
-            background-color: white;
+        .service-card, .feature-card {
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px var(--card-shadow);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
         }
         
-        .service-card:hover {
+        .service-card:hover, .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         
-        .service-card i {
+        .service-card i, .feature-card i {
             font-size: 3rem;
             color: var(--secondary-color);
             margin-bottom: 1.5rem;
         }
         
-        .service-card h3 {
+        .service-card h3, .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: var(--title-color);
         }
         
         .about-container {
@@ -206,7 +274,7 @@
         .about-text h3 {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            color: var(--primary-color);
+            color: var(--title-color);
         }
         
         .about-text p {
@@ -219,17 +287,6 @@
             gap: 2rem;
         }
         
-        .feature-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
         .feature-card::before {
             content: '';
             position: absolute;
@@ -240,23 +297,6 @@
             background-color: var(--secondary-color);
         }
         
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        
-        .feature-card i {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
         .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -264,10 +304,10 @@
         }
         
         .contact-info {
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px var(--card-shadow);
         }
         
         .contact-item {
@@ -286,7 +326,7 @@
         .contact-item .content h3 {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: var(--primary-color);
+            color: var(--title-color);
         }
         
         .map {
@@ -327,10 +367,11 @@
         }
         
         footer {
-            background-color: var(--dark-color);
-            color: white;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
             padding: 2rem 0;
             text-align: center;
+            transition: background-color 0.3s;
         }
         
         .footer-content {
@@ -379,20 +420,278 @@
                 flex-direction: column;
             }
             
+            .logo-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding: 0.5rem 0;
+            }
+            
+            .controls {
+                display: flex;
+                align-items: center;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+                margin-left: 15px;
+            }
+            
+            nav {
+                width: 100%;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease;
+            }
+            
+            nav.active {
+                height: auto;
+            }
+            
             nav ul {
                 margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 0.5rem 0;
+            }
+            
+            .hero {
+                height: auto;
+                min-height: 60vh;
+                padding: 3rem 1rem;
+                justify-content: center;
+                text-align: center;
             }
             
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 1.6rem;
+                word-wrap: break-word;
+                hyphens: auto;
+                max-width: 100%;
+            }
+            
+            .hero p {
+                font-size: 0.95rem;
+                max-width: 100%;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
             }
             
             .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            section {
+                padding: 2.5rem 0;
+                width: 100%;
+                overflow: hidden;
+            }
+            
+            .services-container, .features-container {
+                gap: 1.2rem;
+                display: grid;
+                grid-template-columns: 1fr;
+                max-width: 100%;
+            }
+            
+            .service-card, .feature-card {
+                padding: 1.3rem;
+                height: auto;
+                min-height: auto;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+            
+            .service-card i, .feature-card i {
                 font-size: 2rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .service-card h3, .feature-card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .service-card p, .feature-card p {
+                font-size: 0.9rem;
+                line-height: 1.4;
+                margin-bottom: 0;
             }
             
             .about-container, .contact-container {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .about-text h3 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+            
+            .about-text p {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            .contact-item {
+                margin-bottom: 1.5rem;
+            }
+            
+            .contact-item i {
+                font-size: 1.2rem;
+            }
+            
+            .contact-item .content h3 {
+                font-size: 1.1rem;
+            }
+            
+            .contact-item .content p {
+                font-size: 0.9rem;
+                word-break: break-word;
+                max-width: 100%;
+            }
+            
+            .social-media {
+                gap: 1rem;
+            }
+            
+            .social-media a {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .whatsapp-button {
+                bottom: 15px;
+                left: 15px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .whatsapp-popup {
+                bottom: 75px;
+                left: 15px;
+                width: calc(100% - 30px);
+                max-width: 300px;
+            }
+            
+            .footer-content {
+                padding: 0 1rem;
+            }
+            
+            .footer-content .logo {
+                justify-content: center;
+                margin-bottom: 1rem;
+                font-size: 1.3rem;
+            }
+            
+            .footer-content p {
+                font-size: 0.9rem;
+                word-wrap: break-word;
+            }
+            
+            img, video, iframe, table, .service-card, .feature-card, .about-text, .contact-info, .map {
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .about-text p, .contact-item .content p {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                word-break: break-word;
+                hyphens: auto;
+                max-width: 100%;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0 1rem;
+                overflow: hidden;
+            }
+        }
+        
+        /* Küçük ekranlar için ek düzenlemeler */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            
+            .hero p {
+                font-size: 0.85rem;
+            }
+            
+            .service-card, .feature-card {
+                padding: 1rem;
+            }
+            
+            .service-card h3, .feature-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .service-card p, .feature-card p {
+                font-size: 0.85rem;
+            }
+            
+            .about-text h3 {
+                font-size: 1.3rem;
+            }
+            
+            .about-text p {
+                font-size: 0.85rem;
+            }
+            
+            nav ul li a {
+                font-size: 0.9rem;
+            }
+            
+            .map iframe {
+                height: 250px;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .contact-item .content h3 {
+                font-size: 1rem;
+            }
+            
+            .contact-item .content p {
+                font-size: 0.85rem;
+            }
+            
+            .whatsapp-popup-body p, 
+            .whatsapp-popup-body input, 
+            .whatsapp-popup-body textarea {
+                font-size: 0.85rem;
             }
         }
         
@@ -453,12 +752,14 @@
             bottom: 90px;
             left: 20px;
             width: 300px;
-            background-color: white;
+            background-color: var(--card-bg);
+            color: var(--text-color);
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 998;
             overflow: hidden;
             transition: all 0.3s;
+            display: none; /* Başlangıçta gizle */
         }
         
         .whatsapp-popup-header {
@@ -521,23 +822,49 @@
         .whatsapp-popup-footer button:hover {
             background-color: #128C7E;
         }
+        
+        /* Hamburger menü stili */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+        
+        /* WhatsApp popup kapama butonu */
+        .whatsapp-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-truck"></i>
-                    <span>Kocaklar Nakliye</span>
+                <div class="logo-container">
+                    <div class="logo">
+                        <i class="fas fa-truck"></i>
+                        <span>Kocaklar Nakliye</span>
+                    </div>
+                    <div class="controls">
+                        <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
+                        <div class="menu-toggle" id="menuToggle">
+                            <i class="fas fa-bars"></i>
+                        </div>
+                    </div>
                 </div>
-                <nav>
+                <nav id="mainNav">
                     <ul>
-                        <li><a href="#anasayfa">Ana Sayfa</a></li>
-                        <li><a href="#hizmetlerimiz">Hizmetlerimiz</a></li>
-                        <li><a href="#hakkimizda">Hakkımızda</a></li>
-                        <li><a href="#ozellikler">Özelliklerimiz</a></li>
-                        <li><a href="#iletisim">İletişim</a></li>
+                        <li><a href="#home">Ana Sayfa</a></li>
+                        <li><a href="#services">Hizmetlerimiz</a></li>
+                        <li><a href="#about">Hakkımızda</a></li>
+                        <li><a href="#features">Neden Biz</a></li>
+                        <li><a href="#contact">İletişim</a></li>
                     </ul>
                 </nav>
             </div>
@@ -709,6 +1036,9 @@
                 <h3>Kocaklar Nakliye</h3>
                 <small>Genelde hemen yanıt verir</small>
             </div>
+            <div class="whatsapp-close" id="whatsappClose">
+                <i class="fas fa-times"></i>
+            </div>
         </div>
         <div class="whatsapp-popup-body">
             <p>Merhaba! Nakliye hizmetlerimiz hakkında bilgi almak için mesaj gönderin.</p>
@@ -772,11 +1102,14 @@
             const whatsappSend = document.getElementById('whatsappSend');
             const whatsappName = document.getElementById('whatsappName');
             const whatsappMessage = document.getElementById('whatsappMessage');
+            const whatsappClose = document.getElementById('whatsappClose');
             
-            // Show popup on page load
-            whatsappPopup.style.display = 'block';
+            // Başlangıçta popup kapalı olsun
+            whatsappPopup.style.display = 'none';
             
-            whatsappButton.addEventListener('click', function() {
+            // WhatsApp butonuna tıklandığında popup'ı göster/gizle
+            whatsappButton.addEventListener('click', function(event) {
+                event.stopPropagation(); // Tıklama olayının dışarıya yayılmasını engelle
                 if (whatsappPopup.style.display === 'none') {
                     whatsappPopup.style.display = 'block';
                 } else {
@@ -784,7 +1117,23 @@
                 }
             });
             
-            whatsappSend.addEventListener('click', function() {
+            // WhatsApp popup kapatma
+            whatsappClose.addEventListener('click', function() {
+                whatsappPopup.style.display = 'none';
+            });
+            
+            // Popup içine tıklandığında kapanmasın
+            whatsappPopup.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+            
+            // Sayfanın herhangi bir yerine tıklandığında popup'ı kapat
+            document.addEventListener('click', function() {
+                whatsappPopup.style.display = 'none';
+            });
+            
+            whatsappSend.addEventListener('click', function(event) {
+                event.stopPropagation(); // Tıklama olayının dışarıya yayılmasını engelle
                 const name = whatsappName.value.trim();
                 const message = whatsappMessage.value.trim();
                 
@@ -799,8 +1148,91 @@
                     // Clear fields
                     whatsappName.value = '';
                     whatsappMessage.value = '';
+                    
+                    // Close popup after sending
+                    whatsappPopup.style.display = 'none';
                 } else {
                     alert('Lütfen bir mesaj yazın.');
+                }
+            });
+        });
+
+        // Tema değiştirme fonksiyonları
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Kullanıcının sistem temasını kontrol et
+        function getPreferredTheme() {
+            if (localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+            }
+            
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            
+            return 'light';
+        }
+        
+        // Temayı ayarla
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+        
+        // Sayfa yüklendiğinde tercih edilen temayı ayarla
+        document.addEventListener('DOMContentLoaded', () => {
+            setTheme(getPreferredTheme());
+            
+            // Tema değiştirme düğmesi
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
+            
+            // Sistem teması değiştiğinde güncelle
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.getItem('theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        });
+
+        // Hamburger menü işlevselliği
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Menü öğelerine tıklandığında menünün kapanması
+        const menuLinks = mainNav.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    mainNav.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
             });
         });
