@@ -93,7 +93,7 @@ function setupAdButtons() {
             // E-posta oluştur
             const emailSubject = encodeURIComponent('Feetle Reklam İşbirliği Hakkında');
             const emailBody = encodeURIComponent('Merhaba Feetle Ekibi,\n\nWeb sitenizde reklam vermekle ilgileniyorum. Detaylı bilgi almak isterim.\n\nTeşekkürler,');
-            window.location.href = `mailto:parzivalhaliday@protonmail.com?subject=${emailSubject}&body=${emailBody}`;
+            window.location.href = `mailto:me@parzi.dev?subject=${emailSubject}&body=${emailBody}`;
         });
     });
 }
