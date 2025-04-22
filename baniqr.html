@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kodu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: white;
+        }
+        .qr-container {
+            text-align: center;
+        }
+        .qr-image {
+            max-width: 90vmin;
+            max-height: 90vmin;
+        }
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .print-button:hover {
+            background-color: #2980b9;
+        }
+        @media print {
+            body {
+                background-color: white;
+            }
+            .qr-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .qr-image {
+                max-width: 100%;
+                max-height: 100%;
+            }
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-container">
+        <img src="qr.png" alt="QR Kodu" class="qr-image">
+    </div>
+    <button class="print-button" onclick="window.print()">Yazdır</button>
+</body>
+</html>
