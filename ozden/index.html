@@ -1,29 +1,179 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friend Graph PDF Görüntüleyici</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        #pdf-viewer {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">özden</title>
+  <style>
+    body, html {
+      margin: 0;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      background-image: url("bg.jpg");
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5); /* Arka planın %50 şeffaflığı */
+    }
+    canvas {
+      display: block;
+      position: absolute;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+    }
+    #nightText {
+      color: #ffb3b3;
+      font-size: 48px;
+      font-weight: bold;
+      z-index: 1;
+      user-select: none;
+      margin-bottom: 20px;
+      font-family: Arial; /* Yazı fontunu belirle */
+    }
+    #videoContainer {
+      width: 60%; /* Video konteynerinin genişliği */
+      max-width: 800px; /* Maksimum genişlik */
+    }
+  </style>
 </head>
 <body>
-    <embed 
-        id="pdf-viewer"
-        src="friend_graph.pdf"
-        type="application/pdf"
-    />
+  <div id="container"></div>
+  <div id="nightText">ÖZDENİ BEKLERKEN YAPILDI</div>
+  <br>
+  <div id="videoContainer">
+    <video controls width="100%">
+      <source src="bekliyorum.mp4" type="video/mp4">
+      Tarayıcınız video etiketini desteklemiyor.
+    </video>
+  </div>
+  <script src="emoji-rain.js"></script>
+  <script src="miss.js"></script>
+  <script>
+const fonts = [
+  "Arial",
+  "Times New Roman",
+  "Helvetica",
+  "Calibri",
+  "Courier New",
+  "Georgia",
+  "Verdana",
+  "Garamond",
+  "Palatino",
+  "Comic Sans",
+  "Impact",
+  "Lucida Console",
+  "Trebuchet MS",
+  "Franklin Gothic",
+  "Baskerville",
+  "Copperplate",
+  "Futura",
+  "Century Gothic",
+  "Rockwell",
+  "Tahoma",
+  "Brush Script",
+  "Optima",
+  "Segoe UI",
+  "Bodoni",
+  "Myriad",
+  "Cambria",
+  "Didot",
+  "Monaco",
+  "Consolas",
+  "Gill Sans",
+  "Roboto",
+  "Open Sans",
+  "Lato",
+  "Ubuntu",
+  "Lobster",
+  "Raleway",
+  "Montserrat",
+  "Source Sans Pro",
+  "Arial Black",
+  "Courier",
+  "Bookman",
+  "Avant Garde",
+  "Palatino Linotype",
+  "Impact",
+  "Trebuchet",
+  "Geneva",
+  "Lucida Grande",
+  "Franklin Gothic",
+  "Baskerville Old Face",
+  "Bell MT",
+  "Bradley Hand",
+  "Berlin Sans",
+  "OCR A",
+  "Papyrus",
+  "Brush Script",
+  "Wide Latin",
+  "Vivaldi",
+  "Stencil",
+  "Harlow Solid",
+  "Kristen ITC",
+  "Edwardian Script",
+  "Old English Text",
+  "French Script",
+  "Bauhaus 93",
+  "Snap ITC",
+  "Juice ITC",
+  "Lucida Handwriting",
+  "Chiller",
+  "Blackadder ITC",
+  "Curlz MT",
+  "Mistral",
+  "Freestyle Script",
+  "Segoe Script",
+  "Kunstler Script",
+  "Palace Script",
+  "Magneto",
+  "Copperplate Gothic",
+  "Rockwell Extra Bold",
+  "Perpetua",
+  "Colonna",
+  "Tw Cen MT",
+  "Onyx",
+  "Gigi",
+  "Footlight MT",
+  "Forte",
+  "Kristen ITC",
+  "Ravie",
+  "SimSun",
+  "SimHei",
+  "FangSong",
+  "KaiTi",
+  "PMingLiU",
+  "Microsoft JhengHei",
+  "Microsoft YaHei",
+  "YouYuan",
+  "STXinwei",
+  "STXingkai",
+  "STFangsong",
+  "STZhongsong",
+  "STCaiyun"
+];
+
+    const nightText = document.getElementById('nightText');
+
+    function changeFont() {
+      const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+      nightText.style.fontFamily = randomFont;
+    }
+
+    setInterval(changeFont, 100);
+
+
+
+
+
+
+  
+  </script>
 </body>
 </html>
