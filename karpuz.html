@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karpuz Animasyonu</title>
+  <link href="https://fonts.googleapis.com/css?family=Kirang+Haerang|Work+Sans:400" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #F9EFB2;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      background: radial-gradient(ellipse at 0% 100%, #C2B1DD 0%, #9DB9DB 60%, #ABEDC9 100%);
+      font-family: 'Kirang Haerang', cursive;
+      line-height: 0.9;
+      font-feature-settings: "kern" 1;
+      font-kerning: normal;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .label, .credit {
+      position: absolute;
+      text-align: center;
+      left: 50%;
+      transform: translatex(-50%);
+      white-space: nowrap;
+      margin: 0;
+    }
+    
+    .label {
+      font-size: 46px;
+      top: 8%;
+    }
+    
+    .credit {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      bottom: 8%;
+    }
+    
+    .credit a {
+      color: #c1dd8b;
+    }
+    
+    svg {
+      width: 100%;
+      max-width: 80vmin;
+      max-height: 80vmin;
+      overflow: visible;
+    }
+    
+    .body-clip {
+      cursor: pointer;
+    }
+    
+    .crust-mask {
+      transform: translate(0, 0);
+      will-change: transform;
+      transition: transform 1000ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    .cheese-strand {
+      transform: translate(0, 0);
+      will-change: transform;
+      transition: transform 1000ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    .cheese-gap {
+      transform: translate(0, 0);
+      will-change: transform;
+      transition: transform 1000ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    /* Random transition delays for cheese strands */
+    .cheese-strand[data-index="0"] { transition-delay: 142ms; }
+    .cheese-strand[data-index="1"] { transition-delay: 187ms; }
+    .cheese-strand[data-index="2"] { transition-delay: 165ms; }
+    .cheese-strand[data-index="3"] { transition-delay: 123ms; }
+    .cheese-strand[data-index="4"] { transition-delay: 178ms; }
+    .cheese-strand[data-index="5"] { transition-delay: 156ms; }
+    .cheese-strand[data-index="6"] { transition-delay: 192ms; }
+    .cheese-strand[data-index="7"] { transition-delay: 134ms; }
+    .cheese-strand[data-index="8"] { transition-delay: 176ms; }
+    
+    /* Random transition delays for cheese gaps */
+    .cheese-gap[data-index="0"] { transition-delay: 67ms; }
+    .cheese-gap[data-index="1"] { transition-delay: 23ms; }
+    .cheese-gap[data-index="2"] { transition-delay: 89ms; }
+    .cheese-gap[data-index="3"] { transition-delay: 45ms; }
+    .cheese-gap[data-index="4"] { transition-delay: 76ms; }
+    .cheese-gap[data-index="5"] { transition-delay: 12ms; }
+    .cheese-gap[data-index="6"] { transition-delay: 98ms; }
+    .cheese-gap[data-index="7"] { transition-delay: 34ms; }
+    
+    /* Transform origins for toppings */
+    .seed[data-index="0"], .pepperoni[data-index="0"] { transform-origin: 670px 517px; }
+    .seed[data-index="1"], .pepperoni[data-index="1"] { transform-origin: 727px 611px; }
+    .seed[data-index="2"], .pepperoni[data-index="2"] { transform-origin: 607px 619px; }
+    .seed[data-index="3"], .pepperoni[data-index="3"] { transform-origin: 676px 698px; }
+    .seed[data-index="4"], .pepperoni[data-index="4"] { transform-origin: 774px 745px; }
+    .seed[data-index="5"], .pepperoni[data-index="5"] { transform-origin: 576px 740px; }
+    
+    .seed {
+      fill: #170000;
+      transform: rotate(0);
+      will-change: transform, fill;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    .pepperoni {
+      fill: #170000;
+      will-change: r, fill;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    /* Transition delays from bottom to top */
+    .seed[data-index="0"], .pepperoni[data-index="0"] { transition-delay: 600ms; }
+    .seed[data-index="1"], .pepperoni[data-index="1"] { transition-delay: 500ms; }
+    .seed[data-index="2"], .pepperoni[data-index="2"] { transition-delay: 400ms; }
+    .seed[data-index="3"], .pepperoni[data-index="3"] { transition-delay: 300ms; }
+    .seed[data-index="4"], .pepperoni[data-index="4"] { transition-delay: 200ms; }
+    .seed[data-index="5"], .pepperoni[data-index="5"] { transition-delay: 100ms; }
+    
+    /* Pizza transformation styles */
+    svg.to-pizza .crust-mask {
+      transform: translate(0, 80px);
+      transition-delay: 500ms;
+    }
+    
+    svg.to-pizza .cheese-strand {
+      transform: translate(0, 400px);
+    }
+    
+    svg.to-pizza .cheese-strand[data-index="0"] { transition-delay: 234ms; }
+    svg.to-pizza .cheese-strand[data-index="1"] { transition-delay: 156ms; }
+    svg.to-pizza .cheese-strand[data-index="2"] { transition-delay: 89ms; }
+    svg.to-pizza .cheese-strand[data-index="3"] { transition-delay: 267ms; }
+    svg.to-pizza .cheese-strand[data-index="4"] { transition-delay: 178ms; }
+    svg.to-pizza .cheese-strand[data-index="5"] { transition-delay: 212ms; }
+    svg.to-pizza .cheese-strand[data-index="6"] { transition-delay: 145ms; }
+    svg.to-pizza .cheese-strand[data-index="7"] { transition-delay: 298ms; }
+    svg.to-pizza .cheese-strand[data-index="8"] { transition-delay: 123ms; }
+    
+    svg.to-pizza .cheese-gap {
+      transform: translate(0, 400px);
+    }
+    
+    svg.to-pizza .cheese-gap[data-index="0"] { transition-delay: 367ms; }
+    svg.to-pizza .cheese-gap[data-index="1"] { transition-delay: 323ms; }
+    svg.to-pizza .cheese-gap[data-index="2"] { transition-delay: 389ms; }
+    svg.to-pizza .cheese-gap[data-index="3"] { transition-delay: 345ms; }
+    svg.to-pizza .cheese-gap[data-index="4"] { transition-delay: 376ms; }
+    svg.to-pizza .cheese-gap[data-index="5"] { transition-delay: 312ms; }
+    svg.to-pizza .cheese-gap[data-index="6"] { transition-delay: 398ms; }
+    svg.to-pizza .cheese-gap[data-index="7"] { transition-delay: 334ms; }
+    
+    svg.to-pizza .seed {
+      fill: #BE414D;
+      transform: rotate(90deg);
+    }
+    
+    svg.to-pizza .pepperoni {
+      r: 40;
+      fill: #BE414D;
+    }
+    
+    /* Transition delays from top to bottom */
+    svg.to-pizza .seed[data-index="0"],
+    svg.to-pizza .pepperoni[data-index="0"] { transition-delay: 300ms; }
+    svg.to-pizza .seed[data-index="1"],
+    svg.to-pizza .pepperoni[data-index="1"] { transition-delay: 400ms; }
+    svg.to-pizza .seed[data-index="2"],
+    svg.to-pizza .pepperoni[data-index="2"] { transition-delay: 500ms; }
+    svg.to-pizza .seed[data-index="3"],
+    svg.to-pizza .pepperoni[data-index="3"] { transition-delay: 600ms; }
+    svg.to-pizza .seed[data-index="4"],
+    svg.to-pizza .pepperoni[data-index="4"] { transition-delay: 700ms; }
+    svg.to-pizza .seed[data-index="5"],
+    svg.to-pizza .pepperoni[data-index="5"] { transition-delay: 800ms; }
+  </style>
+</head>
+<body>
+
+<h1 class="label">click the<br>watermelon</h1>
+<svg id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1115 1295.3">
+  <defs>
+    <linearGradient id="shadow_bottom" x1="301.9" x2="838.8" y1="1176.4" y2="548.3" gradientUnits="userSpaceOnUse">
+      <stop offset=".1" stop-color="#020202" stop-opacity="0"/>
+      <stop offset="1"/>
+    </linearGradient>
+
+    <linearGradient id="shadow_top" xlink:href="#shadow_bottom" x1="227.4" x2="761.1" y1="1106.5" y2="482.1"/>
+
+    <clipPath id="body_mask">
+      <path d="M678.8 845c145 0 178-38 180-40s0-5 0-5l-180-360s-1.8-3-3.8-3-3.8 3-3.8 3l-180 360s-2 3 0 5 35 40 180 40"/>
+    </clipPath>
+
+    <clipPath id="base_mask">
+      <path d="M858.8 800l-20.9-41.8c-4 9.4-15.3 42.8-159.1 42.8h-7.6c-143.8 0-155-33.4-159.1-42.8L491.2 800s-2 3 0 5 35 40 180 40h7.6c145 0 178-38 180-40s0-5 0-5z"/>
+    </clipPath>
+
+    <clipPath id="crust_mask">
+      <path class="crust-mask" d="M859.4 640.2l23.6 79.1s2.3 4.3 0 7.1S843.4 783 679.3 783h-8.6c-164 0-201.4-53.8-203.7-56.6s0-7 0-7l23.6-79.2z"/>
+    </clipPath>
+  </defs>
+  <g transform="translate(-116,0)">
+    <!-- background shadows -->
+    <g>
+      <path fill="url(#shadow_bottom)" d="M855 802l4 2.8-398.6 490.5-304-244.5L672 439" opacity=".1"/>
+      <path fill="url(#shadow_top)" d="M855 802l4 2.8-398.6 490.5L0 911l672-472" opacity=".1"/>
+    </g>
+
+    <!-- mask the shape of the pizzamelon -->
+    <g class="body-clip" clip-path="url(#body_mask)">
+      <!-- watermelon flesh -->
+      <path fill="#f07f74" d="M679 860.8c156.3 0 191.9-41 194-43s0-5.4 0-5.4l-194-388s-1.8-3.3-4-3.3-4 3.3-4 3.3l-194 388s-2.2 3.2 0 5.3 37.7 43.1 194 43.1"/>
+      <!-- cheese -->
+      <g fill="#F9EFB2" stroke="#F9EFB2" stroke-width="1">
+        <path class="cheese-gap" d="M814 0v421a5 5 0 0 1 10 0V0z" data-index="0"/>
+        <path class="cheese-gap" d="M788 0v423a5 5 0 0 1 10 0V0z" data-index="1"/>
+        <path class="cheese-gap" d="M729 0v423a12.5 12.5 0 1 1 25 0V0z" data-index="2"/>
+        <path class="cheese-gap" d="M701 0v421a5 5 0 0 1 10 0V0z" data-index="3"/>
+        <path class="cheese-gap" d="M654 0v415a12.5 12.5 0 1 1 25 0V0z" data-index="4"/>
+        <path class="cheese-gap" d="M610 0v415a5 5 0 0 1 10 0V0z" data-index="5"/>
+        <path class="cheese-gap" d="M554 0v421a17 17 0 0 1 34 0V0z" data-index="6"/>
+        <path class="cheese-gap" d="M526 0v421a5 5 0 0 1 10 0V0z" data-index="7"/>
+        <path class="cheese-strand" d="M824 0v420a11 11 0 0 0 22 0V0z" data-index="0"/>
+        <path class="cheese-strand" d="M798 0v430a8 8 0 0 0 16 0V0z" data-index="1"/>
+        <path class="cheese-strand" d="M754 0v422a17 17 0 0 0 34 0v1V0z" data-index="2"/>
+        <path class="cheese-strand" d="M711 0v422a9 9 0 0 0 18 0V0z" data-index="3"/>
+        <path class="cheese-strand" d="M679 0v420a11 11 0 0 0 22 0V0z" data-index="4"/>
+        <path class="cheese-strand" d="M620 0v415a17 17 0 0 0 34 0v1V0z" data-index="5"/>
+        <path class="cheese-strand" d="M588 0v420a11 11 0 0 0 22 0V0z" data-index="6"/>
+        <path class="cheese-strand" d="M536 0v422a9 9 0 0 0 18 0V0z" data-index="7"/>
+        <path class="cheese-strand" d="M504 0v420a11 11 0 0 0 22 0V0z" data-index="8"/>
+      </g>
+      <!-- pepperoni -->
+      <g class="pepperoni-group" fill="#BE414D">
+        <circle class="pepperoni" cx="670" cy="517" r="6" data-index="0"/>
+        <circle class="pepperoni" cx="727" cy="611" r="6" data-index="1"/>
+        <circle class="pepperoni" cx="607" cy="619" r="6" data-index="2"/>
+        <circle class="pepperoni" cx="676" cy="698" r="6" data-index="3"/>
+        <circle class="pepperoni" cx="774" cy="745" r="6" data-index="4"/>
+        <circle class="pepperoni" cx="576" cy="740" r="6" data-index="5"/>
+      </g>
+      <!-- watermelon seeds -->
+      <g class="seed-group" fill="#170000">
+        <path class="seed" d="M676 517a6 6 0 0 1-12 0c0-3.3 2.7-18 6-18s6 14.7 6 18z" data-index="0"/>
+        <path class="seed" d="M732.9 609.9A6 6 0 1 1 721 612c-.6-3.2-.7-18.2 2.5-18.8s8.7 13.3 9.3 16.6z" data-index="1"/>
+        <path class="seed" d="M613 619.6a6 6 0 1 1-12-1.2c.3-3.3 4.6-17.6 7.9-17.3s4.4 15.2 4.1 18.5z" data-index="2"/>
+        <path class="seed" d="M682 698.4a6 6 0 1 1-12-.8c.2-3.3 3.9-17.8 7.2-17.6s5 15 4.8 18.4z" data-index="3"/>
+        <path class="seed" d="M779.8 743.6a6 6 0 0 1-11.6 2.8c-.8-3.2-1.6-18.1 1.6-18.9s9.3 12.9 10 16z" data-index="4"/>
+        <path class="seed" d="M582 740.5a6 6 0 0 1-12-1c.3-3.3 4.3-17.7 7.6-17.4s4.7 15.1 4.4 18.4z" data-index="5"/>
+      </g>
+    </g>
+
+    <!-- mask the shape of the pizzamelon husk -->
+    <g class="base-clip" clip-path="url(#base_mask)">
+      <!-- watermelon rind -->
+      <g>
+        <path fill="#c1dd8b" d="M858.8 800l-20.9-41.8c-4 9.4-15.3 42.8-159.1 42.8h-7.6c-143.8 0-155-33.4-159.1-42.8L491.2 800s-2 3 0 5 35 40 180 40h7.6c145 0 178-38 180-40s0-5 0-5z"/>
+        <path fill="#91c85d" d="M883 817.3l-23.6-59c-4.6 13.2-17.4 60.5-180.1 60.5h-8.6c-162.7 0-175.4-47.3-180-60.6L467 817.3s-2.3 4.3 0 7.1S506.6 881 670.7 881h8.6c164 0 201.4-53.8 203.7-56.6s0-7 0-7z"/>
+        <path fill="#2da057" d="M858.7 799.9c-15.6 14.3-59.2 39.1-179.4 39.1h-8.8c-119.8 0-163.5-24.6-179.3-39-.2.3-1.9 3 0 5s35 40 180 40h7.6c145 0 178-38 180-40s0-5 0-5z"/>
+      </g>
+      <!-- pizza crust mask -->
+      <g class="crust-clip" clip-path="url(#crust_mask)">
+        <g>
+          <path class="crust crust--base" fill="#e7cd7c" d="M858.8 800l-20.9-41.8c-4 9.4-15.3 42.8-159.1 42.8h-7.6c-143.8 0-155-33.4-159.1-42.8L491.2 800s-2 3 0 5 35 40 180 40h7.6c145 0 178-38 180-40s0-5 0-5z"/>
+          <path class="crust crust--shadow" fill="#d9be78" d="M858.7 799.9c-15.6 14.3-59.2 39.1-179.4 39.1h-8.8c-119.8 0-163.5-24.6-179.3-39-.2.3-1.9 3 0 5s35 40 180 40h7.6c145 0 178-38 180-40s0-5 0-5z"/>
+        </g>
+      </g>
+    </g>
+    <!-- pizzamelon shadow -->
+    <path fill="#020000" d="M511.2 814c-2-2 0-5 0-5l176-352-8.4-17s-1.8-3-3.8-3-3.8 3-3.8 3l-180 360s-2 3 0 5c1 1 9.7 10.9 36 20.6-11-6.1-15.3-11-16-11.6z" opacity=".1"/>
+  </g>
+</svg>
+<p class="credit">Built by <a href="https://parzi.dev/">Parzi</a> with 🍉</p>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".body-clip").on('click', function () {
+      $("#svg").toggleClass("to-pizza");
+      if ($("#svg").hasClass("to-pizza")) {
+        $(".label").html("click the<br>pizza");
+      } else {
+        $(".label").html("click the<br>watermelon");
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
