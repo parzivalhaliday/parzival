@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon" href="icons/cv.ico" type="image/x-icon">
+        <meta charset="UTF-8">
+        <meta name="description" content="Parzi's CV">
+        <meta name="keywords" content="CV, Resume, Parzi, Professional Experience, Portfolio, Skills, Kalista , Parzi Kalista , Parzi Twitch , Parzi xd, xd, xD, XD">
+        <meta name="author" content="Parzi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="Parzi's CV">
+        <meta property="og:description" content="Parzi's portfolio">
+        <meta property="og:image" content="https://parzi.lol/pp/profile.png">
+        <meta property="og:url" content="https://parzi.lol">
+        <meta property="og:type" content="website">
+        
+        <title id="pageTitle">Parzi's CV</title>
+        <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/minecraftia" type="text/css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.min.js"></script>
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+    
+    <body> 
+
+        <div id="susam" style="position: fixed; z-index: 99;">
+            <img
+            
+                style=" image-rendering: pixelated; filter: none;"
+            />
+        </div>
+        
+        <header>
+            <div class="text-container" onmouseenter="playMusic()" onmouseleave="pauseMusic()">
+                <pre id="head">
+    ##################################################################
+    # d8888b.  .d8b.  d8888b. d88888D d888888b       .o88b. db    db #
+    # 88  `8D d8' `8b 88  `8D YP  d8'   `88'        d8P  Y8 88    88 #
+    # 88oodD' 88ooo88 88oobY'    d8'     88         8P      Y8    8P #
+    # 88~~~   88~~~88 88`8b     d8'      88         8b      `8b  d8' #
+    # 88      88   88 88 `88.  d8' db   .88.        Y8b  d8  `8bd8'  #
+    # 88      YP   YP 88   YD d88888P Y888888P       `Y88P'    YP    #
+    ################################################################## </pre>
+                <audio class="music" preload loop> 
+                    <source src="test.mp3" type="audio/mp3">
+                    <source src="test.wav" type="audio/wav">
+                </audio>
+            </div>
+        </header>
+        <div id="content">
+        <pre class="section">
+<span class="baslik animated-text">Personal Info</span>
+                
+<span class="a">Name</span><span class="b">Parzi Dinç</span>
+                
+<span class="a">Birth Location</span><span class="b">Balıkesir</span>
+                
+<span class="a">Birth Date</span><span class="b">24/01</span>
+                                
+<span class="a">E-mail</span><a class="b" style="cursor: url('cursor1.png'), auto" href="mailto:me@parzi.dev">me@parzi.dev</a>
+                
+<span class="a">Unix Time</span><span class="b" id="unix-time"></span>
+
+<span class="a">Weather</span><span class="b" id="weather">Yükleniyor...</span>
+        </pre>
+                
+
+        <!-- <pre class="section">
+        <span class="baslik animated-text">my films
+            
+        </span>
+        </pre> -->
+
+        <pre class="section">
+<span class="baslik animated-text">Your Info</span>   
+            
+<span class="a">IP Address</span><span class="b" id="ipAddress"></span>
+
+<span class="a">Location</span><span class="b" id="location"></span>
+            
+<span class="a" >Browser Language Setting</span><span class="b" id="language"></span>
+            
+<span class="a" >Screen Resolution</span><span class="b" id="screen-resolution"></span>
+            
+<span class="a" >Viewport Size</span><span class="b" id="device-screen-size"></span>
+
+<span class="a">Operating System</span><span class="b" id="operating-system"></span>
+
+<span class="a">Page Orientation</span><span class="b" id="oryantasyon"></span>
+            
+<span class="a" >Storage Space</span><span class="b" id="storage"></span>
+<span class="b">yes, your browser gives me the above information XD</span>
+<span class="b">AND <a href="https://parzi.dev/log" style="color: #4CAF50; text-decoration: underline; cursor: url('cursor1.png'), auto">MORE</a> ⬅ click this</span>
+        </pre>
+            
+
+         
+
+
+        <pre class="section">
+<span class="baslik animated-text">Education</span>
+
+<span class="altbaslik">## University ##</span>
+
+<span class=""></span><span class="b">Kastamonu University-  Computer Programming (2018 - 2020)</span>
+<span class=""></span><span class="b">İstinye University - Software Engineering (2021 - 2024)</span>
+<span class=""></span><span class="b">Anadolu University - Management Information System (2024)</span>
+
+<span class="altbaslik">## High School ##</span>
+
+<span class="b">Burhaniye Anadolu Lisesi (2013-2017)</span>
+
+<span class="altbaslik">## (Pre College) ##</strong></li>
+            
+<span class="b"  >speed reading course </span> <a id="beyaz" style="cursor: url('cursor1.png'), auto">(1200 WPM)</a>
+
+<span class="b">touch typing course </span> <a class="dil" id="beyaz" style="cursor: url('cursor1.png'), auto" data-lang="en">EN (127 WPM)</a> - <a class="dil" id="beyaz" style="cursor: url('cursor1.png'), auto" data-lang="tr">TR (132 WPM)</a>
+        <div class="resimBolgesi" style="display: none;">
+            <div class="section">
+                <img id="dilResmi" src="">
+            </div>
+        </div>
+        </pre>
+
+        <pre class="section">
+<span class="baslik animated-text">Computer Languages</span>
+
+<span class="altbaslik">## Python ##</span>
+
+<li class="b">Web Scraping</li><li class="b">Bot programming</li><li class="b">Big Data Processing</li><li class="b">Desktop apps</li><li class="b">Scripts</li><li class="b">Backend</li><li class="b">Web apps</li><li class="b">Django web framework</li>
+
+<span class="altbaslik">## HTML/CSS/Javascript/PHP ##</span>
+
+<li class="b">Front-end Web Development</li><li class="b">Back-end Web Development</li><li class="b">Web Games</li>
+
+<span class="altbaslik">## API ##</span>
+
+<li class="b">RESTful API Design</li><li class="b">API Integration</li><li class="b">Webhook Implementation</li>
+<span style="color: #ffb3b3; margin-left: 1px;">* Who needs APIs when you have bs4, requests and scrapy</span>
+
+<span class="baslik animated-text">Human Languages</span>
+
+<span class="altbaslik">Turkish</span> - <span class="b">Native</span>
+<span class="altbaslik">English</span> - <span class="b">Intermediate  B2+</span>
+        </pre>
+
+        </pre>
+
+
+        <!-- <pre class="section">
+        <span class="baslik animated-text">Certificates</span>
+        <div style="display: none;">
+        <img id="sertifikaResmi" src="">
+        </div>
+
+        <span class="altbaslik" id="python">Zero to Advanced Level Programming with Python</span>
+
+        <span class="altbaslik" id="javascriptes7">Zero to Advanced Level Modern JavaScript Lessons ES7+</span>
+
+        <span class="altbaslik" id="htmljavascript">Complete Practical Web Development Training</span>
+        </pre> -->
+
+
+
+
+        <pre class="section">
+<span class="baslik animated-text">Links</span>
+<span class="a">Website</span>   <a class="a1" href="https://parzivalhaliday.github.io/parzival/">https://parzivalhaliday.github.io/parzival</a>
+<span class="a">Twitter</span>   <a class="a1" href="https://www.twitter.com/parzivalhaliday">https://www.twitter.com/parzivalhaliday</a>
+<span class="a">Github</span>    <a class="a1" href="https://www.github.com/parzivalhaliday">https://www.github.com/parzivalhaliday</a>
+<span class="a">Codepen</span>  <a class="a1" href="https://codepen.io/parzi">https://codepen.io/parzi</a>
+<span class="a">Instagram</span> <a class="a1" href="https://www.instagram.com/parzivalhaliday">https://www.instagram.com/parzivalhaliday</a>
+<span class="a">Youtube</span>   <a class="a1" href="https://www.youtube.com/parzivalhaliday">https://www.youtube.com/@parzivalhaliday</a>
+<span class="a" id="myLink">Steam</span>    <a class="a1" href="https://steamcommunity.com/id/parzivalhaliday/">https://steamcommunity.com/id/parzivalhaliday</a>
+<span class="a">Facebook</span>  <a class="a1" href="https://www.facebook.com/parzivalhalidayx">https://www.facebook.com/parzivalhalidayx</a>
+        </pre>
+
+
+
+
+        <pre class="section" id="github-section">
+<span class="baslik animated-text">Github 100-python-apps</span>
+
+<span class="altbaslik">I store the mini applications I develop with Python in a single repository.</span>
+        <!-- GitHub dizinleri buraya eklenecek -->
+        </pre>
+
+        <!-- <pre class="section">
+        <span class="baslik animated-text">Video</span> 
+
+        <video autoplay controls volume="0.1">
+        <source src="video.mp4" type="video/mp4">
+                    Tarayıcınız video etiketini desteklemiyor.
+                </video>
+            </pre>
+        </div> -->
+
+        <pre class="section" style="padding: 10px; border-radius: 5px;">
+<span class="baslik animated-text" style="font-size: 24px; color: #ffcc00;">Feetle</span>
+<span class="a" style="font-weight: bold;">Website</span>   <a class="a1" href="https://feetle.lol/">https://feetle.lol/</a>
+<span class="b">For development inquiries, feel free to DM me!</span>
+</pre>
+
+
+
+
+        <script src="script.js"></script>
+        <script src="pythonapps.js"></script>
+        <script src="keyboardevent.js"></script>
+        <script src="colorboxes.js"></script>
+        <script src="renk.js"></script>
+        <script src="cat.js"></script>
+        <script src="yourinfo.js"></script>
+        <script src="animatedtext.js"></script>
+        <script src="cursor.js"></script>
+        <script src="havadurumu.js"></script>
+    </body>
+
+</html>

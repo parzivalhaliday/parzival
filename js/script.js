@@ -10,6 +10,26 @@ document.addEventListener('DOMContentLoaded', function() {
         link.setAttribute('rel', 'noopener noreferrer');
     });
 
+    // Spotify'da çalan şarkıyı getir
+    fetchCurrentlyPlaying();
+    
+    // Spotify verilerini düzenli olarak güncelle (5 saniyede bir)
+    setInterval(fetchCurrentlyPlaying, 5000);
+    
+    // Global değişkenler - Spotify verileri için
+    window.spotifyData = {
+        lastFetched: null,
+        isPlaying: false,
+        trackName: '',
+        artists: '',
+        albumName: '',
+        albumImage: '',
+        duration: 0,
+        progress: 0,
+        progressPercent: 0,
+        spotifyUrl: ''
+    };
+
     // GitHub kullanıcı adı
     const githubUsername = 'parzivalhaliday';
     
@@ -78,6 +98,22 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             console.log(`GitHub verisi alınıyor: ${username}`);
             
+            // Local Storage'dan önbelleklenmiş verileri kontrol et
+            const cachedData = localStorage.getItem('github_data');
+            const cachedTime = localStorage.getItem('github_data_time');
+            
+            // Eğer önbellekte veri varsa ve 24 saatten daha yeni ise, onu kullan
+            if (cachedData && cachedTime) {
+                const timeDiff = Date.now() - parseInt(cachedTime);
+                // 24 saat = 86400000 milisaniye
+                if (timeDiff < 86400000) {
+                    console.log('Önbellekteki GitHub verisi kullanılıyor');
+                    const data = JSON.parse(cachedData);
+                    updateGitHubCard(data.user, data.repos);
+                    return;
+                }
+            }
+            
             // GitHub API'den kullanıcı bilgilerini al
             const userResponse = await fetch(`https://api.github.com/users/${username}`);
             
@@ -98,12 +134,61 @@ document.addEventListener('DOMContentLoaded', function() {
             const reposData = await reposResponse.json();
             console.log('GitHub repo verisi:', reposData);
             
+            // Verileri Local Storage'a kaydet
+            localStorage.setItem('github_data', JSON.stringify({
+                user: userData,
+                repos: reposData
+            }));
+            localStorage.setItem('github_data_time', Date.now().toString());
+            
             // GitHub kartını güncelle
             updateGitHubCard(userData, reposData);
             
         } catch (error) {
             console.error('GitHub API hatası:', error);
-            document.querySelector('.github-content').textContent = 'GitHub verileri yüklenemedi';
+            
+            // Önbellekte veri var mı kontrol et
+            const cachedData = localStorage.getItem('github_data');
+            if (cachedData) {
+                console.log('Hata oluştu, önbellekteki GitHub verisi kullanılıyor');
+                const data = JSON.parse(cachedData);
+                updateGitHubCard(data.user, data.repos);
+                return;
+            }
+            
+            // Hata durumunda varsayılan içerik göster
+            const githubCard = document.querySelector('.github-card');
+            const githubHeader = document.querySelector('.github-header');
+            const githubContent = document.querySelector('.github-content');
+            
+            if (githubHeader) {
+                githubHeader.innerHTML = `<span>GITHUB</span>`;
+            }
+            
+            if (githubContent) {
+                githubContent.innerHTML = `
+                    <p style="text-align: center; padding: 20px;">Check out my GitHub profile for projects and contributions</p>
+                    <a href="https://github.com/${username}" target="_blank" class="github-profile-link">
+                        <i class="fab fa-github"></i> Visit GitHub Profile
+                    </a>
+                `;
+            }
+            
+            // GitHub kartına tıklandığında profil sayfasına yönlendir
+            if (githubCard) {
+                githubCard.onclick = function(e) {
+                    // Eğer tıklanan element bir link ise, normal davranışı devam ettir
+                    if (e.target.tagName === 'A' || e.target.parentElement.tagName === 'A') {
+                        return;
+                    }
+                    
+                    // Değilse, GitHub profil sayfasına yönlendir
+                    window.open(`https://github.com/${username}`, '_blank');
+                };
+                
+                // Kartın tıklanabilir olduğunu belirtmek için stil ekle
+                githubCard.style.cursor = 'pointer';
+            }
         }
     }
     
@@ -179,6 +264,117 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Kartın tıklanabilir olduğunu belirtmek için stil ekle
         githubCard.style.cursor = 'pointer';
+    }
+
+    // Spotify'da çalan şarkıyı getirme fonksiyonu
+    async function fetchCurrentlyPlaying() {
+        try {
+            console.log('Spotify verisi alınıyor');
+            
+            // Artık CORS sorunu çözüldüğü için doğrudan API'ye istek yapabiliriz
+            const response = await fetch('https://spoti.parzi.dev/api/currently-playing');
+            
+            if (!response.ok) {
+                throw new Error(`Spotify verileri alınamadı: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Spotify verisi:', data);
+            
+            // Global değişkenleri güncelle
+            window.spotifyData = {
+                lastFetched: new Date(),
+                isPlaying: data.is_playing,
+                trackName: data.track_name,
+                artists: data.artists,
+                albumName: data.album_name,
+                albumImage: data.album_image,
+                duration: data.duration.ms,
+                progress: data.progress.ms,
+                progressPercent: data.progress_percent,
+                spotifyUrl: data.spotify_url
+            };
+            
+            // Spotify kartını güncelle
+            updateSpotifyCard(data);
+            
+        } catch (error) {
+            console.error('Spotify API hatası:', error);
+            
+            // API hatası durumunda, "kapalı" durumu gibi göster
+            const data = {
+                is_playing: false
+            };
+            
+            // Spotify kartını güncelle
+            updateSpotifyCard(data);
+        }
+    }
+    
+    // Spotify kartını güncelleme fonksiyonu
+    function updateSpotifyCard(data) {
+        const spotifyCard = document.querySelector('.spotify-card');
+        const albumCover = spotifyCard.querySelector('.album-cover-placeholder');
+        const songTitle = spotifyCard.querySelector('.song-title');
+        const songArtist = spotifyCard.querySelector('.song-artist');
+        const songAlbum = spotifyCard.querySelector('.song-album');
+        const spotifyStatus = spotifyCard.querySelector('.spotify-status');
+        const lastPlayed = spotifyCard.querySelector('.last-played');
+        const progressBar = spotifyCard.querySelector('.progress-bar');
+        
+        // Şarkı çalıyor mu durumunu güncelle
+        if (data.is_playing) {
+            spotifyStatus.textContent = '🟢';
+            lastPlayed.textContent = `${data.progress.formatted} / ${data.duration.formatted}`;
+            // İlerleme çubuğunu güncelle
+            if (progressBar) {
+                progressBar.style.width = `${data.progress_percent}%`;
+            }
+            
+            // Albüm kapağını güncelle
+            if (albumCover) {
+                // Albüm kapağı placeholder'ı bir img elementi ile değiştir
+                albumCover.innerHTML = `<img src="${data.album_image}" alt="${data.album_name}" class="album-cover">`;
+                albumCover.className = 'album-cover-container';
+            }
+            
+            // Şarkı bilgilerini güncelle
+            if (songTitle) songTitle.textContent = data.track_name;
+            if (songArtist) songArtist.textContent = `by ${data.artists}`;
+            if (songAlbum) songAlbum.textContent = data.album_name;
+        } else {
+            spotifyStatus.textContent = '⚪';
+            
+            // Spotify kapalı olduğunda özel mesaj göster (İngilizce)
+            if (songTitle) songTitle.textContent = "Not currently listening";
+            if (songArtist) songArtist.textContent = "Spotify is closed";
+            if (songAlbum) songAlbum.textContent = "Check back later";
+            if (lastPlayed) lastPlayed.textContent = 'Last checked just now';
+            
+            // Albüm kapağını varsayılan hale getir
+            if (albumCover) {
+                albumCover.innerHTML = '🎵';
+                albumCover.className = 'album-cover-placeholder';
+            }
+            
+            // İlerleme çubuğunu sıfırla
+            if (progressBar) {
+                progressBar.style.width = '0%';
+            }
+        }
+        
+        // Spotify kartına tıklandığında şarkıya yönlendir (şarkı çalıyorsa)
+        if (data.is_playing) {
+            spotifyCard.onclick = function(e) {
+                window.open(data.spotify_url, '_blank');
+            };
+            // Kartın tıklanabilir olduğunu belirtmek için stil ekle
+            spotifyCard.style.cursor = 'pointer';
+        } else {
+            // Spotify kapalıysa tıklama özelliğini kaldır
+            spotifyCard.onclick = null;
+            spotifyCard.style.cursor = 'default';
+        }
     }
 
     // Hava durumu fonksiyonları
