@@ -22,6 +22,8 @@
     --weather-thunderstorm-end: rgba(80, 60, 140, 0.7);
     --weather-fog-start: rgba(150, 150, 170, 0.5);
     --weather-fog-end: rgba(130, 130, 150, 0.7);
+    --weather-wind-start: rgba(100, 150, 140, 0.5);
+    --weather-wind-end: rgba(80, 130, 120, 0.7);
 }
 
 html[data-theme="light"] {
@@ -276,32 +278,37 @@ html[data-theme="dark"] .instagram i {
 
 /* Hava durumu stillerine göre arka plan - Daha simetrik sınırlar */
 .weather-clear {
-    background: var(--card-bg);
+    background: linear-gradient(135deg, var(--weather-clear-start), var(--weather-clear-end));
     border: none;
 }
 
 .weather-clouds {
-    background: var(--card-bg);
+    background: linear-gradient(135deg, var(--weather-clouds-start), var(--weather-clouds-end));
     border: none;
 }
 
 .weather-rain {
-    background: var(--card-bg);
+    background: linear-gradient(135deg, var(--weather-rain-start), var(--weather-rain-end));
     border: none;
 }
 
 .weather-snow {
-    background: var(--card-bg);
+    background: linear-gradient(135deg, var(--weather-snow-start), var(--weather-snow-end));
     border: none;
 }
 
 .weather-thunderstorm {
-    background: var(--card-bg);
+    background: linear-gradient(135deg, var(--weather-thunderstorm-start), var(--weather-thunderstorm-end));
     border: none;
 }
 
 .weather-fog {
-    background: var(--card-bg);
+    background: linear-gradient(135deg, var(--weather-fog-start), var(--weather-fog-end));
+    border: none;
+}
+
+.weather-wind {
+    background: linear-gradient(135deg, var(--weather-wind-start), var(--weather-wind-end));
     border: none;
 }
 
@@ -314,14 +321,24 @@ html[data-theme="dark"] .instagram i {
     pointer-events: none;
     animation: rain linear infinite;
     box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+    border-radius: 0 0 2px 2px;
+    transform: rotate(10deg);
 }
 
 @keyframes rain {
     0% {
-        transform: translateY(-20px);
+        transform: translateY(-20px) rotate(10deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
     }
     100% {
-        transform: translateY(120px);
+        transform: translateY(120px) rotate(10deg);
+        opacity: 0;
     }
 }
 
@@ -329,21 +346,119 @@ html[data-theme="dark"] .instagram i {
 .snowflake {
     position: absolute;
     background: white;
-    width: 3px;
-    height: 3px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     pointer-events: none;
     animation: snow linear infinite;
-    box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    opacity: 0.9;
+}
+
+.snowflake::before,
+.snowflake::after {
+    content: '';
+    position: absolute;
+    background: white;
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    top: -2px;
+    left: -2px;
+    opacity: 0.6;
+}
+
+.snowflake::after {
+    top: 2px;
+    left: 2px;
 }
 
 @keyframes snow {
     0% {
-        transform: translateY(-20px) translateX(0);
+        transform: translateY(-20px) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.9;
+    }
+    90% {
+        opacity: 0.9;
     }
     100% {
-        transform: translateY(120px) translateX(20px);
+        transform: translateY(120px) translateX(20px) rotate(360deg);
+        opacity: 0;
     }
+}
+
+/* Güneş animasyonu için */
+.sun {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 200, 60, 0.9);
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(255, 200, 60, 0.7);
+    animation: sun-pulse 3s ease-in-out infinite;
+    z-index: 1;
+    top: 20px;
+    right: 20px;
+}
+
+@keyframes sun-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+.sun-ray {
+    position: absolute;
+    background: linear-gradient(to right, rgba(255, 200, 60, 0.7), rgba(255, 200, 60, 0.1));
+    height: 2px;
+    width: 30px;
+    border-radius: 2px;
+    transform-origin: 0 0;
+    pointer-events: none;
+    opacity: 0;
+    animation: sun-ray 4s ease-in-out infinite;
+}
+
+@keyframes sun-ray {
+    0%, 100% { opacity: 0.2; width: 20px; }
+    50% { opacity: 0.8; width: 30px; }
+}
+
+/* Bulut animasyonu için */
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    z-index: 2;
+    animation: cloud-float linear infinite;
+}
+
+@keyframes cloud-float {
+    0% { transform: translateX(-120px); }
+    100% { transform: translateX(120px); }
+}
+
+/* Rüzgar animasyonu için */
+.wind-line {
+    position: absolute;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 1px;
+    pointer-events: none;
+    animation: wind linear infinite;
+    transform-origin: 0 0;
+}
+
+@keyframes wind {
+    0% { transform: translateX(-100%) scaleX(0.1); opacity: 0; }
+    5% { opacity: 0.8; }
+    95% { opacity: 0.8; }
+    100% { transform: translateX(100%) scaleX(1); opacity: 0; }
 }
 
 .theme-card {
