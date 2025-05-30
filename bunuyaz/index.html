@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Osurma Efekti</title>
+  <style>
+    body {
+      background: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      cursor: url('cursor.png'), auto;
+
+    }
+    #bani {
+      width: 600px;
+      max-width: 90vw;
+      transition: transform 0.2s;
+    }
+    .fart-effect {
+      animation: fart 0.4s;
+    }
+    @keyframes fart {
+      0% { transform: scale(1) rotate(0deg); }
+      20% { transform: scale(1.1) rotate(-5deg); }
+      50% { transform: scale(0.95) rotate(5deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    #fart-cloud {
+      position: absolute;
+      left: 60%;
+      top: 60%;
+      width: 100px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .show-cloud {
+      opacity: 1;
+      animation: cloud 0.5s forwards;
+    }
+    @keyframes cloud {
+      0% { opacity: 0; transform: scale(0.5) translateY(0); }
+      50% { opacity: 1; transform: scale(1.2) translateY(-20px);}
+      100% { opacity: 0; transform: scale(1.5) translateY(-40px);}
+    }
+  </style>
+</head>
+<body>
+  <div style="position:relative;">
+    <img id="bani" src="bani.png" alt="Bani" draggable="false">
+    <img id="fart-cloud" src="https://pngimg.com/uploads/cloud/cloud_PNG27.png" alt="Fart Cloud">
+    <img id="fartplus-effect" src="https://pngimg.com/uploads/confetti/confetti_PNG87017.png" alt="Fart Plus Confetti" style="position:absolute; left:50%; top:10%; width:1200px; opacity:0; pointer-events:none; transform:translateX(-50%); transition:opacity 0.3s; z-index:10;">
+  </div>
+  <audio id="fart-sound"></audio>
+  <script>
+    const bani = document.getElementById('bani');
+    const fartSound = document.getElementById('fart-sound');
+    const fartCloud = document.getElementById('fart-cloud');
+    const fartPlusEffect = document.getElementById('fartplus-effect');
+    // Osuruk klasöründeki mp3 dosyalarının listesi
+    const fartSounds = [
+      'osuruk/fart1.mp3',
+      'osuruk/fart2.mp3',
+      'osuruk/fart3.mp3',
+      'osuruk/fart4.mp3',
+      'osuruk/fart5.mp3',
+      'osuruk/fart6.mp3',
+      'osuruk/fart7.mp3',
+      'osuruk/fart8.mp3',
+      'osuruk/fart9.mp3'
+    ];
+    function rastgeleFart() {
+      // 100'de 1 ihtimalle fartplus.mp3
+      if (Math.random() < 0.05) {
+        return 'osuruk/fartplus.mp3';
+      }
+      const index = Math.floor(Math.random() * fartSounds.length);
+      return fartSounds[index];
+    }
+    bani.addEventListener('click', () => {
+      // Görsel animasyonu
+      bani.classList.add('fart-effect');
+      setTimeout(() => bani.classList.remove('fart-effect'), 400);
+
+      // Bulut efekti
+      fartCloud.classList.add('show-cloud');
+      setTimeout(() => fartCloud.classList.remove('show-cloud'), 500);
+
+      // Ses ve efekt seçimi
+      const fartFile = rastgeleFart();
+      fartSound.src = fartFile;
+      fartSound.currentTime = 0;
+      fartSound.play();
+
+      // Eğer fartplus.mp3 ise özel efektler
+      if (fartFile === 'osuruk/fartplus.mp3') {
+        fartPlusEffect.style.opacity = 1;
+        fartPlusEffect.style.transition = 'opacity 0.3s';
+        setTimeout(() => {
+          fartPlusEffect.style.opacity = 0;
+        }, 1500);
+      }
+    });
+  </script>
+  <footer style="position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); color: rgb(66, 250, 49); font-size: 34px;">
+ Tüm sesler bani ile girilen oyunlardan alınmıştır.
+  </footer>
+</body>
+</html>
