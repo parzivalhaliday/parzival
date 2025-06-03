@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>badu abi rank winrate 31</title>
+    <title>hakan abi rank winrate 31</title>
     <meta charset="UTF-8">
     <style>
         body {
@@ -113,9 +113,9 @@
 
         async function getSummonerRankDetails() {
             const summoners = [
-                { id: '_bVsFOcy4gLLS3IkWVtilHtWgBiQRJQXKs2jcXwRzV-XF6A', name: 'batuabi', puuid: 'hNVuVdgjtoYRZmGOIkA1QfbuQSa8Cdp4fyYOUJUTrDvHkYeZlO4E3jiR130xUuZrmk-hPz9_Gsii3w' }
+                { id: 'i9ACsSLVd2r2rU-TDPaHWgEpTaKFw5j9HHHkwgXzDh__', name: 'batuabi', puuid: 'hMYVzsTA7G9tY4niU8CZ9iuPDCx0_XU9zoQFntaaoXKEO-G-7viM2anVscdUzZarbOpRbYsrgpXxEQ' }
             ];
-            const apiKey = 'apikeyuslum';
+            const apiKey = 'RGAPI-6a75f092-34cc-47a7-81ad-3e04a682965b';
             const summonerRankData = [];
 
             try {
@@ -127,7 +127,7 @@
 
                 for (let summoner of summoners) {
                     // Rank bilgilerini al
-                    const rankUrl = `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summoner.id}?api_key=${apiKey}`;
+                    const rankUrl = `https://tr1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summoner.id}?api_key=${apiKey}`;
                     const rankResponse = await fetch(rankUrl);
                     const rankData = await rankResponse.json();
 
