@@ -92,6 +92,8 @@ const weatherModule = (function() {
         if (windSpeed > 5 && weatherMain !== 'Rain' && weatherMain !== 'Snow' && weatherMain !== 'Thunderstorm') {
             setWeatherAnimation('Wind');
         }
+
+        updateProfileImageByWeather(weatherMain);
     }
 
     // Hava durumuna göre ikonu ayarla
@@ -463,3 +465,43 @@ const weatherModule = (function() {
     };
 
 })(); 
+
+
+function updateProfileImageByWeather(weatherMain) {
+    const profileImg = document.querySelector('.profile-image img');
+    let imgSrc = 'images/me/me.png'; // Varsayılan
+
+    switch (weatherMain.toLowerCase()) {
+        case 'fog':
+        case 'mist':
+        case 'haze':
+            imgSrc = 'images/me/fog.png';
+            break;
+        case 'smoke':
+            imgSrc = 'images/me/smoke.png';
+            break;
+        case 'squall':
+            imgSrc = 'images/me/squall.png';
+            break;
+        case 'tornado':
+            imgSrc = 'images/me/tornado.png';
+            break;
+        case 'clouds':
+            imgSrc = 'images/me/cloudly.png';
+            break;
+        case 'rain':
+        case 'drizzle':
+        case 'thunderstorm':
+            imgSrc = 'images/me/rainy.png';
+            break;
+        case 'snow':
+            imgSrc = 'images/me/snowy.png';
+            break;
+        case 'clear':
+        default:
+            imgSrc = 'images/me/me.png';
+            break;
+    }
+
+    profileImg.src = imgSrc;
+} 
