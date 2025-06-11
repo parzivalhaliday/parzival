@@ -8,6 +8,9 @@
     --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     --placeholder-bg: #333;
     --transition-speed: 0.3s;
+    --glow-color: #ff00ff;
+    --glow-spread: 5px;
+    --glow-opacity: 0.7;
     
     /* Hava durumu renkleri - Daha simetrik ve benzer renk tonları */
     --weather-clear-start: rgba(255, 180, 60, 0.5);
@@ -26,27 +29,17 @@
     --weather-wind-end: rgba(80, 130, 120, 0.7);
 }
 
-html[data-theme="light"] {
-    --bg-gradient-start: #f0f0f5;
-    --bg-gradient-end: #e0e0ee;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --text-color: #333;
-    --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    --placeholder-bg: #ddd;
-    
-    /* Hava durumu renkleri (açık tema) - Daha simetrik ve benzer renk tonları */
-    --weather-clear-start: rgba(255, 200, 80, 0.5);
-    --weather-clear-end: rgba(255, 180, 60, 0.7);
-    --weather-clouds-start: rgba(160, 180, 200, 0.5);
-    --weather-clouds-end: rgba(140, 160, 180, 0.7);
-    --weather-rain-start: rgba(100, 140, 180, 0.5);
-    --weather-rain-end: rgba(80, 120, 160, 0.7);
-    --weather-snow-start: rgba(220, 230, 240, 0.5);
-    --weather-snow-end: rgba(200, 210, 220, 0.7);
-    --weather-thunderstorm-start: rgba(140, 120, 180, 0.5);
-    --weather-thunderstorm-end: rgba(120, 100, 160, 0.7);
-    --weather-fog-start: rgba(190, 190, 200, 0.5);
-    --weather-fog-end: rgba(170, 170, 180, 0.7);
+/* Night mode with glow effects */
+html[data-night-mode="on"] {
+    --bg-gradient-start: #050510;
+    --bg-gradient-end: #0a0a20;
+    --card-bg: rgba(10, 10, 30, 0.8);
+    --text-color: #d0d0ff;
+    --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    --placeholder-bg: #222;
+    --glow-color: #00ffff;
+    --glow-spread: 8px;
+    --glow-opacity: 0.9;
 }
 
 * {
@@ -178,17 +171,73 @@ body::after {
     opacity: 1;
 }
 
-html[data-theme="dark"] .linkedin { color: #0077b5; }
-html[data-theme="dark"] .github { color: #f5f5f5; }
-html[data-theme="dark"] .mail { color: #ea4335; }
-html[data-theme="dark"] .spotify { color: #1DB954; }
-html[data-theme="dark"] .discord { color: #7289DA; }
-html[data-theme="dark"] .twitter { color: #1DA1F2; }
+/* Social media icon colors for dark mode */
+html[data-theme="dark"] .linkedin { color: #0077b5; transition: all 0.3s ease; }
+html[data-theme="dark"] .github { color: #f5f5f5; transition: all 0.3s ease; }
+html[data-theme="dark"] .mail { color: #ea4335; transition: all 0.3s ease; }
+html[data-theme="dark"] .spotify { color: #1DB954; transition: all 0.3s ease; }
+html[data-theme="dark"] .discord { color: #7289DA; transition: all 0.3s ease; }
+html[data-theme="dark"] .twitter { color: #1DA1F2; transition: all 0.3s ease; }
 html[data-theme="dark"] .instagram i {
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+/* Social media icon colors for night mode */
+html[data-night-mode="on"] .linkedin { 
+    color: #0099ff; 
+    text-shadow: 0 0 8px currentColor;
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .github { 
+    color: #ffffff; 
+    text-shadow: 0 0 8px currentColor;
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .mail { 
+    color: #ff5555; 
+    text-shadow: 0 0 8px currentColor;
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .spotify { 
+    color: #1ED760; 
+    text-shadow: 0 0 8px currentColor;
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .discord { 
+    color: #7289DA; 
+    text-shadow: 0 0 8px currentColor;
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .twitter { 
+    color: #1DA1F2; 
+    text-shadow: 0 0 8px currentColor;
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .instagram i {
+    background: linear-gradient(45deg, #ffaa33, #ff5555, #ff0099, #aa00ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 150, 0.7));
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .social-links a:hover {
+    text-shadow: 0 0 15px currentColor;
+    opacity: 1;
+    transform: translateY(-8px);
 }
 
 .cards-container {
@@ -465,20 +514,22 @@ html[data-theme="dark"] .instagram i {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90px;
-    padding: 0;
+    height: 100px;
 }
 
 .theme-toggle {
-    width: 100%;
-    height: 100%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     border: none;
-    background: none;
+    background: transparent;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
 }
 
 .theme-toggle:hover {
@@ -486,8 +537,190 @@ html[data-theme="dark"] .instagram i {
 }
 
 .theme-icon {
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
+    transition: all 0.5s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Show/hide icons based on theme */
+.light-icon {
+    opacity: 1;
+    filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.7));
+}
+
+.dark-icon {
+    opacity: 0;
+}
+
+/* Night mode icon effects */
+html[data-night-mode="on"] .light-icon {
+    opacity: 0;
+}
+
+html[data-night-mode="on"] .dark-icon {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px var(--glow-color));
+    animation: icon-glow 2s infinite alternate;
+}
+
+@keyframes icon-glow {
+    0% {
+        filter: drop-shadow(0 0 5px var(--glow-color));
+        opacity: 0.8;
+    }
+    100% {
+        filter: drop-shadow(0 0 12px var(--glow-color));
+        opacity: 1;
+    }
+}
+
+/* Lamp toggle animation */
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+html[data-night-mode="on"] .theme-toggle::before {
+    width: 70px;
+    height: 70px;
+    opacity: 0.5;
+    animation: lamp-pulse 3s infinite alternate;
+}
+
+@keyframes lamp-pulse {
+    0% {
+        opacity: 0.3;
+        width: 60px;
+        height: 60px;
+    }
+    100% {
+        opacity: 0.6;
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Light beam effect when lamp is active */
+html[data-night-mode="on"] .theme-toggle::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(to bottom, var(--glow-color), transparent);
+    transform: translateX(-50%);
+    opacity: 0.7;
+    animation: light-beam 1s ease-out forwards;
+    z-index: -1;
+}
+
+@keyframes light-beam {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    100% {
+        height: 50px;
+        opacity: 0.7;
+    }
+}
+
+/* Glow effects for night mode */
+html[data-night-mode="on"] .card {
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+html[data-night-mode="on"] .profile-card {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+html[data-night-mode="on"] .name,
+html[data-night-mode="on"] .title {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+html[data-night-mode="on"] .instagram i:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 0, 150, 0.9));
+    transform: translateY(-8px);
+}
+
+html[data-night-mode="on"] .time {
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+}
+
+html[data-night-mode="on"] .weather-info {
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.8);
+}
+
+html[data-night-mode="on"] .location {
+    text-shadow: 0 0 6px rgba(0, 150, 255, 0.6);
+}
+
+html[data-night-mode="on"] .education-header,
+html[data-night-mode="on"] .spotify-header,
+html[data-night-mode="on"] .github-header {
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+html[data-night-mode="on"] .education-type {
+    color: #00ddff;
+    text-shadow: 0 0 5px rgba(0, 200, 255, 0.6);
+}
+
+html[data-night-mode="on"] .spotify-text {
+    color: #1ED760;
+    text-shadow: 0 0 8px rgba(30, 215, 96, 0.8);
+}
+
+html[data-night-mode="on"] .spotify-status {
+    filter: drop-shadow(0 0 5px rgba(30, 215, 96, 0.8));
+}
+
+html[data-night-mode="on"] .progress-bar {
+    background: linear-gradient(90deg, #00ffff, #00aaff);
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.7);
+}
+
+/* Special glow effect for the XD text */
+@keyframes rainbow-glow {
+    0% { text-shadow: 0 0 var(--glow-spread) #ff0000; color: #ff5555; }
+    20% { text-shadow: 0 0 var(--glow-spread) #ffaa00; color: #ffaa55; }
+    40% { text-shadow: 0 0 var(--glow-spread) #00ff00; color: #55ff55; }
+    60% { text-shadow: 0 0 var(--glow-spread) #0000ff; color: #5555ff; }
+    80% { text-shadow: 0 0 var(--glow-spread) #aa00ff; color: #aa55ff; }
+    100% { text-shadow: 0 0 var(--glow-spread) #ff0000; color: #ff5555; }
+}
+
+html[data-night-mode="on"] .xd-text {
+    animation: rainbow-glow 5s infinite linear;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Hover effects for cards in night mode */
+html[data-night-mode="on"] .card:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+}
+
+html[data-night-mode="on"] .profile-card:hover {
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
 }
 
 .secondary-container {
@@ -779,6 +1012,38 @@ html[data-theme="dark"] .instagram i {
     opacity: 0.7;
 }
 
+.xd-container {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.xd-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.5s ease;
+}
+
+.glow-text {
+    text-shadow: 0 0 var(--glow-spread) var(--glow-color);
+    color: var(--text-color);
+    animation: pulse-glow 2s infinite alternate;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+@keyframes pulse-glow {
+    0% {
+        text-shadow: 0 0 var(--glow-spread) var(--glow-color);
+    }
+    100% {
+        text-shadow: 0 0 calc(var(--glow-spread) * 2) var(--glow-color);
+    }
+}
+
 @media (max-width: 768px) {
     .page-container {
         grid-template-columns: 1fr;
@@ -797,4 +1062,63 @@ html[data-theme="dark"] .instagram i {
         width: 100%;
         height: 200px;
     }
+}
+
+/* Starry background for night mode */
+body.has-stars::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(1px 1px at 25px 5px, white, transparent),
+        radial-gradient(1px 1px at 50px 25px, white, transparent),
+        radial-gradient(1px 1px at 125px 20px, white, transparent),
+        radial-gradient(1.5px 1.5px at 50px 75px, white, transparent),
+        radial-gradient(2px 2px at 175px 135px, white, transparent),
+        radial-gradient(2.5px 2.5px at 225px 85px, white, transparent);
+    background-repeat: repeat;
+    background-size: 250px 250px;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: -1;
+}
+
+body.has-stars.stars-visible::before {
+    opacity: 0.4;
+}
+
+/* Shooting star animation */
+@keyframes shooting-star {
+    0% {
+        transform: translate(0, 0) rotate(315deg) scale(0);
+        opacity: 0;
+    }
+    10% {
+        transform: translate(-10px, 10px) rotate(315deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-100px, 100px) rotate(315deg) scale(0.2);
+        opacity: 0;
+    }
+}
+
+.shooting-star {
+    position: fixed;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, white, transparent);
+    border-radius: 50%;
+    filter: drop-shadow(0 0 5px white);
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.shooting-star.active {
+    animation: shooting-star 1s ease-out forwards;
 } 
