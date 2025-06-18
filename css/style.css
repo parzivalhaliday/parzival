@@ -732,17 +732,17 @@ html[data-night-mode="on"] .profile-card:hover {
 }
 
 .spotify-card {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    padding: 15px;
     position: relative;
+    height: auto;
+    min-width: 300px;
 }
 
 .spotify-header {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
 }
 
 .spotify-text {
@@ -834,134 +834,268 @@ html[data-night-mode="on"] .profile-card:hover {
 }
 
 .tertiary-container {
-    grid-column: 1 / 10;
-    display: grid;
-    grid-template-columns: 1fr;
+    grid-column: 1 / 13;
+    display: flex;
+    justify-content: flex-start;
     gap: 1rem;
     margin-top: 1rem;
 }
 
-.github-card {
-    height: auto;
-    min-height: 200px;
+.github-card, .spotify-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(5px);
+    max-width: 300px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    background-color: var(--card-bg);
-    position: relative;
-    padding: 15px;
-    transition: all 0.3s ease;
+    height: auto;
+    min-height: 180px;
+    transition: all 0.5s ease;
+    color: var(--text-color);
+    border: 2px solid rgba(255, 255, 255, 0.05);
 }
 
-.github-card:hover {
+.github-card {
+    text-decoration: none;
+}
+
+.github-card:hover, .spotify-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--card-shadow);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.github-header {
+.github-user-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 8px;
     margin-bottom: 15px;
-    font-weight: 700;
-    width: 100%;
+}
+
+.github-user-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.github-user-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.github-username {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* GitHub Calendar Özelleştirmeleri */
+.calendar {
+    margin-bottom: 15px;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+/* Statik calendar için stiller */
+.static-calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.calendar-row {
+    display: flex;
+    gap: 3px;
+}
+
+.calendar-month {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+}
+
+.month-initial {
+    font-size: 10px;
+    opacity: 0.8;
+    color: var(--text-color);
+    font-weight: bold;
+    user-select: none;
+}
+
+.calendar-month:hover {
+    transform: scale(1.2);
+}
+
+/* Özel tooltip - title attribute yerine data-tooltip kullanımı */
+.calendar-month::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #1b1f23;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 10;
+    text-align: center;
+    min-width: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+}
+
+/* İlk satır için tooltip konumu (kutucukların üstünde) */
+.calendar-row:first-child .calendar-month::before {
+    bottom: 130%;
+    top: auto;
+    margin-bottom: 0;
+}
+
+/* İkinci satır için tooltip konumu (kutucukların üstünde) */
+.calendar-row:last-child .calendar-month::before {
+    bottom: 130%;
+    margin-bottom: 0;
+}
+
+/* Hover durumunda tooltip gösterimi */
+.calendar-month:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Contribution seviyeleri */
+.level-0 {
+    background-color: #ebedf0;
+}
+
+.level-1 {
+    background-color: #9be9a8;
+}
+
+.level-2 {
+    background-color: #40c463;
+}
+
+.level-3 {
+    background-color: #30a14e;
+}
+
+.level-4 {
+    background-color: #216e39;
+}
+
+/* Karanlık tema için GitHub katkı renkleri */
+html[data-theme="dark"] .level-0 {
+    background-color: #161b22;
+}
+
+html[data-theme="dark"] .level-1 {
+    background-color: #0e4429;
+}
+
+html[data-theme="dark"] .level-2 {
+    background-color: #006d32;
+}
+
+html[data-theme="dark"] .level-3 {
+    background-color: #26a641;
+}
+
+html[data-theme="dark"] .level-4 {
+    background-color: #39d353;
 }
 
 .github-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 40px;
 }
 
-.repo-list {
+.github-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.github-description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.github-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 20px;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 15px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.repo-item {
-    padding: 8px;
-    border-radius: 6px;
-    background-color: rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease;
-    margin-bottom: 8px;
+.github-stars {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    opacity: 0.9;
 }
 
-.repo-item:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+.star-icon {
+    width: 16px;
+    height: 16px;
 }
 
-.repo-name {
+.visit-text {
     font-weight: 600;
     font-size: 0.9rem;
-    color: var(--text-color);
-    text-decoration: none;
-    display: block;
-    margin-bottom: 3px;
 }
 
-.repo-name:hover {
-    text-decoration: underline;
+.arrow-icon {
+    opacity: 0.7;
+    transition: all 0.3s ease;
 }
 
-.repo-details {
-    display: flex;
-    gap: 10px;
-    font-size: 0.75rem;
-    margin-bottom: 3px;
-}
-
-.repo-language {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.language-color {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.repo-stars, .repo-forks {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    opacity: 0.8;
-}
-
-.repo-description {
-    font-size: 0.75rem;
-    opacity: 0.8;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-}
-
-.github-profile-link {
-    margin-top: auto;
-    text-align: center;
-    padding: 8px;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}
-
-.github-profile-link:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+.github-card:hover .arrow-icon {
+    transform: translateX(3px) translateY(-3px);
+    opacity: 1;
 }
 
 .education-card {
-    height: auto;
-    padding: 20px;
-    margin-bottom: 1rem;
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 32px 32px;
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(5px);
+    margin: 0 auto;
+    max-width: 900px;
+    width: 100%;
 }
 
 .education-header {
@@ -974,9 +1108,12 @@ html[data-night-mode="on"] .profile-card:hover {
 }
 
 .education-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    min-width: 320px;
+    flex: 2 1 400px;
+    background: rgba(0,0,0,0.04);
+    border-radius: 12px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .education-section {
@@ -1121,4 +1258,133 @@ body.has-stars.stars-visible::before {
 
 .shooting-star.active {
     animation: shooting-star 1s ease-out forwards;
+}
+
+.skeleton {
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-line {
+    height: 14px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 6px;
+}
+
+.skeleton-line.short {
+    width: 60%;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.6;
+    }
+}
+
+.github-icon {
+    transition: all 0.5s ease;
+    transform-origin: top left;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+.github-card:hover .github-icon {
+    transform: scale(0.75);
+    margin-bottom: 5px;
+}
+
+.github-content {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s ease;
+}
+
+.github-card:hover .github-content {
+    transform: translateY(-30px);
+}
+
+.github-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.github-description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.contribution-grid {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    transform: translateY(-8px);
+}
+
+.github-card:hover .contribution-grid {
+    opacity: 1;
+}
+
+.spotify-powered-by {
+    font-style: italic;
+}
+
+.education-content-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 2.5rem;
+    align-items: flex-start;
+}
+
+.personal-info {
+    min-width: 260px;
+    max-width: 320px;
+    flex: 1 1 260px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.personal-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.personal-list {
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.95rem;
+}
+
+.personal-list li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+    .education-content-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .personal-info {
+        margin-right: 0;
+        max-width: 100%;
+    }
 } 
