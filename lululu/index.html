@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>bani ossuruk</title>
+  <title>lulu ossuruk</title>
   <style>
     body {
       background: #222;
@@ -13,7 +13,7 @@
       cursor: url('cursor.png'), auto;
 
     }
-    #bani {
+    #lulu {
       width: 600px;
       max-width: 90vw;
       transition: transform 0.2s;
@@ -49,13 +49,13 @@
 </head>
 <body>
   <div style="position:relative;">
-    <img id="bani" src="bani.png" alt="Bani" draggable="false">
+    <img id="lulu" src="lulu.png" alt="lulu" draggable="false">
     <img id="fart-cloud" src="https://pngimg.com/uploads/cloud/cloud_PNG27.png" alt="Fart Cloud">
     <img id="fartplus-effect" src="https://pngimg.com/uploads/confetti/confetti_PNG87017.png" alt="Fart Plus Confetti" style="position:absolute; left:50%; top:10%; width:1200px; opacity:0; pointer-events:none; transform:translateX(-50%); transition:opacity 0.3s; z-index:10;">
   </div>
   <audio id="fart-sound"></audio>
   <script>
-    const bani = document.getElementById('bani');
+    const lulu = document.getElementById('lulu');
     const fartSound = document.getElementById('fart-sound');
     const fartCloud = document.getElementById('fart-cloud');
     const fartPlusEffect = document.getElementById('fartplus-effect');
@@ -79,10 +79,10 @@
       const index = Math.floor(Math.random() * fartSounds.length);
       return fartSounds[index];
     }
-    bani.addEventListener('click', () => {
+    lulu.addEventListener('click', () => {
       // Görsel animasyonu
-      bani.classList.add('fart-effect');
-      setTimeout(() => bani.classList.remove('fart-effect'), 400);
+      lulu.classList.add('fart-effect');
+      setTimeout(() => lulu.classList.remove('fart-effect'), 400);
 
       // Bulut efekti
       fartCloud.classList.add('show-cloud');
@@ -105,7 +105,7 @@
     });
   </script>
   <footer style="position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); color: rgb(66, 250, 49); font-size: 34px;">
- Tüm sesler bani ile girilen oyunlardan alınmıştır.
+ Tüm sesler lulu ile girilen oyunlardan alınmıştır.
   </footer>
 </body>
 </html>
