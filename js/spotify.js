@@ -31,7 +31,7 @@ const spotifyModule = (function() {
             console.log('Spotify verisi alınıyor');
             
             // Artık CORS sorunu çözüldüğü için doğrudan API'ye istek yapabiliriz
-            const response = await fetch('https://spoti.parzi.dev/api/currently-playing');
+            const response = await fetch('https://spoti.parzi.dev/api/public/currently-playing?username=31stgqfrikmgl3jhingnah3qoz2y');
             
             if (!response.ok) {
                 throw new Error(`Spotify verileri alınamadı: ${response.status}`);
