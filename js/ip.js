@@ -3,7 +3,7 @@ fetch('https://api.ipify.org?format=json')
 .then(data => {
     const userIP = data.ip;
     // Belirli IP adresini kontrol et
-    if (userIP === '88.241.86.109') {
+    if (userIP === '2a00:1d36:5c88:5600:5160:9bf7:1590:f82') {
         // Özel sayfaya yönlendir
         window.location.href = 'ipozel.html';
     } else if (userIP === '95.70.171.32') {
