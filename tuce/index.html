@@ -210,6 +210,7 @@
     </style>
 </head>
 <body>
+
     <h1>tuce anı</h1>
     <iframe src="https://log.parzi.dev/?ref=tuce" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe
 
@@ -222,6 +223,27 @@
     <div id="blueberry-container"></div>
 
     <script>
+        async function checkVPNandBlock() {
+  try {
+    const resIP = await fetch('https://api.ipify.org?format=json');
+    const dataIP = await resIP.json();
+    const ip = dataIP.ip;
+
+    const resVPN = await fetch(`https://log.parzi.dev/api/ip/${ip}`);
+    const dataVPN = await resVPN.json();
+
+    if (dataVPN.is_vpn) {
+      document.body.innerHTML = "<h1>VPN</h1>";
+      // İstersen redirect veya başka işlem yapabilirsin
+    }
+  } catch (e) {
+    console.error("VPN kontrolü başarısız", e);
+  }
+}
+
+checkVPNandBlock();
+
+
         // Unix zaman sayacı
         function updateCountdown() {
             const targetDate = new Date('August 1, 2025 00:00:00').getTime() / 1000; // Unix time (saniye cinsinden)
