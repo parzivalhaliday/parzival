@@ -945,7 +945,7 @@
             "depth": 1100,
             "display_priority": 4,
             "position": 4,
-            "sprite": "res://items/all/gnome/gnome.png"
+            "sprite": "res://items/all/gnome/gnomesad.png"
           },
           {
             "depth": 1300,
@@ -28462,7 +28462,7 @@
                 "depth": 1100,
                 "display_priority": 4,
                 "position": 4,
-                "sprite": "res://items/all/gnome/gnome.png"
+                "sprite": "res://items/all/gnome/gnomesad.png"
               }
             ],
             "max_nb": "-1",
@@ -29074,7 +29074,7 @@
                 "depth": 1100,
                 "display_priority": 4,
                 "position": 4,
-                "sprite": "res://items/all/gnome/gnome.png"
+                "sprite": "res://items/all/gnome/gnomesad.png"
               }
             ],
             "max_nb": "-1",
@@ -34633,7 +34633,7 @@
                 "depth": 1100,
                 "display_priority": 4,
                 "position": 4,
-                "sprite": "res://items/all/gnome/gnome.png"
+                "sprite": "res://items/all/gnome/gnomesad.png"
               }
             ],
             "max_nb": "-1",
@@ -48889,7 +48889,7 @@
                 "depth": 1100,
                 "display_priority": 4,
                 "position": 4,
-                "sprite": "res://items/all/gnome/gnome.png"
+                "sprite": "res://items/all/gnome/gnomesad.png"
               }
             ],
             "max_nb": "-1",
@@ -95122,7 +95122,7 @@
                 "depth": 1100,
                 "display_priority": 4,
                 "position": 4,
-                "sprite": "res://items/all/gnome/gnome.png"
+                "sprite": "res://items/all/gnome/gnomesad.png"
               }
             ],
             "max_nb": "-1",

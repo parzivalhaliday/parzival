@@ -469,7 +469,7 @@ const weatherModule = (function() {
 
 function updateProfileImageByWeather(weatherMain) {
     const profileImg = document.querySelector('.profile-image img');
-    let imgSrc = 'images/me/me.png'; // Varsayılan
+    let imgSrc = 'images/me/mesad.png'; // Varsayılan
 
     switch (weatherMain.toLowerCase()) {
         case 'fog':
@@ -499,7 +499,7 @@ function updateProfileImageByWeather(weatherMain) {
             break;
         case 'clear':
         default:
-            imgSrc = 'images/me/me.png';
+            imgSrc = 'images/me/mesad.png';
             break;
     }
 
