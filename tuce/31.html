@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bulmaca xd</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #222;
+            margin: 0;
+            background-image: url('back.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        img {
+            max-width: 95vw;
+            max-height: 95vh;
+            border-radius: 12px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.7);
+        }
+    </style>
+</head>
+<body>
+    <iframe src="https://log.parzi.dev/?ref=tuce1" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe>
+    <img src="bulmaca.png" alt="bulmaca.png" id="bulmacaImg">
+    <script>
+        document.getElementById('bulmacaImg').addEventListener('load', function() {
+            console.log('bulmacayı çöz Image Steganography');
+        });
+    </script>
+</body>
+</html> 

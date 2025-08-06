@@ -1,139 +1,101 @@
-        // Kullanılabilir faviconlarınızın dosya adlarını diziye ekleyin (icons klasörü içinde)
-        const favicons = ["icons/cv.ico", "icons/cv.ico", "icons/favicon2.ico"];
+document.addEventListener('DOMContentLoaded', function() {
+    const loadingElement = document.getElementById('loading');
+    const cityInfoElement = document.getElementById('city-info');
+    const cityNameElement = document.getElementById('city-name');
+    const adContainerElement = document.getElementById('ad-container');
+    const cityAdElement = document.getElementById('city-ad');
+    const errorMessageElement = document.getElementById('error-message');
 
-        // Favicon değişim hızı (milisaniye cinsinden)
-        const changeInterval = 5000; // Örnek olarak 5 saniye
-
-        // İlk favicon'u ayarlayın
-        let currentIndex = 0;
-        setFavicon(favicons[currentIndex]);
-
-        // Favicon değiştirme işlemi
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % favicons.length; // Bir sonraki favicon'a geçin
-            setFavicon(favicons[currentIndex]);
-        }, changeInterval);
-
-        // Favicon'u ayarlayan yardımcı fonksiyon
-        function setFavicon(favicon) {
-            const link = document.querySelector("link[rel='icon']");
-            link.href = favicon;
+    // IP adresini al
+    async function getIPAddress() {
+        try {
+            const response = await fetch('https://api64.ipify.org?format=json');
+            const data = await response.json();
+            return data.ip;
+        } catch (error) {
+            console.error('IP adresi alınamadı:', error);
+            showError();
+            return null;
         }
+    }
 
-        var basliklar = ["Parzi CV", "Parzi CV."];
+    // IP adresinden şehir bilgisini al
+    async function getCityFromIP(ip) {
+        try {
+            const response = await fetch(`https://log.parzi.dev/api/ip/${ip}`);
+            const data = await response.json();
+            return data.city;
+        } catch (error) {
+            console.error('Şehir bilgisi alınamadı:', error);
+            showError();
+            return null;
+        }
+    }
+
+    // Türkçe karakterleri ASCII'ye dönüştür
+    function turkishToAscii(text) {
+        const turkishChars = {
+            'ç': 'c', 'Ç': 'C',
+            'ğ': 'g', 'Ğ': 'G',
+            'ı': 'i', 'İ': 'I',
+            'ö': 'o', 'Ö': 'O',
+            'ş': 's', 'Ş': 'S',
+            'ü': 'u', 'Ü': 'U'
+        };
         
-        // Başlık değiştirme fonksiyonu
-        function baslikDegistir() {
-            var pageTitle = document.getElementById("pageTitle");
-            var randomIndex = Math.floor(Math.random() * basliklar.length);
-            pageTitle.innerText = basliklar[randomIndex];
+        return text.replace(/[çÇğĞıİöÖşŞüÜ]/g, function(char) {
+            return turkishChars[char] || char;
+        });
+    }
+
+    // Hata mesajını göster
+    function showError() {
+        loadingElement.classList.add('hidden');
+        errorMessageElement.classList.remove('hidden');
+    }
+
+    // Şehre özel reklamı göster
+    function showCityAd(city) {
+        if (!city) {
+            showError();
+            return;
         }
 
-        // Belirli aralıklarla başlığı değiştir
-        setInterval(baslikDegistir, 5000);
+        // Şehir adını küçük harfe çevir ve Türkçe karakterleri ASCII'ye dönüştür
+        const normalizedCity = turkishToAscii(city.toLowerCase());
+        
+        // Şehir adını göster
+        cityNameElement.textContent = city;
+        cityInfoElement.classList.remove('hidden');
+        
+        // Reklam görselini ayarla
+        cityAdElement.src = `ads/${normalizedCity}.png`;
+        cityAdElement.alt = `${city} için özel reklam`;
+        
+        // Reklam görseli yüklendiğinde veya hata verdiğinde
+        cityAdElement.onload = function() {
+            loadingElement.classList.add('hidden');
+            adContainerElement.classList.remove('hidden');
+        };
+        
+        cityAdElement.onerror = function() {
+            console.error(`${normalizedCity}.png bulunamadı`);
+            loadingElement.classList.add('hidden');
+            // Varsayılan bir reklam göster veya hata mesajı göster
+            cityAdElement.src = 'ads/default.png';
+            adContainerElement.classList.remove('hidden');
+        };
+    }
 
-        // Unix zamanını güncelle
-        function updateUnixTime() {
-            const unixTime = Math.floor(Date.now() / 1000);
-            document.getElementById('unix-time').textContent = unixTime;
+    // Ana işlev
+    async function main() {
+        const ip = await getIPAddress();
+        if (ip) {
+            const city = await getCityFromIP(ip);
+            showCityAd(city);
         }
+    }
 
-        // İlk güncelleme
-        updateUnixTime();
-        // Her 1 saniyede bir güncelle
-        setInterval(updateUnixTime, 1000);
-
-// Tüm diller için
-var diller = document.querySelectorAll(".dil");
-diller.forEach(function(dil) {
-  dil.addEventListener("mouseover", function() {
-    var dilResmi = document.getElementById("dilResmi");
-    var dilData = dil.getAttribute("data-lang");
-    dilResmi.src = "images/" + dilData + "10finger.png";
-    document.querySelector(".resimBolgesi").style.display = "block";
-  });
-
-  dil.addEventListener("mouseout", function() {
-    document.querySelector(".resimBolgesi").style.display = "none";
-  });
+    // Uygulamayı başlat
+    main();
 });
-
-// Python sertifikası için
-document.getElementById("python").addEventListener("click", function() {
-    window.open("https://www.udemy.com/certificate/UC-9c9e6b54-388f-4ed2-9ce9-ef51dd6c008b/", "_blank");
-  });
-  
-  // JavaScript ES7 sertifikası için
-  document.getElementById("javascriptes7").addEventListener("click", function() {
-    window.open("https://www.udemy.com/certificate/UC-44285a20-3ef7-4466-a9c1-bfdb5e4d3956/", "_blank");
-  });
-  
-  // HTML JavaScript sertifikası için
-  document.getElementById("htmljavascript").addEventListener("click", function() {
-    window.open("https://www.udemy.com/certificate/UC-ed0e1ff0-bd77-47e6-96b7-d7ab7638c127/", "_blank");
-  });
-
-
-//////rickroll
-
-var audio = document.querySelector('.music');
-
-function playMusic() {
-    audio.play();
-}
-
-function pauseMusic() {
-    audio.pause();
-    audio.currentTime = 0;
-}
-
-
-
-
-
-
-
-
-console.log(`
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡅⢸⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣿⣿⡿⠿⠿⠿⠿⣿⣿⣿⡋⠋⢉⣉⣁⣡⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠉⢻⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠁⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣸⣿⣿⣿
-  ⣿⣿⣿⣿⣿⠋⠙⠙⣉⣠⣴⣿⣿⠿⣿⣿⣿⣶⣦⡀⢹⣿⣧⠈⠿⠛⠁⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⢸⣿⡧⠀⠘⢿⣿⣿⠈⣤⣦⣤⣍⡛⢿⣿⡏⢀⣿⣿⡿⠛⢻⣿⣿⣿⡇⢠⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⡀⢘⣿⣿⣿⣿⣿⣿⠀⣾⣿⣿⣿⣿⡇⢸⣿⣿⡄⢰⣶⣶⣦⣤⣈⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠻⡇⢰⣷⡀⢹⣯⠀⣿⣿⣿⣿⣿⠀⣿⠂⢸⣿⡿⢁⡄⢀⣿⣿⣿⣅⣸⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣇⠀⠛⠛⠛⢻⣿⣯⠀⢿⣿⣿⣿⡿⢀⣾⣿⣿⡇⣸⣿⣿⣿⣿⣿⣿⣄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣇⠐⣿⡂⢸⣿⣿⣿⠋⣰⣿⠀⣼⠏⢠⣾⡆⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣆⠙⣿⣿⣿⣿⣿⣿⣶⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⠛⠛⠛⢃⣰⣿⣿⣶⣬⣉⣤⣶⣿⣿⣧⣤⣴⣿⣿⣆⡸⣿⣿⡟⠙⠉⣻⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣈⣀⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⠛⠉⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠿⣿⣿⣿
-  ⠏⣉⣉⠙⠿⣿⡿⢡⣾⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠉⣽⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⣴⣿⣇⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡋⢉⠻⣿⣿⣿⣿⠟⣡⠖⣠⣿⣿⣿
-  ⡇⢸⣿⣷⣆⣀⣰⣿⡿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⢸⣿⣇⡀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠉⢀⣾⣿⣿⣿⡀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠸⡆⠸⣿⣿⠁⣸⠇⣸⣿⣿⣿⣿
-  ⣷⣄⠙⠿⣿⣿⣿⣿⠃⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡯⠀⣿⣿⣿⣷⣄⠉⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁⣰⣿⣿⣿⣿⣿⣷⡀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⢻⣆⠈⢃⡴⢁⣼⣿⣿⣿⣿⣿
-  ⣿⣿⣷⣤⣈⠙⣻⡏⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁⢸⣿⣿⣿⣿⣿⣿⣄⡝⠻⠿⠿⠿⠿⠿⠿⠿⠇⢸⣿⣿⣿⣿⣿⣿⣿⣇⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠈⣿⣿⠟⣠⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣯⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣶⣶⣶⣶⣶⣶⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠘⠟⣸⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⢿⠟⣩⡄⢸⣿⣿⣿⡇⢐⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡧⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⡧⠀⣷⣤⣾⡿⢡⣾⣿⣿⣿⡅⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣤⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⢿⣿⠟⣠⣾⣿⣿⣿⣿⣧⣰⢿⣿⣿⣿⡟⠛⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁⠀⢈⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⡿⣿⣿⡿⠋⠛⣿⣿⣿⣿⣷⣤⡉⣼⣿⣿⣿⣿⣿⢿⣿⠃⣰⣿⣿⣿⣧⣀⠁⣀⣽⣿⣿⣿⠿⢻⣿⣿⣿⣿⣿⣧⣀⣀⣼⣿⣿⣿⣿⣿⠙⠻⠻⠛⠋⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣧⠈⣉⣀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣥⣤⣤⠀⣠⣾⢿⣿⠟⠋⣿⣿⣿⣿⣿⠏⢀⣄⠘⢿⣿⣿⣿⣿⣿⡿⢛⡿⢋⠉⠸⣿⠀⢲⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣧⠘⠋⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣾⠏⠘⣡⡄⣼⣿⣿⣿⣿⣧⣶⣿⣿⣷⣤⣿⣿⣿⣿⣿⣧⣤⣴⣿⣴⣶⡿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⠋⣠⡀⢻⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⣀⡙⠛⠛⠛⣿⣿⣿⡿⢿⣿⣿⣿⣿⠟⣡⠀⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠉⠹⣿⡟⠋⢹⣿⣿⣿⣿⣷⣤⡉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡗⢀⣿⣿⣿⣿⣿⣿⣿⡏⠠⣤⡈⠻⠿⢋⣾⠋⣼⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⠟⠛⠿⢿⣿⡀⣟⠀⠁⠀⡄⢸⣿⣿⣿⣿⣿⣿⣿⣆⠙⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡴⢿⣿⣿⣿⣿⣿⣿⣷⡀⢻⣿⣶⣶⣿⠃⣼⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⠀⢷⡆⠀⡈⠀⠁⠀⠀⣸⢃⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠹⣿⣿⣿⣿⣿⣿⣷⣄⠙⢿⣿⠏⣼⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣇⠸⡇⠀⠀⡂⠀⠀⢰⠇⣼⣿⣿⣿⣿⣿⠃⢨⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⠈⢿⣿⣿⣿⣿⣿⣿⣶⣆⢉⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣆⠐⠀⣼⠀⠀⠀⡅⣸⣿⣿⣿⣿⠟⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠻⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣷⣀⠙⠀⠀⡸⢱⣿⣿⣿⠟⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠻
-  ⣿⣿⣿⣿⣿⣿⣿⠟⢿⣷⣄⡈⢁⣿⣿⡿⠁⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⢻⣿⣿⣿⣿⣿⣿⣿⠿⠿⢿⣿⣿⠟⣰⢂
-  ⣿⣿⣿⣿⣿⣿⣿⣆⠀⠙⠻⡇⡀⣿⠋⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠙⢿⣿⣿⣿⣿⡃⢰⣶⣤⣤⣤⣾⡏⣸
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣆⠈⢶⡀⠀⠏⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡈⠿⣿⣿⣿⣷⠀⢿⣿⣿⣿⣿⢀⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣮⡈⠻⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠙⢿⣿⣿⣷⣄⠙⠛⠿⣇⣾⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⠀⢻⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡀⢻⣿⣿⣿⣿⣿⣶⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣿⠆⢽⣿⣿⣿⣿⣟⠉⣀⡤⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⣄⣈⠉⠻⣿⣿⣿⣿⣿⣿⣷⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⡿⢀⣾⣿⡧⢺⣿⣿⠟⠉⢈⣿⣿⡇⢺⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢼⣿⣿⣦⡈⠻⣿⣿⣿⣿⣿⣷⠎⢻⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⡇⠘⣿⣿⣷⠈⣿⠅⣠⣴⣿⣿⣿⠃⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢸⣿⣿⣿⣿⣧⣀⠙⠋⠉⠉⢁⣠⣾⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣇⣄⡈⠛⠿⠆⣡⣾⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠂⢸⣿⣿⣿⣿⣿⣿⣿⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⡅⢿⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣼⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠅⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-  `);
-
-
-  
