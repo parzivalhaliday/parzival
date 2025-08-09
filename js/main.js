@@ -23,6 +23,7 @@ const app = (function() {
         weatherModule.init();
         spotifyModule.init();
         githubModule.init();
+        fitbitModule.init();
         
         return this;
     }

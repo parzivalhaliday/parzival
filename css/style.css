@@ -841,7 +841,7 @@ html[data-night-mode="on"] .profile-card:hover {
     margin-top: 1rem;
 }
 
-.github-card, .spotify-card {
+.github-card, .spotify-card, .fitbit-card {
     background: var(--card-bg);
     border-radius: 15px;
     padding: 20px;
@@ -863,10 +863,57 @@ html[data-night-mode="on"] .profile-card:hover {
     text-decoration: none;
 }
 
-.github-card:hover, .spotify-card:hover {
+.github-card:hover, .spotify-card:hover, .fitbit-card:hover {
     transform: translateY(-5px);
     border-color: rgba(255, 255, 255, 0.2);
 }
+
+/* Fitbit (Adım) kartı */
+.fitbit-header {
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fitbit-status { opacity: 0.8; font-size: 0.9rem; }
+
+.fitbit-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step-progress {
+    --progress: 0%;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(#7c4dff var(--progress), rgba(255,255,255,0.08) 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px auto 10px auto;
+    position: relative;
+}
+
+.step-circle {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-count { font-size: 1.6rem; font-weight: 700; }
+.step-label { font-size: 0.8rem; opacity: 0.7; }
+
+.fitbit-info { text-align: center; margin-top: 6px; font-size: 0.85rem; opacity: 0.9; }
+.fitbit-info .fitbit-date { font-size: 0.75rem; opacity: 0.65; margin-top: 2px; }
 
 .github-user-info {
     display: flex;
