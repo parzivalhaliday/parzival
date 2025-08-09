@@ -1,336 +1,580 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="icons/film.ico" type="image/x-icon">
-<title>My Films</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<style>
-  
-    .section {
-      text-align: center;
-      overflow: hidden;
-    }
-    .baslik {
-      font-size: 44px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      display: inline-block;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="icons/film.ico" type="image/x-icon" />
+  <title>My Films</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root{
+      --bg-1: #0b0f17;
+      --bg-2: #0a0c12;
+      --bg-3: #0a0f1f;
+      --text: #e6f1ff;
+      --muted: #94a3b8;
+      --neon-1: #00e5ff;   /* cyan */
+      --neon-2: #a855f7;   /* purple */
+      --neon-3: #00ffa6;   /* mint */
+      --accent: #ff6a00;   /* amber-ish for particles, links */
+      --card-bg: rgba(13, 18, 28, 0.65);
+      --border: rgba(255,255,255,0.08);
+      --radius: 18px;
+
+      --shadow-1: 0 10px 30px rgba(0,0,0,0.45);
+      --shadow-2: 0 20px 60px rgba(0,0,0,0.55);
+
+      --max-tilt: 10; /* degrees */
     }
 
-    .baslik::before {
-      color: #fff27d;
-      content: "";
-    }
-
-    .baslik::after {
-      color: #fff27d;
-      content: "";
-    }
-  
-    .animated-text {
-      animation: fadeIn 1s ease;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      animation: slideDown 1s ease;
-    }
-
-    a {
-      color: #FF5722;
+    /* Genel reset */
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: linear-gradient(180deg, var(--bg-1), var(--bg-2) 60%, var(--bg-3) 100%);
+      color: var(--text);
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol', sans-serif;
+      scroll-behavior: smooth; /* yumuşak scroll */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
       cursor: url('cursor1.png'), auto;
-      text-decoration: none;
+    }
+    a { color: var(--accent); text-decoration: none; cursor: url('cursor1.png'), auto; }
+    a:hover { color: #ff8f3a; }
+
+    /* Three.js canvas (arka plan) */
+    canvas.webgl-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
     }
 
-    a:hover {
-      color: #FF9800;
+    /* Partiküllerin üzerinde, içerik altında: yumuşak animasyonlu gradient overlay */
+    .gradient-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(0,229,255,0.14), transparent 60%),
+                  radial-gradient(1100px 900px at 85% 15%, rgba(168,85,247,0.12), transparent 60%),
+                  radial-gradient(1100px 900px at 20% 85%, rgba(0,255,166,0.10), transparent 60%);
+      animation: overlayPulse 14s ease-in-out infinite alternate;
+      filter: saturate(120%) contrast(105%);
+    }
+    @keyframes overlayPulse {
+      0%   { filter: blur(0px) saturate(115%); transform: translate3d(0,0,0) scale(1); }
+      100% { filter: blur(1px) saturate(130%); transform: translate3d(0,0,0) scale(1.02); }
     }
 
-    li {
-      border: none;
-      margin: 10px;
-      padding: 15px;
-      background: rgba(33, 33, 33, 0.4);
-      backdrop-filter: blur(16px);
+    /* Üst bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 200px;
-      flex: 0 0 calc(20% - 20px);
-      color: #FFFFFF;
+      background: linear-gradient(90deg, rgba(10,15,30,0.6), rgba(10,15,30,0.35));
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 12px;
+      line-height: 1;
+    }
+    .brand-title {
+      font-family: 'Orbitron', 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: clamp(20px, 2.2vw, 28px);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-shadow:
+        0 0 8px rgba(0,229,255,0.55),
+        0 0 16px rgba(168,85,247,0.35);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    .brand-sub {
+      font-weight: 400;
+      font-size: clamp(12px, 1.4vw, 14px);
+      color: var(--muted);
+      opacity: 0.9;
+    }
+    @keyframes titleGlow {
+      0%   { text-shadow: 0 0 8px rgba(0,229,255,0.45), 0 0 16px rgba(168,85,247,0.25); }
+      100% { text-shadow: 0 0 14px rgba(0,229,255,0.8), 0 0 30px rgba(168,85,247,0.45); }
+    }
+
+    /* Sayfa kapsayıcı */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: min(6vh, 60px) 20px 60px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Liste: grid */
+    #movieList {
+      list-style: none;
+      padding: 0;
+      margin: 26px 0 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      align-items: stretch;
+      animation: slideDown 700ms ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Kart */
+    .movie-card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-1);
       transform-style: preserve-3d;
       perspective: 1000px;
-    }
-
-    .movie-card-content {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-        transition: transform 0.6s;
-    }
-
-    img {
-      width: 100%;
-      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 300ms ease, box-shadow 300ms ease, background 300ms ease, border-color 300ms ease;
+      will-change: transform;
       cursor: url('cursor.png'), auto;
-      transition: transform 0.3s ease;
+      isolation: isolate; /* pseudo'lar için */
+    }
+    /* Neon kenar parıltısı */
+    .movie-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: calc(var(--radius) + 2px);
+      background: conic-gradient(from 0deg, var(--neon-1), var(--neon-2), var(--neon-3), var(--neon-1));
+      filter: blur(16px);
+      opacity: 0;
+      transition: opacity 300ms ease, filter 300ms ease;
+      z-index: -1;
+    }
+    .movie-card:hover::before {
+      opacity: 0.48;
+      filter: blur(12px);
+    }
+    .movie-card:hover {
+      box-shadow: var(--shadow-2);
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(20, 24, 36, 0.75);
+    }
+
+    /* Kart içeriği (3D tilt hedefi) */
+    .movie-card-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
       transform-style: preserve-3d;
+      transition: transform 180ms ease;
     }
 
-    img:hover {
-      transform: scale(1.03);
+    .poster {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: calc(var(--radius) - 2px);
+      transform: translateZ(22px);
+      backface-visibility: hidden;
     }
-  
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .poster img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 450ms ease;
+      will-change: transform;
     }
-  
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+    .movie-card:hover .poster img {
+      transform: scale(1.06);
     }
 
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
+    /* Poster üstüne gradient + parlama */
+    .poster::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(4,8,16,0.85) 0%, rgba(4,8,16,0.35) 40%, rgba(4,8,16,0) 60%),
+        radial-gradient(800px 400px at 0% 0%, rgba(0,229,255,0.12), transparent 60%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      transition: opacity 300ms ease;
     }
-    
-    .section {
-        position: relative;
-        z-index: 1;
-        text-align: center;
-        overflow: hidden;
-        padding-top: 50px;
-        border: none;
-        background: none;
-        box-shadow: none;
+    .movie-card:hover .poster::after {
+      opacity: 0.95;
     }
-</style>
-  
+
+    /* Shine (tek div, pozisyonsal güncellenecek) */
+    .shine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: calc(var(--radius) - 2px);
+      mix-blend-mode: soft-light;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .movie-card:hover .shine { opacity: 1; }
+
+    /* Başlık */
+    .movie-title {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 10px;
+      padding: 10px 12px 8px;
+      border-radius: 12px;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.2;
+      letter-spacing: 0.2px;
+      transform: translateZ(28px);
+      background: linear-gradient(180deg, rgba(7,12,22,0.55), rgba(7,12,22,0.75));
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow:
+        0 6px 20px rgba(0,0,0,0.4),
+        0 0 20px rgba(0,229,255,0.15),
+        inset 0 0 12px rgba(168,85,247,0.06);
+      text-shadow:
+        0 0 8px rgba(0,229,255,0.45),
+        0 0 16px rgba(168,85,247,0.25);
+      opacity: 0;
+      transform-origin: bottom left;
+      transition: opacity 500ms ease 80ms, transform 500ms ease 80ms, box-shadow 300ms ease;
+      will-change: opacity, transform;
+    }
+    .movie-card.is-visible .movie-title { opacity: 1; transform: translateZ(28px) translateY(0); }
+    .movie-card:hover .movie-title {
+      box-shadow:
+        0 8px 28px rgba(0,0,0,0.5),
+        0 0 28px rgba(0,229,255,0.24),
+        inset 0 0 14px rgba(168,85,247,0.08);
+    }
+
+    /* Kart görünme animasyonu */
+    .movie-card {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    .movie-card.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: transform 500ms cubic-bezier(.2,.6,.2,1), opacity 500ms ease;
+    }
+
+    /* Responsive iyileştirmeler */
+    @media (max-width: 600px) {
+      .topbar-inner { padding: 14px 16px; }
+      #movieList { gap: 14px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .movie-title { font-size: 14px; padding: 8px 10px; left: 10px; right: 10px; }
+    }
+
+    /* Scrollbar estetik (WebKit) */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--neon-2), var(--neon-1));
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--neon-2), #00d2ff); }
+
+    /* Motion azaltmayı destekle */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="section">
-  <span class="baslik animated-text">adored</span><br>
-  <span class="baslik">bunlar izlediğim tüm filmler değil her ay 1 kere döndüğüm filmler</span>
+  <!-- Three.js canvas (JS içinde class ekliyoruz) -->
+  <!-- Animated gradient overlay -->
+  <div class="gradient-overlay" aria-hidden="true"></div>
 
-  <ul id="movieList"></ul>
-</div>
+  <!-- Üst bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-title">Adored</div>
+        <div class="brand-sub">Bunlar izlediğim tüm filmler değil; her ay 1 kere döndüğüm filmler</div>
+      </div>
+    </div>
+  </header>
 
-<script src="animatedtext.js"></script>
-<script src="renk.js"></script>
+  <main class="section">
+    <div class="container">
+      <ul id="movieList" aria-live="polite"></ul>
+    </div>
+  </main>
 
-<script>
+  <script>
+    // Three.js Kurulum
+    let scene, camera, renderer, particles;
 
-// Three.js kurulumu
-let scene, camera, renderer, particles;
+    function initThree() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+      camera.position.z = 500;
 
-function initThree() {
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.insertBefore(renderer.domElement, document.body.firstChild);
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.domElement.classList.add('webgl-bg');
+      document.body.insertBefore(renderer.domElement, document.body.firstChild);
 
-    // Parçacık sistemi oluştur
-    const geometry = new THREE.BufferGeometry();
-    const vertices = [];
-    
-    for (let i = 0; i < 5000; i++) {
+      // Parçacıklar
+      const geometry = new THREE.BufferGeometry();
+      const vertices = [];
+      const PARTICLE_COUNT = 5000;
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
         vertices.push(
-            Math.random() * 2000 - 1000,
-            Math.random() * 2000 - 1000,
-            Math.random() * 2000 - 1000
+          Math.random() * 2000 - 1000,
+          Math.random() * 2000 - 1000,
+          Math.random() * 2000 - 1000
         );
-    }
-    
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    
-    const material = new THREE.PointsMaterial({
-        color: 0xFF5722,
+      }
+
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+      const material = new THREE.PointsMaterial({
+        color: 0xff6a00, // var(--accent)
         size: 2,
         transparent: true,
         opacity: 0.6
-    });
-    
-    particles = new THREE.Points(geometry, material);
-    scene.add(particles);
-    
-    camera.position.z = 500;
-}
+      });
 
-function animate() {
-    requestAnimationFrame(animate);
-    updateParticles();
-    particles.rotation.x += 0.0003;
-    particles.rotation.y += 0.0002;
-    renderer.render(scene, camera);
-}
+      particles = new THREE.Points(geometry, material);
+      scene.add(particles);
 
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
+      window.addEventListener('resize', onWindowResize);
+    }
 
-window.addEventListener('resize', onWindowResize);
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
 
-// Three.js başlat
-initThree();
-animate();
-
-const apiKey = '58ec7b5f1bb87b37a5db4b0ad470798d';
-const listId = '8301529';
-const movieList = document.getElementById('movieList');
-
-let currentPage = 1;
-let totalPages = 1;
-const allMovies = [];
-
-function fetchMovies(page) {
-  fetch(`https://api.themoviedb.org/3/list/${listId}?api_key=${apiKey}&page=${page}`)
-    .then(response => response.json())
-    .then(data => {
-      totalPages = data.total_pages;
-      allMovies.push(...data.items);
-      if (currentPage < totalPages) {
-        currentPage++;
-        fetchMovies(currentPage);
-      } else {
-        displayMovies();
+    function animate() {
+      requestAnimationFrame(animate);
+      updateParticles();
+      if (particles) {
+        particles.rotation.x += 0.00035;
+        particles.rotation.y += 0.00025;
       }
-    })
-    .catch(error => {
-      console.error('API\'den veri alınamadı:', error);
-    });
-}
+      renderer.render(scene, camera);
+    }
 
-function createMovieCard(movie) {
-    const listItem = document.createElement('li');
-    const title = movie.title ? movie.title : movie.name;
-    const backdropPath = movie.backdrop_path ? 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path : '';
-    
-    const cardContent = document.createElement('div');
-    cardContent.className = 'movie-card-content';
-    
-    cardContent.innerHTML = `
-        <a href="https://www.themoviedb.org/movie/${movie.id}" target="_blank">
-            <img src="${backdropPath}" alt="${title}">
-            <div>${title}</div>
-        </a>
-    `;
-    
-    listItem.appendChild(cardContent);
-    
-    // Kart için 3D efektler
-    listItem.addEventListener('mousemove', (e) => {
-        const rect = listItem.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        cardContent.style.transform = `
-            rotateX(${rotateX}deg) 
-            rotateY(${rotateY}deg)
-            translateZ(20px)
-        `;
-        
-        // Parlaklık efekti
-        const shine = document.createElement('div');
-        shine.style.background = `radial-gradient(circle at ${x}px ${y}px, 
-            rgba(255,255,255,0.3) 0%, 
-            rgba(255,255,255,0) 80%)`;
-        shine.style.position = 'absolute';
-        shine.style.top = '0';
-        shine.style.left = '0';
-        shine.style.right = '0';
-        shine.style.bottom = '0';
-        shine.style.pointerEvents = 'none';
-        
-        const existingShine = cardContent.querySelector('.shine');
-        if (existingShine) {
-            existingShine.remove();
+    // TMDB Entegrasyon
+    const apiKey = '58ec7b5f1bb87b37a5db4b0ad470798d';
+    const listId = '8301529';
+    const movieList = document.getElementById('movieList');
+
+    let currentPage = 1;
+    let totalPages = 1;
+    const allMovies = [];
+
+    function fetchMovies(page) {
+      fetch(`https://api.themoviedb.org/3/list/${listId}?api_key=${apiKey}&page=${page}`)
+        .then(res => res.json())
+        .then(data => {
+          totalPages = data.total_pages || 1;
+          if (Array.isArray(data.items)) {
+            allMovies.push(...data.items);
+          }
+          if (currentPage < totalPages) {
+            currentPage++;
+            fetchMovies(currentPage);
+          } else {
+            displayMovies();
+          }
+        })
+        .catch(err => console.error('API hatası:', err));
+    }
+
+    // 3D Tilt yardımcıları
+    const supportsFinePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+
+    function createMovieCard(movie) {
+      const listItem = document.createElement('li');
+      listItem.className = 'movie-card';
+
+      const title = movie.title ? movie.title : movie.name;
+      const backdropPath = movie.backdrop_path ? 'https://image.tmdb.org/t/p/w780' + movie.backdrop_path : '';
+
+      const cardContent = document.createElement('div');
+      cardContent.className = 'movie-card-content';
+
+      // Poster + başlık
+      const link = document.createElement('a');
+      link.href = `https://www.themoviedb.org/movie/${movie.id}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', title);
+
+      const poster = document.createElement('div');
+      poster.className = 'poster';
+
+      const img = document.createElement('img');
+      img.src = backdropPath;
+      img.alt = title;
+      img.loading = 'lazy';
+
+      const shine = document.createElement('div');
+      shine.className = 'shine';
+
+      const titleEl = document.createElement('h3');
+      titleEl.className = 'movie-title';
+      titleEl.textContent = title;
+
+      poster.appendChild(img);
+      poster.appendChild(shine);
+      link.appendChild(poster);
+      link.appendChild(titleEl);
+      cardContent.appendChild(link);
+      listItem.appendChild(cardContent);
+
+      // 3D Tilt (yalnızca fare ile)
+      if (supportsFinePointer) {
+        let rafId = null;
+        let targetRotateX = 0;
+        let targetRotateY = 0;
+        let currentRotateX = 0;
+        let currentRotateY = 0;
+
+        const maxTilt = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--max-tilt')) || 10;
+
+        function animateTilt() {
+          currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+          currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+
+          cardContent.style.transform =
+            `rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) translateZ(14px)`;
+
+          rafId = requestAnimationFrame(animateTilt);
         }
-        shine.className = 'shine';
-        cardContent.appendChild(shine);
-    });
-    
-    listItem.addEventListener('mouseleave', () => {
-        cardContent.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
-        const shine = cardContent.querySelector('.shine');
-        if (shine) {
-            shine.remove();
+
+        listItem.addEventListener('mousemove', (e) => {
+          const rect = listItem.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const pctX = (x / rect.width) - 0.5;  // -0.5 ... 0.5
+          const pctY = (y / rect.height) - 0.5;
+
+          targetRotateY = -pctX * maxTilt;
+          targetRotateX =  pctY * maxTilt;
+
+          // Shine'ı güncelle
+          shine.style.background = `radial-gradient(260px 260px at ${x}px ${y}px,
+            rgba(255,255,255,0.25), rgba(255,255,255,0) 60%)`;
+
+          if (!rafId) rafId = requestAnimationFrame(animateTilt);
+        });
+
+        listItem.addEventListener('mouseleave', () => {
+          targetRotateX = 0; targetRotateY = 0;
+          cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(animateTilt);
+          setTimeout(() => { cancelAnimationFrame(rafId); rafId = null; }, 280);
+        });
+      }
+
+      return listItem;
+    }
+
+    function displayMovies() {
+      allMovies.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+      const fragment = document.createDocumentFragment();
+
+      allMovies.forEach(movie => {
+        const card = createMovieCard(movie);
+        fragment.appendChild(card);
+      });
+      movieList.appendChild(fragment);
+
+      // Görünür olunca fade-in ve başlık animasyonu
+      revealCardsOnView();
+    }
+
+    // Kartlar görünür olunca sınıf ekle
+    function revealCardsOnView() {
+      const cards = document.querySelectorAll('.movie-card');
+      const io = new IntersectionObserver((entries, obs) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
         }
-    });
-    
-    return listItem;
-}
+      }, { threshold: 0.2 });
 
-function displayMovies() {
-    allMovies.sort((a, b) => b.vote_average - a.vote_average);
-    allMovies.forEach(movie => {
-        const movieCard = createMovieCard(movie);
-        movieList.appendChild(movieCard);
-    });
-}
+      cards.forEach(card => io.observe(card));
+    }
 
-// Parçacık sistemini film kartlarıyla etkileşimli hale getir
-function updateParticles() {
-    const cards = document.querySelectorAll('li');
-    cards.forEach(card => {
+    // Partikülleri kartlarla hafif etkileşimli yap (mevcut mantığı korur)
+    function updateParticles() {
+      if (!particles) return;
+      const positions = particles.geometry.attributes.position.array;
+      const cards = document.querySelectorAll('.movie-card');
+      if (cards.length === 0) return;
+
+      cards.forEach(card => {
         const rect = card.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        
-        particles.geometry.attributes.position.array.forEach((value, index) => {
-            if (index % 3 === 0) {
-                const x = value;
-                const y = particles.geometry.attributes.position.array[index + 1];
-                const z = particles.geometry.attributes.position.array[index + 2];
-                
-                const distance = Math.sqrt(
-                    Math.pow(x - centerX, 2) + 
-                    Math.pow(y - centerY, 2)
-                );
-                
-                if (distance < 100) {
-                    particles.geometry.attributes.position.array[index + 2] += Math.sin(Date.now() * 0.001) * 0.5;
-                }
-            }
-        });
-        particles.geometry.attributes.position.needsUpdate = true;
-    });
-}
 
-fetchMovies(currentPage);
-</script>
+        // Basit z salınımı (yakın parçacıklara)
+        for (let i = 0; i < positions.length; i += 3) {
+          const x = positions[i];
+          const y = positions[i + 1];
+          const dx = x - centerX;
+          const dy = y - centerY;
+          const distance = Math.sqrt(dx*dx + dy*dy);
+          if (distance < 100) {
+            positions[i + 2] += Math.sin(Date.now() * 0.001) * 0.5;
+          }
+        }
+      });
+
+      particles.geometry.attributes.position.needsUpdate = true;
+    }
+
+    // Başlat
+    initThree();
+    animate();
+    fetchMovies(currentPage);
+  </script>
 </body>
 </html>
 
