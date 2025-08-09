@@ -1,16 +1,35 @@
-fetch('https://api.ipify.org?format=json')
-.then(response => response.json())
-.then(data => {
-    const userIP = data.ip;
-    // Belirli IP adresini kontrol et
-    if (userIP === '2a00:1d36:5c88:5600:5160:9bf7:1590:f82') {
-        // Özel sayfaya yönlendir
-        window.location.href = 'ipozel.html';
-    } else if (userIP === '95.70.171.32') {
-        // İkinci özel IP için yönlendirme
-        window.location.href = 'ipozel2.html';
+/*
+  IP tabanlı yönlendirme
+  - Eşleşmeler `ip-routes.json` dosyasında tutulur (aynı klasörde)
+  - Dosyaya yeni IP:URL çifti ekleyerek yönlendirmeleri genişletebilirsiniz
+*/
+(async function routeUserByIp() {
+  try {
+    const scriptUrl = (document.currentScript && document.currentScript.src)
+      ? document.currentScript.src
+      : new URL('ip.js', window.location.href).toString();
+
+    const routesUrl = new URL('ip-routes.json', scriptUrl).toString();
+
+    const [ipRes, routesRes] = await Promise.all([
+      fetch('https://api.ipify.org?format=json', { cache: 'no-store' }),
+      fetch(routesUrl, { cache: 'no-store' })
+    ]);
+
+    if (!ipRes.ok) throw new Error('IP servisinden yanıt alınamadı');
+    if (!routesRes.ok) throw new Error('ip-routes.json bulunamadı veya erişilemedi');
+
+    const ipData = await ipRes.json();
+    const userIp = ipData && ipData.ip;
+    if (!userIp) return;
+
+    const routes = await routesRes.json();
+    const targetUrl = routes && routes[userIp];
+
+    if (typeof targetUrl === 'string' && targetUrl.length > 0) {
+      window.location.href = targetUrl;
     }
-})
-.catch(error => {
-    console.error('IP bilgisi alınamadı:', error);
-});
+  } catch (error) {
+    console.error('IP yönlendirme hatası:', error);
+  }
+})();
