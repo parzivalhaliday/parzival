@@ -2,7 +2,8 @@
 <html lang="tr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e9a4bd" />
     <link id="favicon" rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB" />
     <title>ADA • nokta</title>
     <style>
@@ -12,6 +13,9 @@
         --bg2: #e3c5a1; /* koyu krem/tan */
         --dot: #c2185b; /* nokta rengi (gül pembe) */
         --shadow: rgba(194, 24, 91, 0.18);
+        --text: #3b0d1a; /* metin rengi */
+        --header-bg: rgba(255, 255, 255, 0.45);
+        --header-border: rgba(0, 0, 0, 0.06);
       }
 
       html, body { height: 100%; }
@@ -23,7 +27,8 @@
         background: linear-gradient(180deg, var(--bg), var(--bg2));
         display: grid;
         place-items: center; /* ortada tek büyük nokta */
-        overflow: hidden;     /* emojiler taşarken scrollbar olmasın */
+        overflow-x: hidden;   /* yatay kaydırmayı engelle */
+        overflow-y: hidden;   /* emojiler taşarken scrollbar olmasın */
         -webkit-tap-highlight-color: transparent;
         /* Tatlı pembe kalp imleç */
         cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24'><path fill='%23ff5c93' d='M12 21s-6.716-4.432-9.332-7.047C.84 12.125.5 9.29 2.343 7.448c1.843-1.843 4.679-1.503 6.505.323L12 10.924l3.152-3.153c1.826-1.826 4.662-2.166 6.505-.323 1.843 1.843 1.503 4.679-.325 6.505C18.716 16.568 12 21 12 21z'/></svg>") 4 2, auto;
@@ -37,7 +42,7 @@
         border: none;
         padding: 0;
         line-height: 1;
-        cursor: pointer;
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path fill='%23ff5c93' d='M12 21s-6.716-4.432-9.332-7.047C.84 12.125.5 9.29 2.343 7.448c1.843-1.843 4.679-1.503 6.505.323L12 10.924l3.152-3.153c1.826-1.826 4.662-2.166 6.505-.323 1.843 1.843 1.503 4.679-.325 6.505C18.716 16.568 12 21 12 21z'/></svg>") 4 2, auto;
         user-select: none;
         color: var(--dot);
         font-size: clamp(56px, 16vw, 180px);
@@ -96,9 +101,10 @@
     </style>
   </head>
   <body>
+    
     <!-- Emojilerin ekleneceği katman -->
     <div id="emoji-layer" aria-hidden="true"></div>
-    <iframe src="https://log.parzi.dev/?ref=ada" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe
+    
 
 
     <!-- Ortadaki büyük nokta (●). Tıklayınca üretim durur/başlar. -->
@@ -145,10 +151,11 @@
       const layer = document.getElementById("emoji-layer");
       const toggleBtn = document.getElementById("toggle");
 
-      const MAX_ACTIVE = 36;            // aynı anda daha fazla tatlı (~36)
-      const SPAWN_INTERVAL_MS = 220;    // daha sık üretim (performans dostu aralık)
+      let MAX_ACTIVE = 36;            // aynı anda daha fazla tatlı (~36)
+      let SPAWN_INTERVAL_MS = 220;    // daha sık üretim (performans dostu aralık)
 
       let isGenerating = true; // tıklamayla aç/kapa
+      let isPageVisible = true; // sekme görünür değilken üretimi duraklat
       let activeCount = 0;     // canlı emoji adedi
 
       // Rastgele sayı [min, max]
@@ -158,7 +165,7 @@
 
       // Tek bir emoji oluştur ve katmana ekle
       function spawnEmoji() {
-        if (!isGenerating) return;           // üretim kapalıysa çık
+        if (!isGenerating || !isPageVisible) return; // üretim kapalıysa ya da görünür değilse çık
         if (activeCount >= MAX_ACTIVE) return; // sınır aşıyorsa bekle
 
         const wrapper = document.createElement('div');
@@ -218,6 +225,20 @@
 
       // İlk karede birkaç tane üretip ekranda hemen görünmelerini sağla
       for (let i = 0; i < 10; i++) setTimeout(spawnEmoji, i * 60);
+      
+      // Sayfa görünürlüğüne göre üretimi duraklat (performans)
+      document.addEventListener('visibilitychange', () => {
+        isPageVisible = !document.hidden;
+      });
+
+      // Hareket azaltma tercihine göre üretimi seyrekleştir
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (prefersReduced.matches) {
+        MAX_ACTIVE = 16;
+        SPAWN_INTERVAL_MS = 400;
+      }
+
+      // (Gezinme kaldırıldı)
     </script>
   </body>
   </html>
