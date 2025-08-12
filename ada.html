@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link id="favicon" rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB" />
+    <title>ADA • nokta</title>
+    <style>
+      /* Basit, yumuşak görünüm — daha koyu pembe/krem tema */
+      :root {
+        --bg: #e9a4bd;  /* koyu pembe */
+        --bg2: #e3c5a1; /* koyu krem/tan */
+        --dot: #c2185b; /* nokta rengi (gül pembe) */
+        --shadow: rgba(194, 24, 91, 0.18);
+      }
+
+      html, body { height: 100%; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: linear-gradient(180deg, var(--bg), var(--bg2));
+        display: grid;
+        place-items: center; /* ortada tek büyük nokta */
+        overflow: hidden;     /* emojiler taşarken scrollbar olmasın */
+        -webkit-tap-highlight-color: transparent;
+        /* Tatlı pembe kalp imleç */
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24'><path fill='%23ff5c93' d='M12 21s-6.716-4.432-9.332-7.047C.84 12.125.5 9.29 2.343 7.448c1.843-1.843 4.679-1.503 6.505.323L12 10.924l3.152-3.153c1.826-1.826 4.662-2.166 6.505-.323 1.843 1.843 1.503 4.679-.325 6.505C18.716 16.568 12 21 12 21z'/></svg>") 4 2, auto;
+      }
+
+      /* Ortadaki büyük nokta (●) — buton olarak erişilebilir kılındı */
+      #toggle {
+        position: relative;
+        z-index: 2; /* emojilerin üstünde kalsın */
+        background: transparent;
+        border: none;
+        padding: 0;
+        line-height: 1;
+        cursor: pointer;
+        user-select: none;
+        color: var(--dot);
+        font-size: clamp(56px, 16vw, 180px);
+        text-shadow: 0 4px 12px var(--shadow);
+        transition: transform 160ms ease;
+      }
+      #toggle:active { transform: scale(0.98); }
+      #toggle:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 8px rgba(194, 24, 91, 0.08);
+        border-radius: 50%;
+      }
+
+      /* Emojiler için katman; tıklamayı engellemesin diye pointer-events kapalı */
+      #emoji-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Her bir emojinin dış sarmalayıcısı: yatay salınım + dönüş burada */
+      .flake {
+        position: fixed; /* viewport referans alınsın */
+        top: -10vh;      /* ekranın biraz üstünden başla */
+        will-change: transform;
+        filter: drop-shadow(0 4px 10px var(--shadow));
+        /* Sway animasyonu: hafif salınım ve dönüş etkisi */
+        animation: sway var(--sway-duration) ease-in-out infinite alternate;
+      }
+
+      /* Düşüş animasyonu iç span'da, böylece transform çakışmaz */
+      .flake > span {
+        display: inline-block;
+        will-change: transform;
+        animation: fall var(--fall-duration) linear forwards;
+      }
+
+      /* Yatay salınım ve dönüş (açılar değişken) */
+      @keyframes sway {
+        0%   { transform: translateX(calc(var(--sway) * -1)) rotate(var(--rot-start)); }
+        100% { transform: translateX(var(--sway)) rotate(var(--rot-end)); }
+      }
+
+      /* Yukarıdan aşağı düşüş */
+      @keyframes fall {
+        from { transform: translateY(0); }
+        to   { transform: translateY(120vh); }
+      }
+
+      /* Hareket azaltma tercihi olanlar için: daha az animasyon ve üretim */
+      @media (prefers-reduced-motion: reduce) {
+        .flake { animation-duration: 6s; }
+        .flake > span { animation-duration: 8s; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Emojilerin ekleneceği katman -->
+    <div id="emoji-layer" aria-hidden="true"></div>
+
+    <!-- Ortadaki büyük nokta (●). Tıklayınca üretim durur/başlar. -->
+    <button id="toggle" type="button" aria-label="Emoji üretimini başlat/durdur" aria-pressed="true">●</button>
+
+    <script>
+      // Dinamik favicon: her saniye rastgele tatlı emojisi
+      (function(){
+        const EMOJI_SET = ["🍰","🍩","🧁","🍪","🍨","🍧","🍮","🍫","🍦","🍭","🍬"];
+        const link = document.getElementById('favicon');
+        const canvas = document.createElement('canvas');
+        const size = 64; // yüksek çözünürlük, tarayıcı küçültür
+        canvas.width = canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        function drawFavicon() {
+          // Arka plan baloncuğu
+          ctx.clearRect(0, 0, size, size);
+          const g = ctx.createLinearGradient(0, 0, size, size);
+          g.addColorStop(0, '#ffffff');
+          g.addColorStop(1, '#ffd1e2');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+          ctx.fill();
+
+          // Emoji çiz
+          const emoji = EMOJI_SET[Math.floor(Math.random()*EMOJI_SET.length)];
+          ctx.font = '42px "Apple Color Emoji", "Segoe UI Emoji", system-ui';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(emoji, size/2, size/2 + 2);
+
+          // Data URL olarak ata
+          const url = canvas.toDataURL('image/png');
+          link.href = url;
+        }
+
+        drawFavicon();
+        setInterval(drawFavicon, 1000);
+      })();
+      // Basit yardımcılar
+      const EMOJIS = ["🍰","🍩","🧁","🍪","🍨","🍧","🍮","🍫","🍦","🍭","🍬"];
+      const layer = document.getElementById("emoji-layer");
+      const toggleBtn = document.getElementById("toggle");
+
+      const MAX_ACTIVE = 36;            // aynı anda daha fazla tatlı (~36)
+      const SPAWN_INTERVAL_MS = 220;    // daha sık üretim (performans dostu aralık)
+
+      let isGenerating = true; // tıklamayla aç/kapa
+      let activeCount = 0;     // canlı emoji adedi
+
+      // Rastgele sayı [min, max]
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+      function randInt(min, max) { return Math.floor(rand(min, max + 1)); }
+      function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      // Tek bir emoji oluştur ve katmana ekle
+      function spawnEmoji() {
+        if (!isGenerating) return;           // üretim kapalıysa çık
+        if (activeCount >= MAX_ACTIVE) return; // sınır aşıyorsa bekle
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'flake';
+
+        // Başlangıç X konumu (vw), kenarlardan hafif pay
+        const leftVw = rand(2, 98);
+        wrapper.style.left = leftVw + 'vw';
+
+        // Boyut (px) — biraz daha büyük aralık
+        const sizePx = rand(28, 64);
+
+        // Düşüş süresi ve salınım parametreleri (daha hızlı ve belirgin)
+        const fallSec = rand(4.2, 9.0);      // daha kısa = daha hızlı düşüş
+        const swaySec = rand(2.2, 4.8);
+        const swayAmp = rand(14, 56);        // px cinsinden yatay genlik
+
+        // Dönüş açıları (derece) — hafifçe sağa/sola dönsün
+        const rotStart = randInt(-35, 5) + 'deg';
+        const rotEnd   = randInt(8, 35) + 'deg';
+
+        // CSS değişkenleri ile animasyonları parametrize et
+        wrapper.style.setProperty('--sway-duration', swaySec + 's');
+        wrapper.style.setProperty('--sway', swayAmp + 'px');
+        wrapper.style.setProperty('--rot-start', rotStart);
+        wrapper.style.setProperty('--rot-end',   rotEnd);
+        wrapper.style.setProperty('--fall-duration', fallSec + 's');
+
+        // İçeriği (emoji) taşıyan span — düşüş animasyonu burada
+        const span = document.createElement('span');
+        span.textContent = choice(EMOJIS);
+        span.style.fontSize = sizePx + 'px';
+
+        // Düşüş bittiğinde DOM'dan temizle
+        span.addEventListener('animationend', () => {
+          wrapper.remove();
+          activeCount = Math.max(0, activeCount - 1);
+        }, { once: true });
+
+        wrapper.appendChild(span);
+        layer.appendChild(wrapper);
+        activeCount += 1;
+      }
+
+      // Düzenli aralıklarla yeni emojiler üret
+      const spawnTimer = setInterval(spawnEmoji, SPAWN_INTERVAL_MS);
+
+      // Noktaya tıklayınca üretimi aç/kapa
+      function toggleGeneration() {
+        isGenerating = !isGenerating;
+        toggleBtn.setAttribute('aria-pressed', String(isGenerating));
+        // Küçük bir görsel ipucu: aktifken hafif büyüsün
+        toggleBtn.style.transform = isGenerating ? 'scale(1.04)' : 'scale(1)';
+      }
+
+      toggleBtn.addEventListener('click', toggleGeneration);
+
+      // İlk karede birkaç tane üretip ekranda hemen görünmelerini sağla
+      for (let i = 0; i < 10; i++) setTimeout(spawnEmoji, i * 60);
+    </script>
+  </body>
+  </html>
+
