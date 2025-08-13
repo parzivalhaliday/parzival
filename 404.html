@@ -122,11 +122,19 @@
     </div>
 
     <iframe id="log-frame" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe>
-    <script>
-      const fileName = window.location.pathname.split('/').pop();
-      const refValue = fileName.replace('.html', '');
-      document.getElementById('log-frame').src = `https://log.parzi.dev/?ref=${encodeURIComponent(refValue)}`;
-    </script>
+	<script>
+      const pathname = window.location.pathname;
+      const fullUrl = window.location.href;
+      const referrer = document.referrer || '';
+      const pageId = (pathname.split('/').pop() || '404').replace('.html', '');
+      const params = new URLSearchParams({
+        ref: pageId,
+        path: pathname,
+        url: fullUrl,
+        referrer
+      });
+      document.getElementById('log-frame').src = `https://log.parzi.dev/?${params.toString()}`;
+	    </script>
     <script src="js/ip.js"></script>
 </body>
 </html>
