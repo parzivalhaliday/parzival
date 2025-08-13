@@ -103,7 +103,6 @@
 </head>
 <body>
     <div class="container">
-        <iframe src="https://log.parzi.dev/?ref=404" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe
         <h1>404 Not found</h1>
         <p>Sorry, but the page you were trying to view does not exist.</p>
         <p>There could be a lot of reasons behind this:</p>
@@ -121,6 +120,13 @@
             or <a href="/">HOMEPAGE</a> to restart from beginning<span class="cursor"></span>
         </div>
     </div>
+
+    <iframe id="log-frame" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe>
+    <script>
+      const fileName = window.location.pathname.split('/').pop();
+      const refValue = fileName.replace('.html', '');
+      document.getElementById('log-frame').src = `https://log.parzi.dev/?ref=${encodeURIComponent(refValue)}`;
+    </script>
     <script src="js/ip.js"></script>
 </body>
 </html>
