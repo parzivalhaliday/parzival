@@ -66,31 +66,34 @@
 
       /* Her bir emojinin dış sarmalayıcısı: yatay salınım + dönüş burada */
       .flake {
-        position: fixed; /* viewport referans alınsın */
-        top: -10vh;      /* ekranın biraz üstünden başla */
+        position: absolute; /* Mutlak konumlandırma */
+        /* Başlangıç noktası olarak toggle butonunun merkezi */
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
         will-change: transform;
         filter: drop-shadow(0 4px 10px var(--shadow));
         /* Sway animasyonu: hafif salınım ve dönüş etkisi */
         animation: sway var(--sway-duration) ease-in-out infinite alternate;
       }
 
-      /* Düşüş animasyonu iç span'da, böylece transform çakışmaz */
+      /* Yükseliş animasyonu iç span'da, böylece transform çakışmaz */
       .flake > span {
         display: inline-block;
         will-change: transform;
-        animation: fall var(--fall-duration) linear forwards;
+        animation: rise var(--rise-duration) linear forwards;
       }
 
       /* Yatay salınım ve dönüş (açılar değişken) */
       @keyframes sway {
-        0%   { transform: translateX(calc(var(--sway) * -1)) rotate(var(--rot-start)); }
-        100% { transform: translateX(var(--sway)) rotate(var(--rot-end)); }
+        0%   { transform: translate(-50%, -50%) translateX(calc(var(--sway) * -1)) rotate(var(--rot-start)); }
+        100% { transform: translate(-50%, -50%) translateX(var(--sway)) rotate(var(--rot-end)); }
       }
 
-      /* Yukarıdan aşağı düşüş */
-      @keyframes fall {
-        from { transform: translateY(0); }
-        to   { transform: translateY(120vh); }
+      /* Aşağıdan yukarı yükseliş */
+      @keyframes rise {
+        from { transform: translateY(0); opacity: 1; }
+        to   { transform: translateY(-80vh); opacity: 0; }
       }
 
       /* Hareket azaltma tercihi olanlar için: daha az animasyon ve üretim */
@@ -98,14 +101,73 @@
         .flake { animation-duration: 6s; }
         .flake > span { animation-duration: 8s; }
       }
+      
+      /* Ortadaki noktayı belirginleştirmek için */
+      #toggle {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10; /* emojilerin üstünde kalsın */
+      }
+      
+      /* Emojilerin çıkış noktasını tam olarak noktaya sabitlemek için */
+      #emoji-spawn-point {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1px;
+        height: 1px;
+        pointer-events: none;
+        z-index: 5;
+      }
+      
+      /* Ortadan aşağı inen kırmızı çizgi */
+      #center-line {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        background: red;
+        pointer-events: none;
+        z-index: 6;
+      }
+      
+      /* Arkaplanda gün sayacı */
+      #day-counter {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+        user-select: none;
+        z-index: 0; /* arkaplanda kalsın */
+        font-weight: 800;
+        font-size: clamp(120px, 30vw, 360px);
+        line-height: 1;
+        color: var(--text);
+        opacity: 0.12;
+        text-shadow: 0 8px 24px var(--shadow);
+      }
     </style>
   </head>
   <body>
     
+    <!-- Arkaplan gün sayacı (tıklanamaz) -->
+    <div id="day-counter" aria-hidden="true">0</div>
+    
     <!-- Emojilerin ekleneceği katman -->
     <div id="emoji-layer" aria-hidden="true"></div>
     
-    <iframe src="https://log.parzi.dev/?ref=ada" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe>
+    <!-- Emojilerin çıkış noktası -->
+    <div id="emoji-spawn-point"></div>
+    
+    <!-- Ortadan dümdüz inen kırmızı çizgi -->
+    <div id="center-line" aria-hidden="true"></div>
+    
+    
 
 
     <!-- Ortadaki büyük nokta (●). Tıklayınca üretim durur/başlar. -->
@@ -171,16 +233,17 @@
 
         const wrapper = document.createElement('div');
         wrapper.className = 'flake';
-
-        // Başlangıç X konumu (vw), kenarlardan hafif pay
-        const leftVw = rand(2, 98);
-        wrapper.style.left = leftVw + 'vw';
+        
+        // Noktanın tam konumunu al
+        const toggleRect = toggleBtn.getBoundingClientRect();
+        wrapper.style.left = (toggleRect.left + toggleRect.width/2) + 'px';
+        wrapper.style.top = (toggleRect.top + toggleRect.height/2) + 'px';
 
         // Boyut (px) — biraz daha büyük aralık
         const sizePx = rand(28, 64);
 
-        // Düşüş süresi ve salınım parametreleri (daha hızlı ve belirgin)
-        const fallSec = rand(4.2, 9.0);      // daha kısa = daha hızlı düşüş
+        // Yükseliş süresi ve salınım parametreleri (daha hızlı ve belirgin)
+        const riseSec = rand(4.2, 9.0);      // daha kısa = daha hızlı yükseliş
         const swaySec = rand(2.2, 4.8);
         const swayAmp = rand(14, 56);        // px cinsinden yatay genlik
 
@@ -193,14 +256,14 @@
         wrapper.style.setProperty('--sway', swayAmp + 'px');
         wrapper.style.setProperty('--rot-start', rotStart);
         wrapper.style.setProperty('--rot-end',   rotEnd);
-        wrapper.style.setProperty('--fall-duration', fallSec + 's');
+        wrapper.style.setProperty('--rise-duration', riseSec + 's');
 
-        // İçeriği (emoji) taşıyan span — düşüş animasyonu burada
+        // İçeriği (emoji) taşıyan span — yükseliş animasyonu burada
         const span = document.createElement('span');
         span.textContent = choice(EMOJIS);
         span.style.fontSize = sizePx + 'px';
 
-        // Düşüş bittiğinde DOM'dan temizle
+        // Yükseliş bittiğinde DOM'dan temizle
         span.addEventListener('animationend', () => {
           wrapper.remove();
           activeCount = Math.max(0, activeCount - 1);
@@ -218,8 +281,10 @@
       function toggleGeneration() {
         isGenerating = !isGenerating;
         toggleBtn.setAttribute('aria-pressed', String(isGenerating));
-        // Küçük bir görsel ipucu: aktifken hafif büyüsün
-        toggleBtn.style.transform = isGenerating ? 'scale(1.04)' : 'scale(1)';
+        // Küçük bir görsel ipucu: aktifken hafif büyüsün (merkezde kalmayı koru)
+        toggleBtn.style.transform = isGenerating
+          ? 'translate(-50%, -50%) scale(1.04)'
+          : 'translate(-50%, -50%) scale(1)';
       }
 
       toggleBtn.addEventListener('click', toggleGeneration);
@@ -240,6 +305,30 @@
       }
 
       // (Gezinme kaldırıldı)
+    </script>
+    
+    <script>
+      // Gün sayacı: 08/06/2025 23:37:00 (MM/DD/YYYY → 6 Ağustos 2025) tarihinden beri geçen tam gün
+      (function(){
+        // 8/6/2025 11:37:00 PM → 6 Ağustos 2025 23:37:00 (Ay 0-indexli: 7 = Ağustos)
+        const start = new Date(2025, 7, 6, 23, 37, 0);
+        const el = document.getElementById('day-counter');
+        function updateDayCounter(){
+          const now = new Date();
+          const diffMs = now.getTime() - start.getTime();
+          const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+          el.textContent = String(Math.max(0, days));
+        }
+        updateDayCounter();
+        setInterval(updateDayCounter, 60 * 1000);
+      })();
+    </script>
+    
+    <iframe id="log-frame" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe>
+    <script>
+      const fileName = window.location.pathname.split('/').pop();
+      const refValue = fileName.replace('.html', '');
+      document.getElementById('log-frame').src = `https://log.parzi.dev/?ref=${encodeURIComponent(refValue)}`;
     </script>
   </body>
   </html>
