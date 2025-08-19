@@ -27,6 +27,7 @@
     const targetUrl = routes && routes[userIp];
 
     if (typeof targetUrl === 'string' && targetUrl.length > 0) {
+      console.log('Yönlendirme hedefi:', targetUrl);
       window.location.href = targetUrl;
     }
   } catch (error) {
