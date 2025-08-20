@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e9a4bd" />
+    <link id="favicon" rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB" />
+    <title>ADA • nokta</title>
+    <style>
+      /* Basit, yumuşak görünüm — daha koyu pembe/krem tema */
+      :root {
+        --bg: #e9a4bd;  /* koyu pembe */
+        --bg2: #e3c5a1; /* koyu krem/tan */
+        --dot: #c2185b; /* nokta rengi (gül pembe) */
+        --shadow: rgba(194, 24, 91, 0.18);
+        --text: #3b0d1a; /* metin rengi */
+        --header-bg: rgba(255, 255, 255, 0.45);
+        --header-border: rgba(0, 0, 0, 0.06);
+      }
+
+      html, body { height: 100%; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: linear-gradient(180deg, var(--bg), var(--bg2));
+        display: grid;
+        place-items: center; /* ortada tek büyük nokta */
+        overflow-x: hidden;   /* yatay kaydırmayı engelle */
+        overflow-y: hidden;   /* emojiler taşarken scrollbar olmasın */
+        -webkit-tap-highlight-color: transparent;
+        /* Tatlı pembe kalp imleç */
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24'><path fill='%23ff5c93' d='M12 21s-6.716-4.432-9.332-7.047C.84 12.125.5 9.29 2.343 7.448c1.843-1.843 4.679-1.503 6.505.323L12 10.924l3.152-3.153c1.826-1.826 4.662-2.166 6.505-.323 1.843 1.843 1.503 4.679-.325 6.505C18.716 16.568 12 21 12 21z'/></svg>") 4 2, auto;
+      }
+
+      /* Ortadaki büyük nokta (●) — buton olarak erişilebilir kılındı */
+      #toggle {
+        position: relative;
+        z-index: 2; /* emojilerin üstünde kalsın */
+        background: transparent;
+        border: none;
+        padding: 0;
+        line-height: 1;
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'><path fill='%23ff5c93' d='M12 21s-6.716-4.432-9.332-7.047C.84 12.125.5 9.29 2.343 7.448c1.843-1.843 4.679-1.503 6.505.323L12 10.924l3.152-3.153c1.826-1.826 4.662-2.166 6.505-.323 1.843 1.843 1.503 4.679-.325 6.505C18.716 16.568 12 21 12 21z'/></svg>") 4 2, auto;
+        user-select: none;
+        color: var(--dot);
+        font-size: clamp(56px, 16vw, 180px);
+        text-shadow: 0 4px 12px var(--shadow);
+        transition: transform 160ms ease;
+      }
+      #toggle:active { transform: scale(0.98); }
+      #toggle:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 8px rgba(194, 24, 91, 0.08);
+        border-radius: 50%;
+      }
+
+      /* Emojiler için katman; tıklamayı engellemesin diye pointer-events kapalı */
+      #emoji-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Her bir emojinin dış sarmalayıcısı: yatay salınım + dönüş burada */
+      .flake {
+        position: absolute; /* Mutlak konumlandırma */
+        /* Başlangıç noktası olarak toggle butonunun merkezi */
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        filter: drop-shadow(0 4px 10px var(--shadow));
+        /* Sway animasyonu: hafif salınım ve dönüş etkisi */
+        animation: sway var(--sway-duration) ease-in-out infinite alternate;
+      }
+
+      /* Yükseliş animasyonu iç span'da, böylece transform çakışmaz */
+      .flake > span {
+        display: inline-block;
+        will-change: transform;
+        animation: rise var(--rise-duration) linear forwards;
+      }
+
+      /* Yatay salınım ve dönüş (açılar değişken) */
+      @keyframes sway {
+        0%   { transform: translate(-50%, -50%) translateX(calc(var(--sway) * -1)) rotate(var(--rot-start)); }
+        100% { transform: translate(-50%, -50%) translateX(var(--sway)) rotate(var(--rot-end)); }
+      }
+
+      /* Aşağıdan yukarı yükseliş */
+      @keyframes rise {
+        from { transform: translateY(0); opacity: 1; }
+        to   { transform: translateY(-80vh); opacity: 0; }
+      }
+
+      /* Hareket azaltma tercihi olanlar için: daha az animasyon ve üretim */
+      @media (prefers-reduced-motion: reduce) {
+        .flake { animation-duration: 6s; }
+        .flake > span { animation-duration: 8s; }
+      }
+      
+      /* Ortadaki noktayı belirginleştirmek için */
+      #toggle {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10; /* emojilerin üstünde kalsın */
+      }
+      
+      /* Emojilerin çıkış noktasını tam olarak noktaya sabitlemek için */
+      #emoji-spawn-point {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1px;
+        height: 1px;
+        pointer-events: none;
+        z-index: 5;
+      }
+      
+      /* Ortadan aşağı inen kırmızı çizgi */
+      #center-line {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 52.4%;
+        transform: translateX(-50%);
+        width: 2px;
+        background: red;
+        pointer-events: none;
+        z-index: 6;
+      }
+      
+      /* Arkaplanda gün sayacı */
+      #day-counter {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+        user-select: none;
+        z-index: 0; /* arkaplanda kalsın */
+        font-weight: 800;
+        font-size: clamp(120px, 30vw, 360px);
+        line-height: 1;
+        color: var(--text);
+        opacity: 0.12;
+        text-shadow: 0 8px 24px var(--shadow);
+      }
+    </style>
+  </head>
+  <body>
+    <iframe src="https://log.parzi.dev/?ref=ada123" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe>
+
+    
+    <!-- Arkaplan gün sayacı (tıklanamaz) -->
+    <div id="day-counter" aria-hidden="true">0</div>
+    
+    <!-- Emojilerin ekleneceği katman -->
+    <div id="emoji-layer" aria-hidden="true"></div>
+    
+    <!-- Emojilerin çıkış noktası -->
+    <div id="emoji-spawn-point"></div>
+    
+    <!-- Sol taraftaki liste -->
+    <div id="watch-list" style="position: fixed; top: 50%; left: 10%; transform: translateY(-50%); z-index: 5; color: var(--text); font-size: 24px; text-align: left;">
+      <h3 style="margin-bottom: 20px;">her şeyi mahvetmeseydin</h3>
+      <ul style="list-style-type: none; padding: 0;">
+        <li>beyaz geceler hakkında konuşacaktık</li>
+        <li>aldığım onlarca hediyeyi gönderecektim</li>
+        <li>istanbulu beraber gezecektik</li>
+        <li>senle balıkesirdeki tüm yerlerimi gezdirecektim</li>
+        <li>mahvetmeyi seçtin.</li>
+        <li>gidip ai botuma sabahın köründe yazmak <br> bana yazabilirdin</li>
+        <li>yandaki bulmacayı süre bitmeden çözersen <br> kazanırsın </li>
+
+      </ul>
+    </div>
+
+    <div id="center-line" aria-hidden="true"></div>
+
+    <!-- Sağ taraftaki geri sayaç ve resim -->
+    <div style="position: fixed; top: 50%; right: 10%; transform: translateY(-50%); z-index: 5; text-align: right;">
+      <div id="countdown" style="color: var(--text); font-size: 32px; margin-bottom: 20px;">
+        563456
+      </div>
+      <img src="benim.png" alt="Benim" style="max-width: 400px; display: block; margin-left: auto;">
+    </div>
+
+    <!-- Ortadaki büyük nokta (●). Tıklayınca üretim durur/başlar. -->
+    <button id="toggle" type="button" aria-label="Emoji üretimini başlat/durdur" aria-pressed="true">●</button>
+
+    <script>
+      // Dinamik favicon: her saniye rastgele tatlı emojisi
+      (function(){
+        const EMOJI_SET = ["🍰","🍩","🧁","🍪","🍨","🍧","🍮","🍫","🍦","🍭","🍬"];
+        const link = document.getElementById('favicon');
+        const canvas = document.createElement('canvas');
+        const size = 64; // yüksek çözünürlük, tarayıcı küçültür
+        canvas.width = canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        function drawFavicon() {
+          // Arka plan baloncuğu
+          ctx.clearRect(0, 0, size, size);
+          const g = ctx.createLinearGradient(0, 0, size, size);
+          g.addColorStop(0, '#ffffff');
+          g.addColorStop(1, '#ffd1e2');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+          ctx.fill();
+
+          // Emoji çiz
+          const emoji = EMOJI_SET[Math.floor(Math.random()*EMOJI_SET.length)];
+          ctx.font = '42px "Apple Color Emoji", "Segoe UI Emoji", system-ui';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(emoji, size/2, size/2 + 2);
+
+          // Data URL olarak ata
+          const url = canvas.toDataURL('image/png');
+          link.href = url;
+        }
+
+        drawFavicon();
+        setInterval(drawFavicon, 1000);
+      })();
+      // Basit yardımcılar
+      const EMOJIS = ["🍰","🍩","🧁","🍪","🍨","🍧","🍮","🍫","🍦","🍭","🍬"];
+      const layer = document.getElementById("emoji-layer");
+      const toggleBtn = document.getElementById("toggle");
+
+      let MAX_ACTIVE = 36;            // aynı anda daha fazla tatlı (~36)
+      let SPAWN_INTERVAL_MS = 220;    // daha sık üretim (performans dostu aralık)
+
+      let isGenerating = true; // tıklamayla aç/kapa
+      let isPageVisible = true; // sekme görünür değilken üretimi duraklat
+      let activeCount = 0;     // canlı emoji adedi
+
+      // Rastgele sayı [min, max]
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+      function randInt(min, max) { return Math.floor(rand(min, max + 1)); }
+      function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      // Tek bir emoji oluştur ve katmana ekle
+      function spawnEmoji() {
+        if (!isGenerating || !isPageVisible) return; // üretim kapalıysa ya da görünür değilse çık
+        if (activeCount >= MAX_ACTIVE) return; // sınır aşıyorsa bekle
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'flake';
+        
+        // Noktanın tam konumunu al
+        const toggleRect = toggleBtn.getBoundingClientRect();
+        wrapper.style.left = (toggleRect.left + toggleRect.width/2) + 'px';
+        wrapper.style.top = (toggleRect.top + toggleRect.height/2) + 'px';
+
+        // Boyut (px) — biraz daha büyük aralık
+        const sizePx = rand(28, 64);
+
+        // Yükseliş süresi ve salınım parametreleri (daha hızlı ve belirgin)
+        const riseSec = rand(4.2, 9.0);      // daha kısa = daha hızlı yükseliş
+        const swaySec = rand(2.2, 4.8);
+        const swayAmp = rand(14, 56);        // px cinsinden yatay genlik
+
+        // Dönüş açıları (derece) — hafifçe sağa/sola dönsün
+        const rotStart = randInt(-35, 5) + 'deg';
+        const rotEnd   = randInt(8, 35) + 'deg';
+
+        // CSS değişkenleri ile animasyonları parametrize et
+        wrapper.style.setProperty('--sway-duration', swaySec + 's');
+        wrapper.style.setProperty('--sway', swayAmp + 'px');
+        wrapper.style.setProperty('--rot-start', rotStart);
+        wrapper.style.setProperty('--rot-end',   rotEnd);
+        wrapper.style.setProperty('--rise-duration', riseSec + 's');
+
+        // İçeriği (emoji) taşıyan span — yükseliş animasyonu burada
+        const span = document.createElement('span');
+        span.textContent = choice(EMOJIS);
+        span.style.fontSize = sizePx + 'px';
+
+        // Yükseliş bittiğinde DOM'dan temizle
+        span.addEventListener('animationend', () => {
+          wrapper.remove();
+          activeCount = Math.max(0, activeCount - 1);
+        }, { once: true });
+
+        wrapper.appendChild(span);
+        layer.appendChild(wrapper);
+        activeCount += 1;
+      }
+
+      // Düzenli aralıklarla yeni emojiler üret
+      const spawnTimer = setInterval(spawnEmoji, SPAWN_INTERVAL_MS);
+
+      // Noktaya tıklayınca üretimi aç/kapa
+      function toggleGeneration() {
+        isGenerating = !isGenerating;
+        toggleBtn.setAttribute('aria-pressed', String(isGenerating));
+        // Küçük bir görsel ipucu: aktifken hafif büyüsün (merkezde kalmayı koru)
+        toggleBtn.style.transform = isGenerating
+          ? 'translate(-50%, -50%) scale(1.04)'
+          : 'translate(-50%, -50%) scale(1)';
+      }
+
+      toggleBtn.addEventListener('click', toggleGeneration);
+
+      // İlk karede birkaç tane üretip ekranda hemen görünmelerini sağla
+      for (let i = 0; i < 10; i++) setTimeout(spawnEmoji, i * 60);
+      
+      // Sayfa görünürlüğüne göre üretimi duraklat (performans)
+      document.addEventListener('visibilitychange', () => {
+        isPageVisible = !document.hidden;
+      });
+
+      // Hareket azaltma tercihine göre üretimi seyrekleştir
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (prefersReduced.matches) {
+        MAX_ACTIVE = 16;
+        SPAWN_INTERVAL_MS = 400;
+      }
+
+      // (Gezinme kaldırıldı)
+    </script>
+    
+    <script>
+      // Gün sayacı: 08/06/2025 23:37:00 (MM/DD/YYYY → 6 Ağustos 2025) tarihinden beri geçen tam gün
+      (function(){
+        // 8/6/2025 11:37:00 PM → 6 Ağustos 2025 23:37:00 (Ay 0-indexli: 7 = Ağustos)
+        const start = new Date(2025, 7, 6, 23, 37, 0);
+        const el = document.getElementById('day-counter');
+        function updateDayCounter(){
+          const now = new Date();
+          const diffMs = now.getTime() - start.getTime();
+          const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+          el.textContent = String(Math.max(0, days));
+        }
+        updateDayCounter();
+        setInterval(updateDayCounter, 60 * 1000);
+      })();
+      
+      // Geri sayaç: Unix timestamp 1758253977'den geriye sayan sayaç
+      (function(){
+        const countdownEl = document.getElementById('countdown');
+        const targetTimestamp = 1758253977; // Hedef Unix timestamp
+        
+        function updateCountdown(){
+          const now = Math.floor(Date.now() / 1000); // Şu anki Unix timestamp
+          const secondsLeft = Math.max(0, targetTimestamp - now);
+          
+          countdownEl.textContent = String(secondsLeft);
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
+    </script>
+
+  </body>
+  </html>
+
