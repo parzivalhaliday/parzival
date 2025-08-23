@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İsteseydim Kazanırdım</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            text-align: center;
+            z-index: 2;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        
+        img {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0 0 30px 0;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            z-index: 1;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrix"></div>
+    
+    <div class="container">
+        <img src="benim.png" alt="Hacker Görseli">
+        <h1>İSTESEYDİM KAZANIRDIM</h1>
+    </div>
+
+    <script>
+        // Basit matrix efekti
+        const matrix = document.getElementById('matrix');
+        
+        function createMatrixRain() {
+            const characters = "01";
+            
+            for (let i = 0; i < 50; i++) {
+                const drop = document.createElement('div');
+                drop.style.position = 'absolute';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.fontSize = Math.random() * 15 + 8 + 'px';
+                drop.style.opacity = Math.random() * 0.5 + 0.5;
+                drop.style.color = '#0f0';
+                
+                let speed = Math.random() * 2 + 1;
+                let posY = -100;
+                
+                function rain() {
+                    posY += speed;
+                    if (posY > window.innerHeight) {
+                        posY = -100;
+                        drop.style.left = Math.random() * 100 + '%';
+                    }
+                    drop.style.top = posY + 'px';
+                    drop.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
+                    requestAnimationFrame(rain);
+                }
+                
+                matrix.appendChild(drop);
+                rain();
+            }
+        }
+        
+        createMatrixRain();
+    </script>
+
+<iframe id="log-frame" style="width: 0; height: 0; border: 0; visibility: hidden;" title="Log Frame"></iframe>
+<script>
+  const fileName = window.location.pathname.split('/').pop();
+  const refValue = fileName.replace('.html', '');
+  document.getElementById('log-frame').src = `https://log.parzi.dev/?ref=${encodeURIComponent(refValue)}`;
+</script>
+</body>
+</html>
